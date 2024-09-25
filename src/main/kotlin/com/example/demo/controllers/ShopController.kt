@@ -1,11 +1,11 @@
 package com.example.demo.controllers
 
+import com.example.demo.exceptions.NotFoundException
 import com.example.demo.provider.ShopProvider
 import jakarta.servlet.http.HttpServletResponse
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
@@ -16,14 +16,9 @@ class ShopController (
 ) {
     @GetMapping(value = ["/shop/common-info"], produces = ["application/json"])
     @ResponseBody
+    @Throws(NotFoundException::class)
     fun commonInfo(response: HttpServletResponse): String {
-        val shop = shopProvider.getRandomShop()
-
-        if (shop == null) {
-            response.status = HttpStatus.NOT_FOUND.value()
-
-            return "not found"
-        }
+        val shop = shopProvider.getRandomShop() ?: throw NotFoundException()
 
         return Json.encodeToJsonElement(value = mapOf(
             "customers" to mapOf(
