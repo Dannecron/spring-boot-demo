@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RestController
 class ShopController (
     @field:Autowired private val shopProvider: ShopProvider,
 ) {
-    @GetMapping(value = ["/shop/common-info"], produces = ["application/json"] )
+    @GetMapping(value = ["/shop/common-info"], produces = ["application/json"])
     @ResponseBody
     fun commonInfo(response: HttpServletResponse): String {
-        response.contentType = "application/json"
-
         val shop = shopProvider.getRandomShop()
 
         if (shop == null) {

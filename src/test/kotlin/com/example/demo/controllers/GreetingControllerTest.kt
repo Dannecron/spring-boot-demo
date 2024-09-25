@@ -11,7 +11,6 @@ import kotlin.test.Test
 
 @WebMvcTest(GreetingController::class)
 class GreetingControllerTest(@Autowired val mockMvc: MockMvc) {
-
     @Test
     fun greetings_shouldSeeGreetingMessage() {
         mockMvc.perform(get("/greeting"))

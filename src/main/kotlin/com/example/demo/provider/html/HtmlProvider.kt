@@ -19,7 +19,7 @@ fun renderProductTable(): String {
                 }
             }
 
-            val products = getProducts()
+            val products = getInnerProducts()
             for ((i, product) in products.withIndex()) {
                 tr {
                     td (color = getCellColor(0, i+1)) {
