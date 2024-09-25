@@ -1,0 +1,11 @@
+Some simple checklist for this demo repo:
+- [x] connect to database
+- [x] make migrations
+- [ ] make repository and models
+- [ ] make crud api
+- [ ] make openapi documentation generation
+- [ ] connect to kafka to produce events
+- [ ] make kafka consumer
+- [ ] register prometheus metrics
+- [ ] expose prometheus metrics
+- [ ] add otel collector

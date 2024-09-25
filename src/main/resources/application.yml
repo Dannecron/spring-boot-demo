@@ -1,0 +1,16 @@
+---
+spring:
+  application:
+    name: Demo
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demo?currentSchema=demo
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      schema: demo
+  flyway: #flyway automatically uses the datasource from the application to connect to the DB
+    enabled: true # enables flyway database migration
+    locations: classpath:db/migration/structure, classpath:db/migration/data # the location where flyway should look for migration scripts
+    validate-on-migrate: true
+    default-schema: demo
