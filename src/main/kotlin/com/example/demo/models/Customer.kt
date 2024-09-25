@@ -12,5 +12,5 @@ data class Customer(val name: String, val city: City, val orders: List<Order>) {
 
     fun getOrderedProducts(): Set<Product> = orders.flatMap { order -> order.products }.toSet()
 
-    fun getTotalOrderPrice(): Double = orders.flatMap { ord -> ord.products }.sumOf { pr -> pr.price }
+    fun getTotalOrderPrice(): Double = orders.flatMap { ord -> ord.products }.sumOf { pr -> pr.getPriceDouble()}
 }

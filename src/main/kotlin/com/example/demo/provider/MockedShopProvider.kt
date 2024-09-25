@@ -1,28 +1,46 @@
 package com.example.demo.provider
 
 import com.example.demo.models.*
+import java.time.OffsetDateTime
+import java.util.*
 
 class MockedShopProvider: ShopProvider {
     override fun getRandomShop(): Shop? {
+        val productOne = makeProduct(id = 1, name = "one", price = 11.2)
+        val productTwo = makeProduct(id = 2, name = "two", price = 13.2)
+        val productThree = makeProduct(id = 3, name = "three", price = 15.2)
+        val productFour = makeProduct(id = 4, name = "four", price = 14.2)
+
         return Shop(name="shop", customers= listOf(
             Customer(
                 name = "Foo-1",
                 city = City(name= "Bar"),
                 orders = listOf(
-                    Order(products = listOf(Product(name = "one", price = 11.2)), isDelivered = false),
-                    Order(products = listOf(Product(name = "two", price = 13.2)), isDelivered = false),
-                    Order(products = listOf(Product(name = "three", price = 15.2)), isDelivered = true),
+                    Order(products = listOf(productOne, productTwo), isDelivered = true),
+                    Order(products = listOf(productThree), isDelivered = false),
                 )
             ),
             Customer(
                 name = "Foo-2",
                 city = City(name= "Bar"),
                 orders = listOf(
-                    Order(products = listOf(Product(name = "one", price = 12.2)), isDelivered = false),
-                    Order(products = listOf(Product(name = "two", price = 13.2)), isDelivered = true),
-                    Order(products = listOf(Product(name = "four", price = 14.2)), isDelivered = true),
+                    Order(products = listOf(productOne), isDelivered = false),
+                    Order(products = listOf(productTwo), isDelivered = true),
+                    Order(products = listOf(productFour), isDelivered = true),
                 )
             ),
         ))
+    }
+
+    private fun makeProduct(id: Long, name: String, price: Double): Product {
+        return Product(
+            id = id,
+            guid = UUID.randomUUID(),
+            name = name,
+            description = null,
+            price = (price * 100).toInt(),
+            createdAt = OffsetDateTime.now(),
+            updatedAt = null,
+        )
     }
 }
