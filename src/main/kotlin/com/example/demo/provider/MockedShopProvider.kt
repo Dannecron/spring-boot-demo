@@ -38,7 +38,7 @@ class MockedShopProvider: ShopProvider {
             guid = UUID.randomUUID(),
             name = name,
             description = null,
-            price = (price * 100).toInt(),
+            price = (price * 100).toLong(),
             createdAt = OffsetDateTime.now(),
             updatedAt = null,
         )
