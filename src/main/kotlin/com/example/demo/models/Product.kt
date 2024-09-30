@@ -27,6 +27,11 @@ data class Product(
     @Serializable(with = OffsetDateTimeSerialization::class)
     @Column(value = "updated_at")
     val updatedAt: OffsetDateTime?,
+    @Serializable(with = OffsetDateTimeSerialization::class)
+    @Column(value = "deleted_at")
+    val deletedAt: OffsetDateTime?,
 ) {
     fun getPriceDouble(): Double = (price.toDouble() / 100).roundTo(2)
+
+    fun isDeleted(): Boolean = deletedAt != null
 }

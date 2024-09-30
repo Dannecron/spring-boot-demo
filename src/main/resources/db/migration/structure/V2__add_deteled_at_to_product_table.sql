@@ -1,0 +1,1 @@
+alter table product add deleted_at timestamptz default null;
