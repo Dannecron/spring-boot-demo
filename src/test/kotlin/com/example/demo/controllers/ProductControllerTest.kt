@@ -1,8 +1,8 @@
 package com.example.demo.controllers
 
 import com.example.demo.models.Product
-import com.example.demo.provider.ProductRepository
 import com.example.demo.responses.ResponseStatus
+import com.example.demo.services.ProductService
 import org.hamcrest.Matchers.nullValue
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
@@ -20,7 +20,7 @@ import java.util.*
 @WebMvcTest(ProductController::class)
 class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
     @MockBean
-    private lateinit var productRepository: ProductRepository
+    private lateinit var productService: ProductService
 
     @Test
     fun getProduct_success() {
@@ -34,9 +34,10 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
             price = 11130,
             createdAt = now,
             updatedAt = null,
+            deletedAt = null,
         )
 
-        whenever(productRepository.findByGuid(
+        whenever(productService.findByGuid(
             eq(guid),
         )) doReturn product
 
@@ -54,7 +55,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
     fun getProduct_notFound() {
         val guid = UUID.randomUUID()
 
-        whenever(productRepository.findByGuid(
+        whenever(productService.findByGuid(
             eq(guid),
         )) doReturn null
 

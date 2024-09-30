@@ -1,50 +1,56 @@
 package com.example.demo.controllers
 
 import com.example.demo.exceptions.NotFoundException
-import com.example.demo.models.Product
-import com.example.demo.provider.ProductRepository
+import com.example.demo.exceptions.UnprocessableException
 import com.example.demo.requests.CreateProductRequest
+import com.example.demo.responses.makeOkResponse
+import com.example.demo.services.ProductService
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.time.OffsetDateTime
 import java.util.*
 
 @RestController
-@RequestMapping(value = ["/api/product"])
+@RequestMapping(value = ["/api/product"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class ProductController(
-    @Autowired val productRepository: ProductRepository
+    val productService: ProductService
 ) {
-    @GetMapping(value = ["{guid}"], produces = ["application/json"])
+    @GetMapping("/{guid}")
     @ResponseBody
+    @Throws(NotFoundException::class)
     fun getProduct(
         @PathVariable guid: UUID
     ): String {
-        val product = productRepository.findByGuid(guid = guid) ?: throw NotFoundException()
+        val product = productService.findByGuid(guid = guid) ?: throw NotFoundException()
 
         return Json.encodeToJsonElement(value = product).toString()
     }
 
-    @PostMapping(value = [""], consumes = ["application/json"], produces = ["application/json"])
+    @PostMapping(value = ["/"], consumes = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
     fun createProduct(
         @RequestBody product: CreateProductRequest
     ): String {
-        val productModel = Product(
-            id = null,
-            guid = UUID.randomUUID(),
-            name = product.name,
-            description = product.description,
-            price = product.price,
-            createdAt = OffsetDateTime.now(),
-            updatedAt = null,
+        val saved = productService.create(
+            product.name,
+            product.price,
+            product.description,
         )
-
-        val saved = productRepository.save(productModel)
 
         return Json.encodeToJsonElement(value = saved).toString()
     }
 
-    // todo delete with soft-delete
+    @DeleteMapping("/{guid}")
+    @ResponseBody
+    @Throws(NotFoundException::class, UnprocessableException::class)
+    fun deleteProduct(
+        @PathVariable guid: UUID,
+    ): ResponseEntity<Any> {
+        productService.delete(guid)
+
+        return ResponseEntity(makeOkResponse(), HttpStatus.OK)
+    }
 }

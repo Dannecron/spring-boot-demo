@@ -41,6 +41,7 @@ class MockedShopProvider: ShopProvider {
             price = (price * 100).toLong(),
             createdAt = OffsetDateTime.now(),
             updatedAt = null,
+            deletedAt = null,
         )
     }
 }

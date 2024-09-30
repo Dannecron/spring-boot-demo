@@ -1,5 +1,7 @@
 package com.example.demo.responses
 
-class BaseResponse(val status: ResponseStatus)
+open class BaseResponse(val status: ResponseStatus)
 
-fun makeNotFound(): BaseResponse = BaseResponse(status = ResponseStatus.NOT_FOUND)
+fun makeOkResponse(): BaseResponse = BaseResponse(status = ResponseStatus.OK)
+
+fun makeNotFoundResponse(): BaseResponse = BaseResponse(status = ResponseStatus.NOT_FOUND)
