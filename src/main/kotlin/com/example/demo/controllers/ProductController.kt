@@ -5,8 +5,7 @@ import com.example.demo.exceptions.UnprocessableException
 import com.example.demo.requests.CreateProductRequest
 import com.example.demo.responses.makeOkResponse
 import com.example.demo.services.ProductService
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.encodeToJsonElement
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -16,31 +15,31 @@ import java.util.*
 @RestController
 @RequestMapping(value = ["/api/product"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class ProductController(
-    val productService: ProductService
+    val productService: ProductService,
 ) {
     @GetMapping("/{guid}")
     @ResponseBody
     @Throws(NotFoundException::class)
     fun getProduct(
-        @PathVariable guid: UUID
-    ): String {
+        @PathVariable guid: UUID,
+    ): ResponseEntity<Any> {
         val product = productService.findByGuid(guid = guid) ?: throw NotFoundException()
 
-        return Json.encodeToJsonElement(value = product).toString()
+        return ResponseEntity(product, HttpStatus.OK)
     }
 
-    @PostMapping(value = ["/"], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping(value = [""], consumes = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
     fun createProduct(
-        @RequestBody product: CreateProductRequest
-    ): String {
+        @Valid @RequestBody product: CreateProductRequest,
+    ): ResponseEntity<Any> {
         val saved = productService.create(
             product.name,
             product.price,
             product.description,
         )
 
-        return Json.encodeToJsonElement(value = saved).toString()
+        return ResponseEntity(saved, HttpStatus.CREATED)
     }
 
     @DeleteMapping("/{guid}")

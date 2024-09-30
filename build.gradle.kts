@@ -30,6 +30,7 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
 	implementation("org.postgresql:postgresql")
 	implementation("org.springframework.boot:spring-boot-starter-mustache")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
