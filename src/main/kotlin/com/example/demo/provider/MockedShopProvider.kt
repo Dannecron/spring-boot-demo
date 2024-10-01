@@ -14,7 +14,7 @@ class MockedShopProvider: ShopProvider {
         return Shop(name="shop", customers= listOf(
             Customer(
                 name = "Foo-1",
-                city = City(name= "Bar"),
+                city = makeCity(id = 1, name = "Foo"),
                 orders = listOf(
                     Order(products = listOf(productOne, productTwo), isDelivered = true),
                     Order(products = listOf(productThree), isDelivered = false),
@@ -22,7 +22,7 @@ class MockedShopProvider: ShopProvider {
             ),
             Customer(
                 name = "Foo-2",
-                city = City(name= "Bar"),
+                city = makeCity(id = 2, name = "Bar"),
                 orders = listOf(
                     Order(products = listOf(productOne), isDelivered = false),
                     Order(products = listOf(productTwo), isDelivered = true),
@@ -32,16 +32,23 @@ class MockedShopProvider: ShopProvider {
         ))
     }
 
-    private fun makeProduct(id: Long, name: String, price: Double): Product {
-        return Product(
-            id = id,
-            guid = UUID.randomUUID(),
-            name = name,
-            description = null,
-            price = (price * 100).toLong(),
-            createdAt = OffsetDateTime.now(),
-            updatedAt = null,
-            deletedAt = null,
-        )
-    }
+    private fun makeProduct(id: Long, name: String, price: Double): Product = Product(
+        id = id,
+        guid = UUID.randomUUID(),
+        name = name,
+        description = null,
+        price = (price * 100).toLong(),
+        createdAt = OffsetDateTime.now(),
+        updatedAt = null,
+        deletedAt = null,
+    )
+
+    private fun makeCity(id: Long, name: String): City = City(
+        id = id,
+        guid = UUID.randomUUID(),
+        name = name,
+        createdAt = OffsetDateTime.now(),
+        updatedAt = null,
+        deletedAt = null,
+    )
 }

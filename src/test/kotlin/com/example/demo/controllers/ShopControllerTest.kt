@@ -30,7 +30,7 @@ class ShopControllerTest(@Autowired val mockMvc: MockMvc) {
         val shopMock = Shop(name="shop", customers= listOf(
             Customer(
                 name = "cus-one",
-                city = City(name= "city-one"),
+                city = makeCity(id = 1, name = "city-one"),
                 orders = listOf(
                     Order(products = listOf(productOne), isDelivered = false),
                     Order(products = listOf(productTwo), isDelivered = false),
@@ -39,7 +39,7 @@ class ShopControllerTest(@Autowired val mockMvc: MockMvc) {
             ),
             Customer(
                 name = "cus-two",
-                city = City(name= "city-two"),
+                city = makeCity(id = 2, name = "city-two"),
                 orders = listOf(
                     Order(products = listOf(productOne), isDelivered = false),
                     Order(products = listOf(productTwo), isDelivered = true),
@@ -75,16 +75,23 @@ class ShopControllerTest(@Autowired val mockMvc: MockMvc) {
             .andExpect(content().json("""{"status":"not found"}"""))
     }
 
-    private fun makeProduct(id: Long, name: String, price: Double): Product {
-        return Product(
-            id = id,
-            guid = UUID.randomUUID(),
-            name = name,
-            description = null,
-            price = (price * 100).toLong(),
-            createdAt = OffsetDateTime.now(),
-            updatedAt = null,
-            deletedAt = null,
-        )
-    }
+    private fun makeProduct(id: Long, name: String, price: Double): Product = Product(
+        id = id,
+        guid = UUID.randomUUID(),
+        name = name,
+        description = null,
+        price = (price * 100).toLong(),
+        createdAt = OffsetDateTime.now(),
+        updatedAt = null,
+        deletedAt = null,
+    )
+
+    private fun makeCity(id: Long, name: String): City = City(
+        id = id,
+        guid = UUID.randomUUID(),
+        name = name,
+        createdAt = OffsetDateTime.now(),
+        updatedAt = null,
+        deletedAt = null,
+    )
 }
