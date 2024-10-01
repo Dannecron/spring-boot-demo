@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -148,6 +149,28 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.status") { value(ResponseStatus.UNPROCESSABLE.status) } }
             .andExpect { jsonPath("\$.cause") { value(MethodArgumentNotValidException::class.qualifiedName) } }
+    }
 
+    @Test
+    fun deleteProduct_success() {
+        val guid = UUID.randomUUID()
+
+        whenever(productService.delete(
+            eq(guid),
+        )) doReturn Product(
+            id = 2133,
+            guid = guid,
+            name = "name",
+            description = "description",
+            price = 210202,
+            createdAt = OffsetDateTime.now(),
+            updatedAt = null,
+            deletedAt = OffsetDateTime.now(),
+        )
+
+        mockMvc.delete("/api/product/${guid}")
+            .andExpect { status { status { isOk() } } }
+            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
+            .andExpect { jsonPath("\$.status") { value(ResponseStatus.OK.status) } }
     }
 }
