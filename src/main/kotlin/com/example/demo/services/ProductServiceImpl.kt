@@ -7,7 +7,9 @@ import com.example.demo.provider.ProductRepository
 import java.time.OffsetDateTime
 import java.util.*
 
-class ProductServiceImpl(private val productRepository: ProductRepository): ProductService {
+class ProductServiceImpl(
+    private val productRepository: ProductRepository,
+): ProductService {
     override fun findByGuid(guid: UUID): Product? = productRepository.findByGuid(guid)
 
     override fun create(name: String, price: Long, description: String?): Product {
