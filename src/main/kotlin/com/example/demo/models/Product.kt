@@ -11,7 +11,7 @@ import org.springframework.data.relational.core.mapping.Table
 import java.time.OffsetDateTime
 import java.util.*
 
-@Table(value = "product", schema = "public")
+@Table(value = "product")
 @Serializable
 data class Product(
     @Id
