@@ -3,8 +3,8 @@ package com.example.demo.services.database.city
 import com.example.demo.BaseFeatureTest
 import com.example.demo.models.City
 import com.example.demo.providers.CityRepository
-import com.example.demo.services.database.exceptions.AlreadyDeletedException
 import com.example.demo.services.database.city.exceptions.CityNotFoundException
+import com.example.demo.services.database.exceptions.AlreadyDeletedException
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
@@ -12,7 +12,7 @@ import java.util.*
 import kotlin.test.*
 
 @ContextConfiguration(classes = [CityRepository::class, CityServiceImpl::class])
-class CityServiceImplTest: BaseFeatureTest() {
+class CityServiceImplFeatureTest: BaseFeatureTest() {
     @Autowired
     private lateinit var cityRepository: CityRepository
     @Autowired
