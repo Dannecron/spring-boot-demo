@@ -1,7 +1,8 @@
-package com.example.demo.controllers
+package com.example.demo.http.controllers
 
+import com.example.demo.http.controllers.ProductController
 import com.example.demo.models.Product
-import com.example.demo.responses.ResponseStatus
+import com.example.demo.http.responses.ResponseStatus
 import com.example.demo.services.ProductService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.hamcrest.Matchers.contains

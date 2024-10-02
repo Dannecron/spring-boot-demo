@@ -1,6 +1,6 @@
-package com.example.demo.controllers
+package com.example.demo.http.controllers
 
-import com.example.demo.exceptions.NotFoundException
+import com.example.demo.http.exceptions.NotFoundException
 import com.example.demo.provider.ShopProvider
 import jakarta.servlet.http.HttpServletResponse
 import kotlinx.serialization.json.Json

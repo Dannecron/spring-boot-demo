@@ -1,7 +1,7 @@
 package com.example.demo.services
 
-import com.example.demo.exceptions.NotFoundException
-import com.example.demo.exceptions.UnprocessableException
+import com.example.demo.http.exceptions.NotFoundException
+import com.example.demo.http.exceptions.UnprocessableException
 import com.example.demo.models.Product
 import com.example.demo.services.kafka.exceptions.InvalidArgumentException
 import org.springframework.stereotype.Service

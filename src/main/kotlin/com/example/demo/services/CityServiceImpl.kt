@@ -1,7 +1,7 @@
 package com.example.demo.services
 
-import com.example.demo.exceptions.NotFoundException
-import com.example.demo.exceptions.UnprocessableException
+import com.example.demo.http.exceptions.NotFoundException
+import com.example.demo.http.exceptions.UnprocessableException
 import com.example.demo.models.City
 import com.example.demo.provider.CityRepository
 import java.time.OffsetDateTime

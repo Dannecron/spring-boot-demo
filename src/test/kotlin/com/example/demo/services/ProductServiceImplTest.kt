@@ -1,6 +1,6 @@
 package com.example.demo.services
 
-import com.example.demo.exceptions.NotFoundException
+import com.example.demo.http.exceptions.NotFoundException
 import com.example.demo.models.Product
 import com.example.demo.provider.ProductRepository
 import com.example.demo.services.kafka.Producer

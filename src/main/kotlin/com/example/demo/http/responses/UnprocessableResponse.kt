@@ -1,4 +1,4 @@
-package com.example.demo.responses
+package com.example.demo.http.responses
 
 import org.springframework.validation.ObjectError
 

@@ -1,9 +1,9 @@
-package com.example.demo.exceptions
+package com.example.demo.http.exceptions
 
-import com.example.demo.responses.makeBadRequestResponse
-import com.example.demo.responses.makeNotFoundResponse
-import com.example.demo.responses.makeUnprocessableResponse
-import com.example.demo.responses.makeUnprocessableResponseWithErrors
+import com.example.demo.http.responses.makeBadRequestResponse
+import com.example.demo.http.responses.makeNotFoundResponse
+import com.example.demo.http.responses.makeUnprocessableResponse
+import com.example.demo.http.responses.makeUnprocessableResponseWithErrors
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException

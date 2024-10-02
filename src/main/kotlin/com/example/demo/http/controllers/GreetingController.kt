@@ -1,4 +1,4 @@
-package com.example.demo.controllers
+package com.example.demo.http.controllers
 
 import com.example.demo.provider.html.renderProductTable
 import org.springframework.web.bind.annotation.GetMapping

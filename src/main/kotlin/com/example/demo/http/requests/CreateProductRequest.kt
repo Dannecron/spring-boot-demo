@@ -1,4 +1,4 @@
-package com.example.demo.requests
+package com.example.demo.http.requests
 
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank

@@ -1,5 +1,6 @@
-package com.example.demo.controllers
+package com.example.demo.http.controllers
 
+import com.example.demo.http.controllers.GreetingController
 import org.hamcrest.core.StringContains
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest

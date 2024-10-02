@@ -1,8 +1,8 @@
 package com.example.demo.services
 
 import com.example.demo.BaseFeatureTest
-import com.example.demo.exceptions.NotFoundException
-import com.example.demo.exceptions.UnprocessableException
+import com.example.demo.http.exceptions.NotFoundException
+import com.example.demo.http.exceptions.UnprocessableException
 import com.example.demo.models.Product
 import com.example.demo.provider.ProductRepository
 import org.junit.jupiter.api.assertThrows

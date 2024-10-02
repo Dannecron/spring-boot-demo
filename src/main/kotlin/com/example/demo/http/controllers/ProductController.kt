@@ -1,9 +1,9 @@
-package com.example.demo.controllers
+package com.example.demo.http.controllers
 
-import com.example.demo.exceptions.NotFoundException
-import com.example.demo.exceptions.UnprocessableException
-import com.example.demo.requests.CreateProductRequest
-import com.example.demo.responses.makeOkResponse
+import com.example.demo.http.exceptions.NotFoundException
+import com.example.demo.http.exceptions.UnprocessableException
+import com.example.demo.http.requests.CreateProductRequest
+import com.example.demo.http.responses.makeOkResponse
 import com.example.demo.services.ProductService
 import com.example.demo.services.kafka.exceptions.InvalidArgumentException
 import jakarta.validation.Valid

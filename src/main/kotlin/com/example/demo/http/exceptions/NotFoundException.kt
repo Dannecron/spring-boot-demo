@@ -1,3 +1,3 @@
-package com.example.demo.exceptions
+package com.example.demo.http.exceptions
 
 class NotFoundException: RuntimeException()
