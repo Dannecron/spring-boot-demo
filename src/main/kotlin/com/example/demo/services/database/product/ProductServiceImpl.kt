@@ -1,9 +1,9 @@
-package com.example.demo.services
+package com.example.demo.services.database.product
 
-import com.example.demo.http.exceptions.NotFoundException
-import com.example.demo.http.exceptions.UnprocessableException
 import com.example.demo.models.Product
-import com.example.demo.provider.ProductRepository
+import com.example.demo.providers.ProductRepository
+import com.example.demo.services.database.exceptions.AlreadyDeletedException
+import com.example.demo.services.database.product.exceptions.ProductNotFoundException
 import com.example.demo.services.kafka.Producer
 import java.time.OffsetDateTime
 import java.util.*
@@ -31,10 +31,10 @@ class ProductServiceImpl(
     }
 
     override fun delete(guid: UUID): Product? {
-        val product = findByGuid(guid) ?: throw NotFoundException()
+        val product = findByGuid(guid) ?: throw ProductNotFoundException()
 
         if (product.isDeleted()) {
-            throw UnprocessableException("product already deleted")
+            throw AlreadyDeletedException()
         }
 
         val deletedProduct = product.copy(
@@ -52,7 +52,7 @@ class ProductServiceImpl(
     }
 
     override fun syncToKafka(guid: UUID, topic: String?) {
-        val product = findByGuid(guid) ?: throw NotFoundException()
+        val product = findByGuid(guid) ?: throw ProductNotFoundException()
 
         producer.produceProductInfo(topic ?: defaultSyncTopic, product)
     }

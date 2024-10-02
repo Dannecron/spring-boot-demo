@@ -1,4 +1,4 @@
-package com.example.demo.provider.html
+package com.example.demo.providers.html
 
 fun getTitleColor() = "#b9c9fe"
 fun getCellColor(index: Int, row: Int) = if ((index + row) %2 == 0) "#dce4ff" else "#eff2ff"

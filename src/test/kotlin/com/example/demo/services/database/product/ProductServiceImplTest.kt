@@ -1,10 +1,10 @@
-package com.example.demo.services
+package com.example.demo.services.database.product
 
-import com.example.demo.http.exceptions.NotFoundException
 import com.example.demo.models.Product
-import com.example.demo.provider.ProductRepository
+import com.example.demo.providers.ProductRepository
 import com.example.demo.services.kafka.Producer
 import com.example.demo.services.kafka.exceptions.InvalidArgumentException
+import com.example.demo.services.database.product.exceptions.ProductNotFoundException
 import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
 import org.mockito.kotlin.*
@@ -67,7 +67,7 @@ class ProductServiceImplTest {
         whenever(productRepository.findByGuid(eq(guid)))
             .thenReturn(null)
 
-        assertThrows<NotFoundException> {
+        assertThrows<ProductNotFoundException> {
             productService.syncToKafka(guid, specificTopic)
         }
 

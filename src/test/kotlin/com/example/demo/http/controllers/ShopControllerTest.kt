@@ -1,8 +1,7 @@
 package com.example.demo.http.controllers
 
-import com.example.demo.http.controllers.ShopController
 import com.example.demo.models.*
-import com.example.demo.provider.ShopProvider
+import com.example.demo.providers.ShopProvider
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired

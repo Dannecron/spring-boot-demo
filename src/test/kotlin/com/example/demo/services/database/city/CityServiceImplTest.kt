@@ -1,10 +1,14 @@
-package com.example.demo.services
+package com.example.demo.services.database.city
 
 import com.example.demo.BaseFeatureTest
 import com.example.demo.models.City
-import com.example.demo.provider.CityRepository
+import com.example.demo.providers.CityRepository
+import com.example.demo.services.database.exceptions.AlreadyDeletedException
+import com.example.demo.services.database.city.exceptions.CityNotFoundException
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
+import java.util.*
 import kotlin.test.*
 
 @ContextConfiguration(classes = [CityRepository::class, CityServiceImpl::class])
@@ -35,6 +39,14 @@ class CityServiceImplTest: BaseFeatureTest() {
             assertEquals(city.id, deletedCity.id)
             assertNotNull(deletedCity.deletedAt)
             assertTrue(deletedCity.isDeleted())
+
+            assertThrows<AlreadyDeletedException> {
+                cityServiceImpl.delete(city.guid)
+            }
+
+            assertThrows<CityNotFoundException> {
+                cityServiceImpl.delete(UUID.randomUUID())
+            }
         } finally {
             val id = city?.id
             if (id != null) {

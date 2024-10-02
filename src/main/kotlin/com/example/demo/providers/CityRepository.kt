@@ -1,4 +1,4 @@
-package com.example.demo.provider
+package com.example.demo.providers
 
 import com.example.demo.models.City
 import org.springframework.data.jdbc.repository.query.Query

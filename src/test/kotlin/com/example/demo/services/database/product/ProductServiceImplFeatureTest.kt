@@ -1,10 +1,10 @@
-package com.example.demo.services
+package com.example.demo.services.database.product
 
 import com.example.demo.BaseFeatureTest
-import com.example.demo.http.exceptions.NotFoundException
-import com.example.demo.http.exceptions.UnprocessableException
 import com.example.demo.models.Product
-import com.example.demo.provider.ProductRepository
+import com.example.demo.providers.ProductRepository
+import com.example.demo.services.database.exceptions.AlreadyDeletedException
+import com.example.demo.services.database.product.exceptions.ProductNotFoundException
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
@@ -52,11 +52,11 @@ class ProductServiceImplFeatureTest: BaseFeatureTest() {
             assertTrue(deletedProduct.isDeleted())
 
             // try to delete already deleted product
-            assertThrows<UnprocessableException> {
+            assertThrows<AlreadyDeletedException> {
                 productService.delete(product.guid)
             }
 
-            assertThrows<NotFoundException> {
+            assertThrows<ProductNotFoundException> {
                 productService.delete(UUID.randomUUID())
             }
         } finally {

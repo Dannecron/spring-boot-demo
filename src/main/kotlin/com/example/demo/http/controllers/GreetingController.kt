@@ -1,6 +1,6 @@
 package com.example.demo.http.controllers
 
-import com.example.demo.provider.html.renderProductTable
+import com.example.demo.providers.html.renderProductTable
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController

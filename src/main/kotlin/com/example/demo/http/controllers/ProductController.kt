@@ -4,7 +4,9 @@ import com.example.demo.http.exceptions.NotFoundException
 import com.example.demo.http.exceptions.UnprocessableException
 import com.example.demo.http.requests.CreateProductRequest
 import com.example.demo.http.responses.makeOkResponse
-import com.example.demo.services.ProductService
+import com.example.demo.services.database.exceptions.AlreadyDeletedException
+import com.example.demo.services.database.product.ProductService
+import com.example.demo.services.database.product.exceptions.ProductNotFoundException
 import com.example.demo.services.kafka.exceptions.InvalidArgumentException
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -65,7 +67,13 @@ class ProductController(
     fun deleteProduct(
         @PathVariable guid: UUID,
     ): ResponseEntity<Any> {
-        productService.delete(guid)
+        try {
+            productService.delete(guid)
+        } catch (notFoundException: ProductNotFoundException) {
+            throw NotFoundException()
+        } catch (alreadyDeletedException: AlreadyDeletedException) {
+            throw UnprocessableException("product already deleted")
+        }
 
         return ResponseEntity(makeOkResponse(), HttpStatus.OK)
     }

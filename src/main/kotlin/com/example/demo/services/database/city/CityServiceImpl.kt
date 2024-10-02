@@ -1,9 +1,9 @@
-package com.example.demo.services
+package com.example.demo.services.database.city
 
-import com.example.demo.http.exceptions.NotFoundException
-import com.example.demo.http.exceptions.UnprocessableException
 import com.example.demo.models.City
-import com.example.demo.provider.CityRepository
+import com.example.demo.providers.CityRepository
+import com.example.demo.services.database.exceptions.AlreadyDeletedException
+import com.example.demo.services.database.city.exceptions.CityNotFoundException
 import java.time.OffsetDateTime
 import java.util.*
 
@@ -26,10 +26,10 @@ class CityServiceImpl(
     }
 
     override fun delete(guid: UUID): City? {
-        val city = findByGuid(guid) ?: throw NotFoundException()
+        val city = findByGuid(guid) ?: throw CityNotFoundException()
 
         if (city.isDeleted()) {
-            throw UnprocessableException("city already deleted")
+            throw AlreadyDeletedException()
         }
 
         val deletedCity = city.copy(

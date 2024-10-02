@@ -1,4 +1,4 @@
-package com.example.demo.provider.html
+package com.example.demo.providers.html
 
 data class InnerProduct(val description: String, val price: Double, val popularity: Int)
 

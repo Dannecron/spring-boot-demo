@@ -1,4 +1,4 @@
-package com.example.demo.provider.html
+package com.example.demo.providers.html
 
 open class Tag(val name: String) {
     val children: MutableList<Tag> = ArrayList()

@@ -1,13 +1,13 @@
 package com.example.demo.config
 
-import com.example.demo.provider.CityRepository
-import com.example.demo.provider.MockedShopProvider
-import com.example.demo.provider.ProductRepository
-import com.example.demo.provider.ShopProvider
-import com.example.demo.services.CityService
-import com.example.demo.services.CityServiceImpl
-import com.example.demo.services.ProductService
-import com.example.demo.services.ProductServiceImpl
+import com.example.demo.providers.CityRepository
+import com.example.demo.providers.MockedShopProvider
+import com.example.demo.providers.ProductRepository
+import com.example.demo.providers.ShopProvider
+import com.example.demo.services.database.city.CityService
+import com.example.demo.services.database.city.CityServiceImpl
+import com.example.demo.services.database.product.ProductService
+import com.example.demo.services.database.product.ProductServiceImpl
 import com.example.demo.services.kafka.Producer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
