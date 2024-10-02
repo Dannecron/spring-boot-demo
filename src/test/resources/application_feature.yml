@@ -8,3 +8,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+kafka:
+  bootstrap-servers: localhost:1234
+  producer:
+    product:
+      default-sync-topic: demo-product-sync
+  consumer:
+    group-id: demo-consumer
+    topics: demo-city-sync
+    auto-startup: false

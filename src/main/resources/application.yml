@@ -20,3 +20,7 @@ kafka:
   producer:
     product:
       default-sync-topic: demo-product-sync
+  consumer:
+    group-id: demo-consumer
+    topics: demo-city-sync
+    auto-startup: false
