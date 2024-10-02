@@ -2,6 +2,7 @@ package com.example.demo.services.kafka
 
 import com.example.demo.models.Product
 import com.example.demo.services.kafka.dto.ProductDto
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.runner.RunWith
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doReturn
@@ -26,6 +27,9 @@ class ProducerImplTest {
     @Autowired
     private lateinit var producerImpl: ProducerImpl
 
+    @Autowired
+    private lateinit var objectMapper: ObjectMapper
+
     @MockBean
     private lateinit var kafkaTemplate: KafkaTemplate<String, Any>
 
@@ -43,7 +47,7 @@ class ProducerImplTest {
             deletedAt = OffsetDateTime.now(),
         )
 
-        val captor = argumentCaptor<Message<ProductDto>>()
+        val captor = argumentCaptor<Message<String>>()
 
         whenever(kafkaTemplate.send(captor.capture()))
             .doReturn(CompletableFuture<SendResult<String, Any>>())
@@ -52,8 +56,10 @@ class ProducerImplTest {
 
         assertEquals(1, captor.allValues.count())
         val actualArgument = captor.firstValue
-        assertEquals(product.id, actualArgument.payload.id)
-        assertEquals(product.guid.toString(), actualArgument.payload.guid)
+
+        val actualProductDto = objectMapper.readValue(actualArgument.payload, ProductDto::class.java)
+        assertEquals(product.id, actualProductDto.id)
+        assertEquals(product.guid.toString(), actualProductDto.guid)
         assertEquals(topic, actualArgument.headers[KafkaHeaders.TOPIC])
         assertEquals("some-custom-header", actualArgument.headers["X-Custom-Header"])
     }

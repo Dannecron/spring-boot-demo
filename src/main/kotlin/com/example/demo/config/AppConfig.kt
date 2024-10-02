@@ -9,6 +9,7 @@ import com.example.demo.services.database.city.CityServiceImpl
 import com.example.demo.services.database.product.ProductService
 import com.example.demo.services.database.product.ProductServiceImpl
 import com.example.demo.services.kafka.Producer
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -20,9 +21,10 @@ class AppConfig(
     private val defaultProductSyncTopic: String
 ) {
     @Bean
-    fun shopProvider(): ShopProvider{
-        return MockedShopProvider()
-    }
+    fun objectMapper(): ObjectMapper = ObjectMapper()
+
+    @Bean
+    fun shopProvider(): ShopProvider = MockedShopProvider()
 
     @Bean
     fun productService(

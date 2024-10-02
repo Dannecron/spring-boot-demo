@@ -2,7 +2,7 @@ package com.example.demo.config
 
 import com.example.demo.services.kafka.Producer
 import com.example.demo.services.kafka.ProducerImpl
-import com.example.demo.services.kafka.dto.serializer.ProductSerializer
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,7 +24,7 @@ class ProducerConfig(
 
         configProps[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] = servers
         configProps[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
-        configProps[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] = ProductSerializer::class.java
+        configProps[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
 
         return DefaultKafkaProducerFactory(configProps)
     }
@@ -35,7 +35,11 @@ class ProducerConfig(
     )
 
     @Bean
-    fun producer(@Autowired kafkaTemplate: KafkaTemplate<String, Any>): Producer = ProducerImpl(
+    fun producer(
+        @Autowired kafkaTemplate: KafkaTemplate<String, Any>,
+        @Autowired objectMapper: ObjectMapper
+    ): Producer = ProducerImpl(
         kafkaTemplate,
+        objectMapper,
     )
 }
