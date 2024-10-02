@@ -7,7 +7,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.nullValue
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
@@ -48,7 +47,8 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
 
         whenever(productService.findByGuid(
             eq(guid),
-        )) doReturn product
+        ))
+            .thenReturn(product)
 
         mockMvc.get("/api/product/$guid")
             .andExpect { status { status { isOk() } } }
@@ -66,7 +66,8 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
 
         whenever(productService.findByGuid(
             eq(guid),
-        )) doReturn null
+        ))
+            .thenReturn(null)
 
         mockMvc.get("/api/product/$guid")
             .andExpect { status { status { isNotFound() } } }
@@ -89,16 +90,17 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
             eq(name),
             eq(price),
             eq(description)
-        )) doReturn Product(
-            id = productId,
-            guid = UUID.randomUUID(),
-            name = name,
-            description = description,
-            price = price,
-            createdAt = OffsetDateTime.now(),
-            updatedAt = null,
-            deletedAt = null,
-        )
+        ))
+            .thenReturn(Product(
+                id = productId,
+                guid = UUID.randomUUID(),
+                name = name,
+                description = description,
+                price = price,
+                createdAt = OffsetDateTime.now(),
+                updatedAt = null,
+                deletedAt = null,
+            ))
 
         mockMvc.post("/api/product") {
             contentType = MediaType.APPLICATION_JSON
@@ -118,8 +120,6 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
             mapOf("description" to description, "price" to price)
         )
 
-        verifyNoInteractions(productService)
-
         mockMvc.post("/api/product") {
             contentType = MediaType.APPLICATION_JSON
             content = reqBody
@@ -128,6 +128,8 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.status") { value(ResponseStatus.BAD_REQUEST.status) } }
             .andExpect { jsonPath("\$.cause") { contains("name") } }
+
+        verifyNoInteractions(productService)
     }
 
     @Test
@@ -139,8 +141,6 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
             mapOf("name" to "", "description" to description, "price" to price)
         )
 
-        verifyNoInteractions(productService)
-
         mockMvc.post("/api/product") {
             contentType = MediaType.APPLICATION_JSON
             content = reqBody
@@ -149,6 +149,8 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.status") { value(ResponseStatus.UNPROCESSABLE.status) } }
             .andExpect { jsonPath("\$.cause") { value(MethodArgumentNotValidException::class.qualifiedName) } }
+
+        verifyNoInteractions(productService)
     }
 
     @Test
@@ -157,16 +159,17 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
 
         whenever(productService.delete(
             eq(guid),
-        )) doReturn Product(
-            id = 2133,
-            guid = guid,
-            name = "name",
-            description = "description",
-            price = 210202,
-            createdAt = OffsetDateTime.now(),
-            updatedAt = null,
-            deletedAt = OffsetDateTime.now(),
-        )
+        ))
+            .thenReturn(Product(
+                id = 2133,
+                guid = guid,
+                name = "name",
+                description = "description",
+                price = 210202,
+                createdAt = OffsetDateTime.now(),
+                updatedAt = null,
+                deletedAt = OffsetDateTime.now(),
+            ))
 
         mockMvc.delete("/api/product/${guid}")
             .andExpect { status { status { isOk() } } }

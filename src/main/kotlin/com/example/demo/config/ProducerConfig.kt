@@ -5,6 +5,7 @@ import com.example.demo.services.kafka.ProducerImpl
 import com.example.demo.services.kafka.dto.serializer.ProductSerializer
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringSerializer
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -34,7 +35,7 @@ class ProducerConfig(
     )
 
     @Bean
-    fun producer(): Producer = ProducerImpl(
-        kafkaTemplate(),
+    fun producer(@Autowired kafkaTemplate: KafkaTemplate<String, Any>): Producer = ProducerImpl(
+        kafkaTemplate,
     )
 }

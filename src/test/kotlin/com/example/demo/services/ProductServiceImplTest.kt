@@ -1,49 +1,102 @@
 package com.example.demo.services
 
-import com.example.demo.BaseFeatureTest
+import com.example.demo.exceptions.NotFoundException
 import com.example.demo.models.Product
 import com.example.demo.provider.ProductRepository
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.context.ContextConfiguration
-import kotlin.test.*
+import com.example.demo.services.kafka.Producer
+import com.example.demo.services.kafka.exceptions.InvalidArgumentException
+import org.junit.jupiter.api.assertThrows
+import org.junit.runner.RunWith
+import org.mockito.kotlin.*
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.context.junit4.SpringRunner
+import java.time.OffsetDateTime
+import java.util.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 
-@ContextConfiguration(classes = [ProductRepository::class, ProductServiceImpl::class])
-class ProductServiceImplTest: BaseFeatureTest() {
-    @Autowired
+@RunWith(SpringRunner::class)
+@SpringBootTest
+class ProductServiceImplTest {
+    private val defaultTopic = "some-default-topic"
     private lateinit var productService: ProductServiceImpl
-    @Autowired
+
+    @MockBean
+    @Qualifier("producer")
+    private lateinit var producer: Producer
+    @MockBean
     private lateinit var productRepository: ProductRepository
 
+    @BeforeTest
+    fun setUp() {
+        productService = ProductServiceImpl(
+            defaultSyncTopic = defaultTopic,
+            productRepository = productRepository,
+            producer = producer,
+        )
+    }
+
     @Test
-    fun createFindDelete_success() {
-        val name = "new-product-name"
-        val price = 33333.toLong()
-        val description = "some-description"
-        var product: Product? = null
+    fun syncToKafka_success() {
+        val guid = UUID.randomUUID()
+        val product = Product(
+            id = 123,
+            guid = guid,
+            name = "name",
+            description = "description",
+            price = 10050,
+            createdAt = OffsetDateTime.now().minusDays(1),
+            updatedAt = OffsetDateTime.now().minusHours(2),
+            deletedAt = OffsetDateTime.now(),
+        )
 
-        try {
-            product = productService.create(name = name, price = price, description = description)
-            assertNotNull(product.id)
-            assertEquals(name, product.name)
-            assertEquals(price, product.price)
-            assertEquals(333.33, product.getPriceDouble())
+        whenever(productRepository.findByGuid(eq(guid)))
+            .thenReturn(product)
+        whenever(producer.produceProductInfo(defaultTopic, product)).doAnswer{}
 
-            val dbProduct = productService.findByGuid(product.guid)
-            assertNotNull(dbProduct)
-            assertEquals(product.id, dbProduct.id)
-            assertFalse(dbProduct.isDeleted())
+        productService.syncToKafka(guid, null)
+    }
 
-            val deletedProduct = productService.delete(product.guid)
-            assertNotNull(deletedProduct)
-            assertEquals(product.id, deletedProduct.id)
-            assertNotNull(deletedProduct.deletedAt)
-            assertTrue(deletedProduct.isDeleted())
-        } finally {
-            val id = product?.id
-            if (id != null) {
-                productRepository.deleteById(id)
-            }
+    @Test
+    fun syncToKafka_notFound() {
+        val specificTopic = "specificNotice"
+        val guid = UUID.randomUUID()
 
+        whenever(productRepository.findByGuid(eq(guid)))
+            .thenReturn(null)
+
+        assertThrows<NotFoundException> {
+            productService.syncToKafka(guid, specificTopic)
+        }
+
+        verifyNoInteractions(producer)
+    }
+
+    @Test
+    fun syncToKafka_invalidArgumentException() {
+        val specificTopic = "specificNotice"
+        val guid = UUID.randomUUID()
+
+        val product = Product(
+            id = 123,
+            guid = guid,
+            name = "name",
+            description = "description",
+            price = 10050,
+            createdAt = OffsetDateTime.now().minusDays(1),
+            updatedAt = OffsetDateTime.now().minusHours(2),
+            deletedAt = OffsetDateTime.now(),
+        )
+
+        whenever(productRepository.findByGuid(eq(guid)))
+            .thenReturn(product)
+        whenever(producer.produceProductInfo(specificTopic, product))
+            .doThrow(InvalidArgumentException("some error"))
+
+        assertThrows< InvalidArgumentException> {
+            productService.syncToKafka(guid, specificTopic)
         }
     }
 }

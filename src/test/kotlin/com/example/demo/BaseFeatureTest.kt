@@ -15,5 +15,5 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @EnableJdbcRepositories
 class BaseFeatureTest {
     @MockBean
-    private lateinit var producer: Producer
+    lateinit var producer: Producer
 }
