@@ -4,11 +4,14 @@ import com.example.demo.exceptions.NotFoundException
 import com.example.demo.exceptions.UnprocessableException
 import com.example.demo.models.Product
 import com.example.demo.provider.ProductRepository
+import com.example.demo.services.kafka.Producer
 import java.time.OffsetDateTime
 import java.util.*
 
 class ProductServiceImpl(
+    private val defaultSyncTopic: String,
     private val productRepository: ProductRepository,
+    private val producer: Producer,
 ): ProductService {
     override fun findByGuid(guid: UUID): Product? = productRepository.findByGuid(guid)
 
@@ -47,4 +50,11 @@ class ProductServiceImpl(
 
         return productRepository.save(deletedProduct)
     }
+
+    override fun syncToKafka(guid: UUID, topic: String?) {
+        val product = findByGuid(guid) ?: throw NotFoundException()
+
+        producer.produceProductInfo(topic ?: defaultSyncTopic, product)
+    }
+
 }

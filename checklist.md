@@ -1,8 +1,8 @@
 Some simple checklist for this demo repo:
 - [x] connect to database
 - [x] make migrations
-- [ ] make repository and models
-- [ ] make crud api
+- [x] make repository and models
+- [x] make crud api
 - [ ] make openapi documentation generation
 - [ ] connect to kafka to produce events
 - [ ] make kafka consumer

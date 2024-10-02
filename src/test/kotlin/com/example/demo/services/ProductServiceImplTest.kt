@@ -5,11 +5,7 @@ import com.example.demo.models.Product
 import com.example.demo.provider.ProductRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
-import kotlin.test.assertFalse
+import kotlin.test.*
 
 @ContextConfiguration(classes = [ProductRepository::class, ProductServiceImpl::class])
 class ProductServiceImplTest: BaseFeatureTest() {

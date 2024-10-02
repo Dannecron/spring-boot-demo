@@ -1,10 +1,10 @@
 package com.example.demo
 
-import org.springframework.beans.factory.annotation.Autowired
+import com.example.demo.services.kafka.Producer
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories
-import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.context.ActiveProfiles
 import org.testcontainers.junit.jupiter.Testcontainers
 
@@ -14,6 +14,6 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @EnableJdbcRepositories
 class BaseFeatureTest {
-    @Autowired
-    lateinit var jdbcTemplate: JdbcTemplate
+    @MockBean
+    private lateinit var producer: Producer
 }

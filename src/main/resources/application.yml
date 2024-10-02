@@ -14,3 +14,9 @@ spring:
     locations: classpath:db/migration/structure, classpath:db/migration/data # the location where flyway should look for migration scripts
     validate-on-migrate: true
     default-schema: public
+
+kafka:
+  bootstrap-servers: localhost:9095
+  producer:
+    product:
+      default-sync-topic: demo-product-sync
