@@ -1,5 +1,6 @@
 package com.example.demo.http.controllers
 
+import com.example.demo.BaseUnitTest
 import com.example.demo.models.*
 import com.example.demo.providers.ShopProvider
 import org.mockito.kotlin.doReturn
@@ -16,7 +17,7 @@ import java.util.*
 import kotlin.test.Test
 
 @WebMvcTest(ShopController::class)
-class ShopControllerTest(@Autowired val mockMvc: MockMvc) {
+class ShopControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
     @MockBean
     private lateinit var shopProvider: ShopProvider
 

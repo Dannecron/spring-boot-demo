@@ -1,5 +1,6 @@
 package com.example.demo.services.database.product
 
+import com.example.demo.BaseUnitTest
 import com.example.demo.models.Product
 import com.example.demo.providers.ProductRepository
 import com.example.demo.services.database.product.exceptions.ProductNotFoundException
@@ -19,7 +20,7 @@ import kotlin.test.Test
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class ProductServiceImplTest {
+class ProductServiceImplTest: BaseUnitTest() {
     private val defaultTopic = "some-default-topic"
     private lateinit var productService: ProductServiceImpl
 

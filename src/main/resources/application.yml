@@ -23,4 +23,4 @@ kafka:
   consumer:
     group-id: demo-consumer
     topics: demo-city-sync
-    auto-startup: false
+    auto-startup: true

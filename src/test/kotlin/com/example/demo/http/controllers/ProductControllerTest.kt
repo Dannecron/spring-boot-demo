@@ -1,5 +1,6 @@
 package com.example.demo.http.controllers
 
+import com.example.demo.BaseUnitTest
 import com.example.demo.http.responses.ResponseStatus
 import com.example.demo.models.Product
 import com.example.demo.services.database.product.ProductService
@@ -24,7 +25,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 @WebMvcTest(ProductController::class)
-class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
+class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
     @MockBean
     private lateinit var productService: ProductService
     private val mapper = jacksonObjectMapper()

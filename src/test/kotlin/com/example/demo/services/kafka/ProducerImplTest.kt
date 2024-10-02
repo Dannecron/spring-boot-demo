@@ -1,5 +1,6 @@
 package com.example.demo.services.kafka
 
+import com.example.demo.BaseUnitTest
 import com.example.demo.models.Product
 import com.example.demo.services.kafka.dto.ProductDto
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -23,7 +24,7 @@ import kotlin.test.assertEquals
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class ProducerImplTest {
+class ProducerImplTest: BaseUnitTest() {
     @Autowired
     private lateinit var producerImpl: ProducerImpl
 

@@ -1,6 +1,6 @@
 package com.example.demo.http.controllers
 
-import com.example.demo.http.controllers.GreetingController
+import com.example.demo.BaseUnitTest
 import org.hamcrest.core.StringContains
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import kotlin.test.Test
 
 @WebMvcTest(GreetingController::class)
-class GreetingControllerTest(@Autowired val mockMvc: MockMvc) {
+class GreetingControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
     @Test
     fun greetings_shouldSeeGreetingMessage() {
         mockMvc.perform(get("/greeting"))
