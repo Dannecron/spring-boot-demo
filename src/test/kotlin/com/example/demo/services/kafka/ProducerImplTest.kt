@@ -3,7 +3,7 @@ package com.example.demo.services.kafka
 import com.example.demo.BaseUnitTest
 import com.example.demo.models.Product
 import com.example.demo.services.kafka.dto.ProductDto
-import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.serialization.json.Json
 import org.junit.runner.RunWith
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doReturn
@@ -27,9 +27,6 @@ import kotlin.test.assertEquals
 class ProducerImplTest: BaseUnitTest() {
     @Autowired
     private lateinit var producerImpl: ProducerImpl
-
-    @Autowired
-    private lateinit var objectMapper: ObjectMapper
 
     @MockBean
     private lateinit var kafkaTemplate: KafkaTemplate<String, Any>
@@ -58,7 +55,7 @@ class ProducerImplTest: BaseUnitTest() {
         assertEquals(1, captor.allValues.count())
         val actualArgument = captor.firstValue
 
-        val actualProductDto = objectMapper.readValue(actualArgument.payload, ProductDto::class.java)
+        val actualProductDto = Json.decodeFromString<ProductDto>(actualArgument.payload)
         assertEquals(product.id, actualProductDto.id)
         assertEquals(product.guid.toString(), actualProductDto.guid)
         assertEquals(topic, actualArgument.headers[KafkaHeaders.TOPIC])

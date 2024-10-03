@@ -1,7 +1,7 @@
 package com.example.demo.models
 
-import com.example.demo.models.serializables.OffsetDateTimeSerialization
-import com.example.demo.models.serializables.UuidSerialization
+import com.example.demo.services.serializables.OffsetDateTimeSerialization
+import com.example.demo.services.serializables.UuidSerialization
 import kotlinx.serialization.Serializable
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column

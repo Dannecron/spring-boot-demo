@@ -2,7 +2,6 @@ package com.example.demo.config
 
 import com.example.demo.services.kafka.Producer
 import com.example.demo.services.kafka.ProducerImpl
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.beans.factory.annotation.Autowired
@@ -37,9 +36,7 @@ class KafkaProducerConfig(
     @Bean
     fun producer(
         @Autowired kafkaTemplate: KafkaTemplate<String, Any>,
-        @Autowired objectMapper: ObjectMapper
     ): Producer = ProducerImpl(
         kafkaTemplate,
-        objectMapper,
     )
 }
