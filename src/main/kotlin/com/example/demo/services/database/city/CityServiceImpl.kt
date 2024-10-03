@@ -51,11 +51,6 @@ class CityServiceImpl(
         }
 
         val deletedCity = city.copy(
-            id = city.id!!,
-            guid = city.guid,
-            name = city.name,
-            createdAt = city.createdAt,
-            updatedAt = city.updatedAt,
             deletedAt = OffsetDateTime.now(),
         )
 

@@ -42,13 +42,6 @@ class ProductServiceImpl(
         }
 
         val deletedProduct = product.copy(
-            id = product.id!!,
-            guid = product.guid,
-            name = product.name,
-            description = product.description,
-            price = product.price,
-            createdAt = product.createdAt,
-            updatedAt = product.updatedAt,
             deletedAt = OffsetDateTime.now(),
         )
 
