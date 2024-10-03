@@ -4,8 +4,8 @@ Some simple checklist for this demo repo:
 - [x] make repository and models
 - [x] make crud api
 - [ ] make openapi documentation generation
-- [ ] connect to kafka to produce events
-- [ ] make kafka consumer
+- [x] connect to kafka to produce events
+- [x] make kafka consumer
 - [ ] register prometheus metrics
 - [ ] expose prometheus metrics
 - [ ] add otel collector
