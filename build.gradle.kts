@@ -22,27 +22,27 @@ repositories {
 }
 
 dependencies {
-	api("org.springframework.boot:spring-boot-starter-data-jdbc")
+	api("org.springframework.boot:spring-boot-starter-data-jdbc:3.2.4")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.flywaydb:flyway-core")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
-	implementation("org.postgresql:postgresql")
-	implementation("org.springframework.boot:spring-boot-starter-mustache")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.springframework.kafka:spring-kafka")
+	implementation("org.flywaydb:flyway-core:9.22.3")
+	implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.20")
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+	implementation("org.postgresql:postgresql:42.6.2")
+	implementation("org.springframework.boot:spring-boot-starter-mustache:3.2.4")
+	implementation("org.springframework.boot:spring-boot-starter-validation:3.2.4")
+	implementation("org.springframework.boot:spring-boot-starter-web:3.2.4")
+	implementation("org.springframework.kafka:spring-kafka:3.1.3")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.0.20")
 	testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.kafka:spring-kafka-test")
-	testImplementation("org.testcontainers:junit-jupiter")
-	testImplementation("org.testcontainers:testcontainers")
-	testImplementation("org.testcontainers:postgresql")
+	testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.4")
+	testImplementation("org.springframework.kafka:spring-kafka-test:3.1.3")
+	testImplementation("org.testcontainers:junit-jupiter:1.19.7")
+	testImplementation("org.testcontainers:testcontainers:1.19.7")
+	testImplementation("org.testcontainers:postgresql:1.19.7")
 }
 
 kotlin {
