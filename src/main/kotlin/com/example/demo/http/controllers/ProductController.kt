@@ -9,6 +9,8 @@ import com.example.demo.services.database.product.ProductService
 import com.example.demo.services.database.product.exceptions.ProductNotFoundException
 import com.example.demo.services.kafka.exceptions.InvalidArgumentException
 import jakarta.validation.Valid
+import org.springdoc.core.annotations.ParameterObject
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -21,7 +23,6 @@ class ProductController(
     val productService: ProductService,
 ) {
     @GetMapping("/{guid}")
-    @ResponseBody
     @Throws(NotFoundException::class)
     fun getProduct(
         @PathVariable guid: UUID,
@@ -31,8 +32,25 @@ class ProductController(
         return ResponseEntity(product, HttpStatus.OK)
     }
 
+    @GetMapping("")
+    fun getProducts(
+        @ParameterObject pageable: Pageable,
+    ): ResponseEntity<Any> {
+        val products = productService.findAll(pageable)
+
+        return ResponseEntity(
+            mapOf(
+                "data" to products.content,
+                "meta" to mapOf(
+                    "total" to products.totalElements,
+                    "pages" to products.totalPages,
+                ),
+            ),
+            HttpStatus.OK,
+        )
+    }
+
     @PostMapping("/{guid}/sync")
-    @ResponseBody
     @Throws(NotFoundException::class)
     fun syncProductToKafka(
         @PathVariable guid: UUID,
@@ -48,7 +66,6 @@ class ProductController(
     }
 
     @PostMapping(value = [""], consumes = [MediaType.APPLICATION_JSON_VALUE])
-    @ResponseBody
     fun createProduct(
         @Valid @RequestBody product: CreateProductRequest,
     ): ResponseEntity<Any> {
@@ -62,7 +79,6 @@ class ProductController(
     }
 
     @DeleteMapping("/{guid}")
-    @ResponseBody
     @Throws(NotFoundException::class, UnprocessableException::class)
     fun deleteProduct(
         @PathVariable guid: UUID,

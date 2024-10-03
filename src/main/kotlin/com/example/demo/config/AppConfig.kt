@@ -10,18 +10,25 @@ import com.example.demo.services.database.product.ProductService
 import com.example.demo.services.database.product.ProductServiceImpl
 import com.example.demo.services.kafka.Producer
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-
 @Configuration
 class AppConfig(
     @Value("\${kafka.producer.product.default-sync-topic}")
     private val defaultProductSyncTopic: String
 ) {
     @Bean
-    fun objectMapper(): ObjectMapper = ObjectMapper()
+    fun objectMapper(): ObjectMapper {
+        val objectMapper = ObjectMapper()
+        objectMapper.registerModules(JavaTimeModule())
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+        return objectMapper
+    }
 
     @Bean
     fun shopProvider(): ShopProvider = MockedShopProvider()
@@ -39,3 +46,4 @@ class AppConfig(
     @Bean
     fun cityService(@Autowired cityRepository: CityRepository): CityService = CityServiceImpl(cityRepository)
 }
+

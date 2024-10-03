@@ -8,12 +8,16 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.nullValue
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
@@ -74,6 +78,36 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
             .andExpect { status { status { isNotFound() } } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.status") { value(ResponseStatus.NOT_FOUND.status) } }
+    }
+
+    @Test
+    fun getProducts_success() {
+        val now = OffsetDateTime.now()
+        whenever(productService.findAll(
+            PageRequest.of(1, 2, Sort.by(Sort.Direction.DESC, "createdAt")),
+        )) doReturn PageImpl(listOf(Product(
+            id = 12,
+            guid = UUID.randomUUID(),
+            name = "some",
+            description = null,
+            price = 11130,
+            createdAt = now,
+            updatedAt = null,
+            deletedAt = null,
+        )))
+
+        mockMvc.get("/api/product?page=1&size=2&sort=created_at,desc")
+            .andExpect { status { status { isOk() } } }
+            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
+            .andExpect { jsonPath("\$.meta.total") { value(1) } }
+            .andExpect { jsonPath("\$.meta.pages") { value(1) } }
+            .andExpect { jsonPath("\$.data") { isArray() } }
+            .andExpect { jsonPath("\$.data[0].id") { value(12) } }
+            .andExpect { jsonPath("\$.data[0].name") { value("some") } }
+            .andExpect { jsonPath("\$.data[0].description") { value(null) } }
+            .andExpect { jsonPath("\$.data[0].createdAt") { value(now.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)) } }
+            .andExpect { jsonPath("\$.data[0].priceDouble") { value(111.30) } }
+            .andExpect { jsonPath("\$.data[0].isDeleted") { value(false) } }
     }
 
     @Test
