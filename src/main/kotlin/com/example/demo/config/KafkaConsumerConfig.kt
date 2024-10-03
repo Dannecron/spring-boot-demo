@@ -2,7 +2,6 @@ package com.example.demo.config
 
 import com.example.demo.services.database.city.CityService
 import com.example.demo.services.kafka.Consumer
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,10 +22,8 @@ class KafkaConsumerConfig(
     @Bean
     fun consumer(
         @Autowired cityService: CityService,
-        @Autowired objectMapper: ObjectMapper,
     ): Consumer = Consumer(
         cityService = cityService,
-        objectMapper = objectMapper,
     )
 
     @Bean
