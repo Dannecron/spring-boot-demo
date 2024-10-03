@@ -3,11 +3,18 @@ package com.example.demo.http.controllers
 import com.example.demo.http.exceptions.NotFoundException
 import com.example.demo.http.exceptions.UnprocessableException
 import com.example.demo.http.requests.CreateProductRequest
+import com.example.demo.http.responses.NotFoundResponse
 import com.example.demo.http.responses.makeOkResponse
+import com.example.demo.http.responses.page.PageResponse
+import com.example.demo.models.Product
 import com.example.demo.services.database.exceptions.AlreadyDeletedException
 import com.example.demo.services.database.product.ProductService
 import com.example.demo.services.database.product.exceptions.ProductNotFoundException
 import com.example.demo.services.kafka.exceptions.InvalidArgumentException
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
 import org.springdoc.core.annotations.ParameterObject
 import org.springframework.data.domain.Pageable
@@ -24,6 +31,14 @@ class ProductController(
 ) {
     @GetMapping("/{guid}")
     @Throws(NotFoundException::class)
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "200", content = [
+            Content(mediaType = "application/json", schema = Schema(implementation = Product::class)),
+        ]),
+        ApiResponse(responseCode = "404", content = [
+            Content(mediaType = "application/json", schema = Schema(implementation = NotFoundResponse::class))
+        ])
+    ])
     fun getProduct(
         @PathVariable guid: UUID,
     ): ResponseEntity<Any> {
@@ -33,19 +48,18 @@ class ProductController(
     }
 
     @GetMapping("")
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "200", content = [
+            Content(mediaType = "application/json", schema = Schema(implementation = PageResponse::class)),
+        ]),
+    ])
     fun getProducts(
         @ParameterObject pageable: Pageable,
     ): ResponseEntity<Any> {
         val products = productService.findAll(pageable)
 
         return ResponseEntity(
-            mapOf(
-                "data" to products.content,
-                "meta" to mapOf(
-                    "total" to products.totalElements,
-                    "pages" to products.totalPages,
-                ),
-            ),
+            PageResponse(products),
             HttpStatus.OK,
         )
     }

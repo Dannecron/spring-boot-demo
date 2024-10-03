@@ -24,3 +24,9 @@ kafka:
     group-id: demo-consumer
     topics: demo-city-sync
     auto-startup: true
+
+springdoc:
+  api-docs:
+    path: /doc/openapi
+  swagger-ui:
+    path: /doc/swagger-ui.html

@@ -24,11 +24,13 @@ repositories {
 dependencies {
 	api("org.springframework.boot:spring-boot-starter-data-jdbc:3.2.4")
 
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.4")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.4")
 	implementation("org.flywaydb:flyway-core:9.22.3")
 	implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.20")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 	implementation("org.postgresql:postgresql:42.6.2")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 	implementation("org.springframework.boot:spring-boot-starter-mustache:3.2.4")
 	implementation("org.springframework.boot:spring-boot-starter-validation:3.2.4")
 	implementation("org.springframework.boot:spring-boot-starter-web:3.2.4")

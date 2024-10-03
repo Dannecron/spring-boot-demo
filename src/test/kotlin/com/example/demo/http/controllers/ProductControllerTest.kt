@@ -83,8 +83,10 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
     @Test
     fun getProducts_success() {
         val now = OffsetDateTime.now()
+        val pageRequest = PageRequest.of(1, 2, Sort.by(Sort.Direction.DESC, "createdAt"))
+
         whenever(productService.findAll(
-            PageRequest.of(1, 2, Sort.by(Sort.Direction.DESC, "createdAt")),
+            pageRequest,
         )) doReturn PageImpl(listOf(Product(
             id = 12,
             guid = UUID.randomUUID(),
@@ -96,7 +98,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
             deletedAt = null,
         )))
 
-        mockMvc.get("/api/product?page=1&size=2&sort=created_at,desc")
+        mockMvc.get("/api/product?page=1&size=2&sort=createdAt,desc")
             .andExpect { status { status { isOk() } } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.meta.total") { value(1) } }
