@@ -4,7 +4,6 @@ import com.example.demo.BaseUnitTest
 import com.example.demo.http.responses.ResponseStatus
 import com.example.demo.models.Product
 import com.example.demo.services.database.product.ProductService
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.nullValue
 import org.junit.jupiter.api.Test
@@ -32,8 +31,6 @@ import java.util.*
 class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
     @MockBean
     private lateinit var productService: ProductService
-    private val mapper = jacksonObjectMapper()
-
 
     @Test
     fun getProduct_success() {
@@ -119,9 +116,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
         val description = null
         val price = 20000.toLong()
 
-        val reqBody = mapper.writeValueAsString(
-            mapOf("name" to name, "description" to description, "price" to price)
-        )
+        val reqBody = """{"name":"$name","description":null,"price":$price}"""
 
         whenever(productService.create(
             eq(name),
@@ -150,12 +145,9 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
 
     @Test
     fun createProduct_badRequest_noNameParam() {
-        val description = null
         val price = 20000.toLong()
 
-        val reqBody = mapper.writeValueAsString(
-            mapOf("description" to description, "price" to price)
-        )
+        val reqBody = """{"description":null,"price":$price}"""
 
         mockMvc.post("/api/product") {
             contentType = MediaType.APPLICATION_JSON
@@ -171,12 +163,9 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
 
     @Test
     fun createProduct_badRequest_emptyName() {
-        val description = null
         val price = 20000.toLong()
 
-        val reqBody = mapper.writeValueAsString(
-            mapOf("name" to "", "description" to description, "price" to price)
-        )
+        val reqBody = """{"name":"","description":null,"price":$price}"""
 
         mockMvc.post("/api/product") {
             contentType = MediaType.APPLICATION_JSON
