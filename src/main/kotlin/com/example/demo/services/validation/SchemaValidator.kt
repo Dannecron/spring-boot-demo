@@ -1,5 +1,7 @@
-package com.example.demo.services.kafka
+package com.example.demo.services.validation
 
+import com.example.demo.services.validation.exceptions.ElementNotValidException
+import com.example.demo.services.validation.exceptions.SchemaNotFoundException
 import io.github.optimumcode.json.schema.JsonSchema
 import io.github.optimumcode.json.schema.ValidationError
 import kotlinx.serialization.json.JsonElement
@@ -20,10 +22,7 @@ class SchemaValidator(
 
         val valid = schema.validate(value, errors::add)
         if (!valid) {
-            // todo throw another exception
-            println(errors.toString())
-
-           throw RuntimeException("invalid schema")
+            throw ElementNotValidException(errors)
         }
     }
 
@@ -34,8 +33,7 @@ class SchemaValidator(
         }
 
         val schemaFile = schemaMap[schemaName]
-            ?: // todo throw another exception
-            throw RuntimeException("unknown json-schema")
+            ?: throw SchemaNotFoundException()
 
         val schema = ResourceUtils.getFile("classpath:json-schemas/$schemaFile")
             .readText(Charsets.UTF_8)

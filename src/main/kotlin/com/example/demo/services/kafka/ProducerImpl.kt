@@ -2,6 +2,7 @@ package com.example.demo.services.kafka
 
 import com.example.demo.models.Product
 import com.example.demo.services.kafka.dto.ProductDto
+import com.example.demo.services.validation.SchemaValidator
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import org.springframework.kafka.core.KafkaTemplate

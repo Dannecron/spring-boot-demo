@@ -9,7 +9,7 @@ import com.example.demo.services.database.city.CityServiceImpl
 import com.example.demo.services.database.product.ProductService
 import com.example.demo.services.database.product.ProductServiceImpl
 import com.example.demo.services.kafka.Producer
-import com.example.demo.services.kafka.SchemaValidator
+import com.example.demo.services.validation.SchemaValidator
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule

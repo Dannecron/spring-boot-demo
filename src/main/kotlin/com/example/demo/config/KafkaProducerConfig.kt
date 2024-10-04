@@ -2,7 +2,7 @@ package com.example.demo.config
 
 import com.example.demo.services.kafka.Producer
 import com.example.demo.services.kafka.ProducerImpl
-import com.example.demo.services.kafka.SchemaValidator
+import com.example.demo.services.validation.SchemaValidator
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.beans.factory.annotation.Autowired
