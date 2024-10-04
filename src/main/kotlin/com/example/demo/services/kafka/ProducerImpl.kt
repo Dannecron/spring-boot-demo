@@ -13,10 +13,14 @@ import org.springframework.stereotype.Service
 @Service
 class ProducerImpl(
     private val kafkaTemplate: KafkaTemplate<String, Any>,
+    private val schemaValidator: SchemaValidator,
 ): Producer {
     override fun produceProductInfo(topicName: String, product: Product) {
 
         val serializedProduct = Json.encodeToJsonElement(ProductDto(product))
+
+        schemaValidator.validate("product-sync", serializedProduct)
+
         val message: Message<String> = MessageBuilder
             .withPayload(serializedProduct.toString())
             .setHeader(KafkaHeaders.TOPIC, topicName)

@@ -9,17 +9,19 @@ import com.example.demo.services.database.city.CityServiceImpl
 import com.example.demo.services.database.product.ProductService
 import com.example.demo.services.database.product.ProductServiceImpl
 import com.example.demo.services.kafka.Producer
+import com.example.demo.services.kafka.SchemaValidator
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+
 @Configuration
+@EnableConfigurationProperties(KafkaProperties::class)
 class AppConfig(
-    @Value("\${kafka.producer.product.default-sync-topic}")
-    private val defaultProductSyncTopic: String
+    @Autowired private val kafkaProperties: KafkaProperties,
 ) {
     @Bean
     fun objectMapper(): ObjectMapper {
@@ -38,12 +40,15 @@ class AppConfig(
         @Autowired productRepository: ProductRepository,
         @Autowired producer: Producer,
     ): ProductService = ProductServiceImpl(
-        defaultProductSyncTopic,
+        kafkaProperties.producer.product.defaultSyncTopic,
         productRepository,
         producer,
     )
 
     @Bean
     fun cityService(@Autowired cityRepository: CityRepository): CityService = CityServiceImpl(cityRepository)
+
+    @Bean
+    fun schemaValidator(): SchemaValidator = SchemaValidator(kafkaProperties.validation.schema)
 }
 

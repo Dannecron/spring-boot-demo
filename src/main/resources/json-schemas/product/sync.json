@@ -1,0 +1,41 @@
+{
+  "schema": "http://json-schema.org/draft-07/schema#",
+  "title": "event sync product",
+  "type": "object",
+  "required": ["id", "guid"],
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "guid": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    },
+    "number": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    },
+    "deletedAt": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    }
+  }
+}

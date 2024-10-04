@@ -24,6 +24,9 @@ kafka:
     group-id: demo-consumer
     topics: demo-city-sync
     auto-startup: true
+  validation:
+    schema:
+      product-sync: product/sync.json
 
 springdoc:
   api-docs:

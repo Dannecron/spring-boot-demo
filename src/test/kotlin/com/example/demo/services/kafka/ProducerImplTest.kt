@@ -4,10 +4,9 @@ import com.example.demo.BaseUnitTest
 import com.example.demo.models.Product
 import com.example.demo.services.kafka.dto.ProductDto
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToJsonElement
 import org.junit.runner.RunWith
-import org.mockito.kotlin.argumentCaptor
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.whenever
+import org.mockito.kotlin.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -31,6 +30,9 @@ class ProducerImplTest: BaseUnitTest() {
     @MockBean
     private lateinit var kafkaTemplate: KafkaTemplate<String, Any>
 
+    @MockBean
+    private lateinit var schemaValidator: SchemaValidator
+
     @Test
     fun produceProductInfo_success() {
         val topic = "some-topic"
@@ -49,6 +51,12 @@ class ProducerImplTest: BaseUnitTest() {
 
         whenever(kafkaTemplate.send(captor.capture()))
             .doReturn(CompletableFuture<SendResult<String, Any>>())
+
+        whenever(schemaValidator.validate(
+            eq("product-sync"),
+            eq(Json.encodeToJsonElement(product))
+        ))
+            .doAnswer { }
 
         producerImpl.produceProductInfo(topic, product)
 

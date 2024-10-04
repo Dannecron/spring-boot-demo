@@ -26,6 +26,7 @@ dependencies {
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.4")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.4")
+	implementation("io.github.optimumcode:json-schema-validator:0.2.3")
 	implementation("org.flywaydb:flyway-core:9.22.3")
 	implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.20")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
