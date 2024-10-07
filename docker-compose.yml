@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
       context: .
     environment:
+      SPRING_LOG_LEVEL: $SPRING_LOG_LEVEL
+      SPRING_ACTIVE_PROFILE: $SPRING_ACTIVE_PROFILE
       DB_URL: $DB_URL
       DB_NAME: $DB_NAME
       DB_SCHEMA: $DB_SCHEMA

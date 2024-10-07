@@ -5,6 +5,8 @@ import com.example.demo.providers.ProductRepository
 import com.example.demo.services.database.exceptions.AlreadyDeletedException
 import com.example.demo.services.database.product.exceptions.ProductNotFoundException
 import com.example.demo.services.kafka.Producer
+import com.example.demo.utils.LoggerDelegate
+import net.logstash.logback.marker.Markers
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import java.time.OffsetDateTime
@@ -15,7 +17,15 @@ class ProductServiceImpl(
     private val productRepository: ProductRepository,
     private val producer: Producer,
 ): ProductService {
+    private val logger by LoggerDelegate()
+
     override fun findByGuid(guid: UUID): Product? = productRepository.findByGuid(guid)
+        .also {
+            logger.debug(
+                Markers.appendEntries(mapOf("guid" to guid, "idResult" to it?.id)),
+                "find product by guid",
+            )
+        }
 
     override fun findAll(pageable: Pageable): Page<Product> = productRepository.findAll(pageable)
 
