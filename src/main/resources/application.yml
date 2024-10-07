@@ -33,3 +33,23 @@ springdoc:
     path: /doc/openapi
   swagger-ui:
     path: /doc/swagger-ui.html
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      base-path: /
+      path-mapping:
+        metrics: spring-metrics
+        prometheus: metrics
+        info: version
+      exposure:
+        include: health,prometheus,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
