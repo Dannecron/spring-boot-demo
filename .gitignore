@@ -30,3 +30,6 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+.env
+docker-compose.override.yml

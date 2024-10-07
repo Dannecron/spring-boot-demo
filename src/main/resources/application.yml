@@ -3,20 +3,20 @@ spring:
   application:
     name: Demo
   datasource:
-    url: jdbc:postgresql://localhost:5432/demo?currentSchema=public
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://${DB_URL:localhost:5432}/${DB_NAME:demo}?currentSchema=${DB_SCHEMA:public}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
     hikari:
-      schema: public
+      schema: ${DB_SCHEMA:public}
   flyway: #flyway automatically uses the datasource from the application to connect to the DB
     enabled: true # enables flyway database migration
     locations: classpath:db/migration/structure, classpath:db/migration/data # the location where flyway should look for migration scripts
     validate-on-migrate: true
-    default-schema: public
+    default-schema: ${DB_SCHEMA:public}
 
 kafka:
-  bootstrap-servers: localhost:9095
+  bootstrap-servers: ${KAFKA_SERVERS:localhost:9095}
   producer:
     product:
       default-sync-topic: demo-product-sync

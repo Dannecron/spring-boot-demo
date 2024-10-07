@@ -1,0 +1,17 @@
+---
+services:
+  demo:
+    image: localhost/spring-boot-demo:latest
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      DB_URL: $DB_URL
+      DB_NAME: $DB_NAME
+      DB_SCHEMA: $DB_SCHEMA
+      DB_USERNAME: $DB_USERNAME
+      DB_PASSWORD: $DB_PASSWORD
+      KAFKA_SERVERS: $KAFKA_SERVERS
+    expose:
+      - 8080
+      - 8081

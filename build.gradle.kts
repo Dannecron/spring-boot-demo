@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.example"
-version = "0.0.1-SNAPSHOT"
+version = "single-version"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
@@ -69,4 +69,3 @@ tasks.test {
 tasks.jacocoTestReport {
 	dependsOn(tasks.test) // tests are required to run before generating the report
 }
-
