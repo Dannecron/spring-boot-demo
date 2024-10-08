@@ -6,6 +6,6 @@ Some simple checklist for this demo repo:
 - [x] make openapi documentation generation
 - [x] connect to kafka to produce events
 - [x] make kafka consumer
-- [ ] register prometheus metrics
+- [x] register prometheus metrics
 - [x] expose prometheus metrics
 - [ ] add otel collector
