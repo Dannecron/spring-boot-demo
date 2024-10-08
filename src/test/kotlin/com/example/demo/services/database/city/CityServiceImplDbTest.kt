@@ -1,6 +1,6 @@
 package com.example.demo.services.database.city
 
-import com.example.demo.BaseFeatureTest
+import com.example.demo.BaseDbTest
 import com.example.demo.models.City
 import com.example.demo.providers.CityRepository
 import com.example.demo.services.database.city.exceptions.CityNotFoundException
@@ -12,7 +12,7 @@ import java.util.*
 import kotlin.test.*
 
 @ContextConfiguration(classes = [CityRepository::class, CityServiceImpl::class])
-class CityServiceImplFeatureTest: BaseFeatureTest() {
+class CityServiceImplDbTest: BaseDbTest() {
     @Autowired
     private lateinit var cityRepository: CityRepository
     @Autowired

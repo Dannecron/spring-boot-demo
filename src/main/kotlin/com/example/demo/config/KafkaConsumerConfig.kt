@@ -2,6 +2,7 @@ package com.example.demo.config
 
 import com.example.demo.services.database.city.CityService
 import com.example.demo.services.kafka.Consumer
+import io.micrometer.core.instrument.MeterRegistry
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,15 +19,20 @@ class KafkaConsumerConfig(
     @Bean
     fun consumer(
         @Autowired cityService: CityService,
-    ): Consumer = Consumer(cityService)
+        @Autowired metricRegistry: MeterRegistry
+    ): Consumer = Consumer(
+        cityService = cityService,
+        metricRegistry = metricRegistry,
+    )
 
     @Bean
     fun consumerFactory(): ConsumerFactory<String, String> {
         val configs = mapOf(
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaProperties.bootstrapServers,
             ConsumerConfig.GROUP_ID_CONFIG to kafkaProperties.consumer.groupId,
+            ConsumerConfig.AUTO_OFFSET_RESET_CONFIG to kafkaProperties.consumer.autoOffsetReset,
             ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
-            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
+            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java
         )
 
         return DefaultKafkaConsumerFactory(configs)

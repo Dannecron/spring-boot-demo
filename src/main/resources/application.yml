@@ -29,6 +29,7 @@ kafka:
   consumer:
     group-id: demo-consumer
     topics: demo-city-sync
+    auto-offset-reset: none
     auto-startup: true
   validation:
     schema:

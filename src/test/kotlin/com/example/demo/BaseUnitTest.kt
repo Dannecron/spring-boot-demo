@@ -24,6 +24,7 @@ open class BaseUnitTest {
                 groupId = "group",
                 topics = "topic",
                 autoStartup = false,
+                autoOffsetReset = "none",
             ),
             validation = KafkaProperties.Validation(
                 schema = mapOf("product-sync" to "foo"),

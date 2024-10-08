@@ -8,12 +8,12 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories
 import org.springframework.test.context.ActiveProfiles
 import org.testcontainers.junit.jupiter.Testcontainers
 
-@ActiveProfiles("feature")
+@ActiveProfiles("db")
 @DataJdbcTest
 @Testcontainers(disabledWithoutDocker = false)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @EnableJdbcRepositories
-class BaseFeatureTest {
+class BaseDbTest {
     @MockBean
     lateinit var producer: Producer
 }

@@ -22,6 +22,7 @@ data class KafkaProperties @ConstructorBinding constructor(
         val groupId: String,
         val topics: String,
         val autoStartup: Boolean,
+        val autoOffsetReset: String,
     )
 
     data class Validation(

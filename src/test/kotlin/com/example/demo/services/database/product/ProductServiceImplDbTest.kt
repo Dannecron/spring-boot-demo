@@ -1,6 +1,6 @@
 package com.example.demo.services.database.product
 
-import com.example.demo.BaseFeatureTest
+import com.example.demo.BaseDbTest
 import com.example.demo.models.Product
 import com.example.demo.providers.ProductRepository
 import com.example.demo.services.database.exceptions.AlreadyDeletedException
@@ -12,7 +12,7 @@ import java.util.*
 import kotlin.test.*
 
 @ContextConfiguration(classes = [ProductRepository::class])
-class ProductServiceImplFeatureTest: BaseFeatureTest() {
+class ProductServiceImplDbTest: BaseDbTest() {
     private lateinit var productService: ProductServiceImpl
     @Autowired
     private lateinit var productRepository: ProductRepository
