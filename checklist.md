@@ -8,4 +8,4 @@ Some simple checklist for this demo repo:
 - [x] make kafka consumer
 - [x] register prometheus metrics
 - [x] expose prometheus metrics
-- [ ] add otel collector
+- [x] add otel collector
