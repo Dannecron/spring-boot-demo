@@ -53,9 +53,8 @@ class ProductServiceImplTest: BaseUnitTest() {
             deletedAt = OffsetDateTime.now(),
         )
 
-        whenever(productRepository.findByGuid(eq(guid)))
-            .thenReturn(product)
-        whenever(producer.produceProductInfo(defaultTopic, product)).doAnswer{}
+        whenever(productRepository.findByGuid(eq(guid))) doReturn product
+        whenever(producer.produceProductInfo(defaultTopic, product)) doAnswer {}
 
         productService.syncToKafka(guid, null)
     }
@@ -65,8 +64,7 @@ class ProductServiceImplTest: BaseUnitTest() {
         val specificTopic = "specificNotice"
         val guid = UUID.randomUUID()
 
-        whenever(productRepository.findByGuid(eq(guid)))
-            .thenReturn(null)
+        whenever(productRepository.findByGuid(eq(guid))) doReturn null
 
         assertThrows<ProductNotFoundException> {
             productService.syncToKafka(guid, specificTopic)
@@ -91,10 +89,8 @@ class ProductServiceImplTest: BaseUnitTest() {
             deletedAt = OffsetDateTime.now(),
         )
 
-        whenever(productRepository.findByGuid(eq(guid)))
-            .thenReturn(product)
-        whenever(producer.produceProductInfo(specificTopic, product))
-            .doThrow(InvalidArgumentException("some error"))
+        whenever(productRepository.findByGuid(eq(guid))) doReturn product
+        whenever(producer.produceProductInfo(specificTopic, product)) doThrow InvalidArgumentException("some error")
 
         assertThrows< InvalidArgumentException> {
             productService.syncToKafka(guid, specificTopic)

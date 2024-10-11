@@ -50,14 +50,12 @@ class ProducerImplTest: BaseUnitTest() {
 
         val captor = argumentCaptor<Message<String>>()
 
-        whenever(kafkaTemplate.send(captor.capture()))
-            .doReturn(CompletableFuture<SendResult<String, Any>>())
+        whenever(kafkaTemplate.send(captor.capture())) doReturn CompletableFuture<SendResult<String, Any>>()
 
         whenever(schemaValidator.validate(
             eq("product-sync"),
             eq(Json.encodeToJsonElement(product))
-        ))
-            .doAnswer { }
+        )) doAnswer { }
 
         producerImpl.produceProductInfo(topic, product)
 

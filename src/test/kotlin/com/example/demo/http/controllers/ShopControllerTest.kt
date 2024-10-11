@@ -8,10 +8,9 @@ import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.get
 import java.time.OffsetDateTime
 import java.util.*
 import kotlin.test.Test
@@ -56,24 +55,24 @@ class ShopControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
 
         whenever(
             shopProvider.getRandomShop()
-        ) doReturn (shopMock)
+        ) doReturn shopMock
 
-        mockMvc.perform(get("/shop/common-info"))
-            .andExpect(status().isOk)
-            .andExpect(content().contentType("application/json"))
-            .andExpect(content().json(expectedJson))
+        mockMvc.get("/shop/common-info")
+            .andExpect{ status { status { isOk() } } }
+            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
+            .andExpect { content { json(expectedJson) } }
     }
 
     @Test
     fun commonInfo_shouldSeeNotFoundResponse() {
         whenever(
             shopProvider.getRandomShop()
-        ) doReturn (null)
+        ) doReturn null
 
-        mockMvc.perform(get("/shop/common-info"))
-            .andExpect(status().isNotFound)
-            .andExpect(content().contentType("application/json"))
-            .andExpect(content().json("""{"status":"not found"}"""))
+        mockMvc.get("/shop/common-info")
+            .andExpect { status { status { isNotFound() } } }
+            .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
+            .andExpect { content { json("""{"status":"not found"}""") } }
     }
 
     private fun makeProduct(id: Long, name: String, price: Double): Product = Product(

@@ -49,8 +49,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
 
         whenever(productService.findByGuid(
             eq(guid),
-        ))
-            .thenReturn(product)
+        )) doReturn product
 
         mockMvc.get("/api/product/$guid")
             .andExpect { status { status { isOk() } } }
@@ -68,8 +67,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
 
         whenever(productService.findByGuid(
             eq(guid),
-        ))
-            .thenReturn(null)
+        )) doReturn null
 
         mockMvc.get("/api/product/$guid")
             .andExpect { status { status { isNotFound() } } }
@@ -122,17 +120,16 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
             eq(name),
             eq(price),
             eq(description)
-        ))
-            .thenReturn(Product(
-                id = productId,
-                guid = UUID.randomUUID(),
-                name = name,
-                description = description,
-                price = price,
-                createdAt = OffsetDateTime.now(),
-                updatedAt = null,
-                deletedAt = null,
-            ))
+        )) doReturn Product(
+            id = productId,
+            guid = UUID.randomUUID(),
+            name = name,
+            description = description,
+            price = price,
+            createdAt = OffsetDateTime.now(),
+            updatedAt = null,
+            deletedAt = null,
+        )
 
         mockMvc.post("/api/product") {
             contentType = MediaType.APPLICATION_JSON
@@ -185,17 +182,16 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
 
         whenever(productService.delete(
             eq(guid),
-        ))
-            .thenReturn(Product(
-                id = 2133,
-                guid = guid,
-                name = "name",
-                description = "description",
-                price = 210202,
-                createdAt = OffsetDateTime.now(),
-                updatedAt = null,
-                deletedAt = OffsetDateTime.now(),
-            ))
+        )) doReturn Product(
+            id = 2133,
+            guid = guid,
+            name = "name",
+            description = "description",
+            price = 210202,
+            createdAt = OffsetDateTime.now(),
+            updatedAt = null,
+            deletedAt = OffsetDateTime.now(),
+        )
 
         mockMvc.delete("/api/product/${guid}")
             .andExpect { status { status { isOk() } } }
