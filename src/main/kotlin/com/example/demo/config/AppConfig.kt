@@ -1,5 +1,7 @@
 package com.example.demo.config
 
+import com.example.demo.config.properties.KafkaProperties
+import com.example.demo.config.properties.ValidationProperties
 import com.example.demo.providers.CityRepository
 import com.example.demo.providers.MockedShopProvider
 import com.example.demo.providers.ProductRepository
@@ -24,7 +26,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@EnableConfigurationProperties(KafkaProperties::class)
+@EnableConfigurationProperties(KafkaProperties::class, ValidationProperties::class)
 class AppConfig(
     @Autowired private val kafkaProperties: KafkaProperties,
 ) {
@@ -54,7 +56,9 @@ class AppConfig(
     fun cityService(@Autowired cityRepository: CityRepository): CityService = CityServiceImpl(cityRepository)
 
     @Bean
-    fun schemaValidator(): SchemaValidator = SchemaValidatorImp(kafkaProperties.validation.schema)
+    fun schemaValidator(
+        @Autowired validationProperties: ValidationProperties,
+    ): SchemaValidator = SchemaValidatorImp(validationProperties.schema)
 
     @Bean
     fun otlpHttpSpanExporter(@Value("\${tracing.url}") url: String): OtlpHttpSpanExporter {

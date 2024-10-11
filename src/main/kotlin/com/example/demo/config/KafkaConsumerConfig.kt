@@ -1,5 +1,6 @@
 package com.example.demo.config
 
+import com.example.demo.config.properties.KafkaProperties
 import com.example.demo.services.database.city.CityService
 import com.example.demo.services.kafka.Consumer
 import io.micrometer.core.instrument.MeterRegistry

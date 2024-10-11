@@ -1,6 +1,7 @@
 package com.example.demo.services.validation
 
 import com.example.demo.BaseUnitTest
+import com.example.demo.services.validation.SchemaValidator.Companion.SCHEMA_KAFKA_PRODUCT_SYNC
 import com.example.demo.services.validation.exceptions.ElementNotValidException
 import com.example.demo.services.validation.exceptions.SchemaNotFoundException
 import kotlinx.serialization.json.Json
@@ -41,7 +42,7 @@ class SchemaValidatorImpTest(
         @JvmStatic
         fun validateDataProvider() = listOf(
             Arguments.of(
-                "product-sync",
+                SCHEMA_KAFKA_PRODUCT_SYNC,
                 """
                 {
                   "id": 123,
@@ -57,7 +58,7 @@ class SchemaValidatorImpTest(
                 null,
             ),
             Arguments.of( // no id
-                "product-sync",
+                SCHEMA_KAFKA_PRODUCT_SYNC,
                 """
                 {
                     "guid": "3a27e322-b5b6-427f-b761-a02284c1cfa4",
@@ -72,7 +73,7 @@ class SchemaValidatorImpTest(
                 ElementNotValidException::class,
             ),
             Arguments.of( // wrong guid
-                "product-sync",
+                SCHEMA_KAFKA_PRODUCT_SYNC,
                 """
                 {
                     "id": 213,

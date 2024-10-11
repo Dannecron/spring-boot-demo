@@ -3,6 +3,7 @@ package com.example.demo.services.kafka
 import com.example.demo.models.Product
 import com.example.demo.services.kafka.dto.ProductDto
 import com.example.demo.services.validation.SchemaValidator
+import com.example.demo.services.validation.SchemaValidator.Companion.SCHEMA_KAFKA_PRODUCT_SYNC
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import org.springframework.kafka.core.KafkaTemplate
@@ -20,7 +21,7 @@ class ProducerImpl(
 
         val serializedProduct = Json.encodeToJsonElement(ProductDto(product))
 
-        schemaValidator.validate("product-sync", serializedProduct)
+        schemaValidator.validate(SCHEMA_KAFKA_PRODUCT_SYNC, serializedProduct)
 
         val message: Message<String> = MessageBuilder
             .withPayload(serializedProduct.toString())

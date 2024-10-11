@@ -1,5 +1,6 @@
 package com.example.demo.config
 
+import com.example.demo.config.properties.KafkaProperties
 import com.example.demo.services.kafka.Producer
 import com.example.demo.services.kafka.ProducerImpl
 import com.example.demo.services.validation.SchemaValidator

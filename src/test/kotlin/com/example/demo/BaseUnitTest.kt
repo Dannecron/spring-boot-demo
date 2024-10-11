@@ -1,7 +1,9 @@
 package com.example.demo
 
-import com.example.demo.config.KafkaProperties
+import com.example.demo.config.properties.KafkaProperties
+import com.example.demo.config.properties.ValidationProperties
 import com.example.demo.services.kafka.Consumer
+import com.example.demo.services.validation.SchemaValidator.Companion.SCHEMA_KAFKA_PRODUCT_SYNC
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.annotation.Bean
@@ -26,9 +28,11 @@ open class BaseUnitTest {
                 autoStartup = false,
                 autoOffsetReset = "none",
             ),
-            validation = KafkaProperties.Validation(
-                schema = mapOf("product-sync" to "product/sync.json"),
-            ),
+        )
+
+        @Bean
+        fun validationProperties(): ValidationProperties = ValidationProperties(
+            schema = mapOf(SCHEMA_KAFKA_PRODUCT_SYNC to "kafka/product/sync.json"),
         )
     }
 }

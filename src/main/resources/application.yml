@@ -31,9 +31,10 @@ kafka:
     topics: demo-city-sync
     auto-offset-reset: none
     auto-startup: true
-  validation:
-    schema:
-      product-sync: product/sync.json
+
+validation:
+  schema:
+    kafka-product-sync: kafka/product/sync.json
 
 springdoc:
   api-docs:
