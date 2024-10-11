@@ -10,6 +10,7 @@ import com.example.demo.services.database.product.ProductService
 import com.example.demo.services.database.product.ProductServiceImpl
 import com.example.demo.services.kafka.Producer
 import com.example.demo.services.validation.SchemaValidator
+import com.example.demo.services.validation.SchemaValidatorImp
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -53,7 +54,7 @@ class AppConfig(
     fun cityService(@Autowired cityRepository: CityRepository): CityService = CityServiceImpl(cityRepository)
 
     @Bean
-    fun schemaValidator(): SchemaValidator = SchemaValidator(kafkaProperties.validation.schema)
+    fun schemaValidator(): SchemaValidator = SchemaValidatorImp(kafkaProperties.validation.schema)
 
     @Bean
     fun otlpHttpSpanExporter(@Value("\${tracing.url}") url: String): OtlpHttpSpanExporter {

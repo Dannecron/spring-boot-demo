@@ -27,7 +27,7 @@ open class BaseUnitTest {
                 autoOffsetReset = "none",
             ),
             validation = KafkaProperties.Validation(
-                schema = mapOf("product-sync" to "foo"),
+                schema = mapOf("product-sync" to "product/sync.json"),
             ),
         )
     }

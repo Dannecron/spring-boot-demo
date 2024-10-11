@@ -2,7 +2,7 @@
   "schema": "http://json-schema.org/draft-07/schema#",
   "title": "event sync product",
   "type": "object",
-  "required": ["id", "guid"],
+  "required": ["id", "guid", "name", "price", "createdAt"],
   "properties": {
     "id": {
       "type": "number"
@@ -19,8 +19,8 @@
         { "type": "null" }
       ]
     },
-    "number": {
-      "type": "string"
+    "price": {
+      "type": "number"
     },
     "createdAt": {
       "type": "string"
