@@ -3,8 +3,8 @@ package com.example.demo.services.database.city
 import com.example.demo.BaseDbTest
 import com.example.demo.models.City
 import com.example.demo.providers.CityRepository
-import com.example.demo.services.database.exceptions.CityNotFoundException
 import com.example.demo.services.database.exceptions.AlreadyDeletedException
+import com.example.demo.services.database.exceptions.CityNotFoundException
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
@@ -25,7 +25,6 @@ class CityServiceImplDbTest: BaseDbTest() {
 
         try {
             city = cityServiceImpl.create(name = name)
-            assertNotNull(city)
             assertNotNull(city.id)
             assertEquals(name, city.name)
 
@@ -35,7 +34,6 @@ class CityServiceImplDbTest: BaseDbTest() {
             assertFalse(dbCity.isDeleted())
 
             val deletedCity = cityServiceImpl.delete(city.guid)
-            assertNotNull(deletedCity)
             assertEquals(city.id, deletedCity.id)
             assertNotNull(deletedCity.deletedAt)
             assertTrue(deletedCity.isDeleted())

@@ -2,12 +2,11 @@ package com.example.demo.config
 
 import com.example.demo.config.properties.KafkaProperties
 import com.example.demo.config.properties.ValidationProperties
-import com.example.demo.providers.CityRepository
-import com.example.demo.providers.MockedShopProvider
-import com.example.demo.providers.ProductRepository
-import com.example.demo.providers.ShopProvider
+import com.example.demo.providers.*
 import com.example.demo.services.database.city.CityService
 import com.example.demo.services.database.city.CityServiceImpl
+import com.example.demo.services.database.customer.CustomerService
+import com.example.demo.services.database.customer.CustomerServiceImpl
 import com.example.demo.services.database.product.ProductService
 import com.example.demo.services.database.product.ProductServiceImpl
 import com.example.demo.services.kafka.Producer
@@ -54,6 +53,12 @@ class AppConfig(
 
     @Bean
     fun cityService(@Autowired cityRepository: CityRepository): CityService = CityServiceImpl(cityRepository)
+
+    @Bean
+    fun customerService(
+        @Autowired customerRepository: CustomerRepository,
+        @Autowired cityRepository: CityRepository,
+    ): CustomerService = CustomerServiceImpl(customerRepository, cityRepository)
 
     @Bean
     fun schemaValidator(

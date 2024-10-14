@@ -1,26 +1,26 @@
 package com.example.demo.models
 
-data class Shop(val name: String, val customers: List<Customer>) {
+data class Shop(val name: String, val customers: List<CustomerLocal>) {
     fun checkAllCustomersAreFrom(city: City): Boolean = customers.count { cus -> cus.city == city } == customers.count()
 
     fun countCustomersFrom(city: City): Int = customers.count { cus -> cus.city == city }
 
     fun getCitiesCustomersAreFrom(): Set<City> = customers.map { cus -> cus.city }.toSet()
 
-    fun findAnyCustomerFrom(city: City): Customer? = customers.firstOrNull { cus -> cus.city == city }
+    fun findAnyCustomerFrom(city: City): CustomerLocal? = customers.firstOrNull { cus -> cus.city == city }
 
     fun getAllOrderedProducts(): Set<Product> = customers.flatMap { cus -> cus.getOrderedProducts() }.toSet()
 
-    fun getCustomersFrom(city: City): List<Customer> = customers.filter { cus -> cus.city == city }
+    fun getCustomersFrom(city: City): List<CustomerLocal> = customers.filter { cus -> cus.city == city }
 
-    fun getCustomersSortedByNumberOfOrders(): List<Customer> = customers.sortedBy { cus -> cus.orders.count() }
+    fun getCustomersSortedByNumberOfOrders(): List<CustomerLocal> = customers.sortedBy { cus -> cus.orders.count() }
 
-    fun getCustomerWithMaximumNumberOfOrders(): Customer? = customers.maxByOrNull { cus -> cus.orders.count() }
+    fun getCustomerWithMaximumNumberOfOrders(): CustomerLocal? = customers.maxByOrNull { cus -> cus.orders.count() }
 
     /**
      * Return customers who have more undelivered orders than delivered
      */
-    fun getCustomersWithMoreUndeliveredOrdersThanDelivered(): Set<Customer> = customers.partition(predicate = fun (cus): Boolean {
+    fun getCustomersWithMoreUndeliveredOrdersThanDelivered(): Set<CustomerLocal> = customers.partition(predicate = fun (cus): Boolean {
         val (del, undel) = cus.orders.partition { ord -> ord.isDelivered }
 
         return del.count() < undel.count()
@@ -42,7 +42,7 @@ data class Shop(val name: String, val customers: List<Customer>) {
         }.toSet()
     }
 
-    fun groupCustomersByCity(): Map<City, List<Customer>> = customers.groupBy { cus -> cus.city }
+    fun groupCustomersByCity(): Map<City, List<CustomerLocal>> = customers.groupBy { cus -> cus.city }
 
     fun hasCustomerFrom(city: City): Boolean = customers.any { cus -> cus.city == city }
 }

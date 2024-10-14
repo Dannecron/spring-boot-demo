@@ -12,7 +12,7 @@ class MockedShopProvider: ShopProvider {
         val productFour = makeProduct(id = 4, name = "four", price = 14.2)
 
         return Shop(name="shop", customers= listOf(
-            Customer(
+            CustomerLocal(
                 name = "Foo-1",
                 city = makeCity(id = 1, name = "Foo"),
                 orders = listOf(
@@ -20,7 +20,7 @@ class MockedShopProvider: ShopProvider {
                     Order(products = listOf(productThree), isDelivered = false),
                 )
             ),
-            Customer(
+            CustomerLocal(
                 name = "Foo-2",
                 city = makeCity(id = 2, name = "Bar"),
                 orders = listOf(

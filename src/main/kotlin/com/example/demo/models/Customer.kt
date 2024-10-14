@@ -1,16 +1,26 @@
 package com.example.demo.models
 
-data class Customer(val name: String, val city: City, val orders: List<Order>) {
-    /**
-     * Return the most expensive product among all delivered products
-     */
-    fun getMostExpensiveDeliveredProduct(): Product? = orders.filter { ord -> ord.isDelivered }
-        .flatMap { ord -> ord.products }
-        .maxByOrNull { pr -> pr.price }
+import com.example.demo.services.serializables.OffsetDateTimeSerialization
+import com.example.demo.services.serializables.UuidSerialization
+import kotlinx.serialization.Serializable
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.Table
+import java.time.OffsetDateTime
+import java.util.*
 
-    fun getMostExpensiveOrderedProduct(): Product? = orders.flatMap { ord -> ord.products }.maxByOrNull { pr -> pr.price }
-
-    fun getOrderedProducts(): Set<Product> = orders.flatMap { order -> order.products }.toSet()
-
-    fun getTotalOrderPrice(): Double = orders.flatMap { ord -> ord.products }.sumOf { pr -> pr.getPriceDouble()}
-}
+@Table("customer")
+data class Customer(
+    @Id
+    val id: Long?,
+    @Serializable(with = UuidSerialization::class)
+    val guid: UUID,
+    val name: String,
+    val cityId: Long?,
+    @Serializable(with = OffsetDateTimeSerialization::class)
+    @Column(value = "created_at")
+    val createdAt: OffsetDateTime,
+    @Serializable(with = OffsetDateTimeSerialization::class)
+    @Column(value = "updated_at")
+    val updatedAt: OffsetDateTime?,
+)

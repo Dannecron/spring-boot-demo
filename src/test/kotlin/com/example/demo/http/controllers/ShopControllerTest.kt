@@ -28,7 +28,7 @@ class ShopControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
         val productFour = makeProduct(id = 4, name = "four", price = 14.2)
 
         val shopMock = Shop(name="shop", customers= listOf(
-            Customer(
+            CustomerLocal(
                 name = "cus-one",
                 city = makeCity(id = 1, name = "city-one"),
                 orders = listOf(
@@ -37,7 +37,7 @@ class ShopControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
                     Order(products = listOf(productThree), isDelivered = true),
                 )
             ),
-            Customer(
+            CustomerLocal(
                 name = "cus-two",
                 city = makeCity(id = 2, name = "city-two"),
                 orders = listOf(
