@@ -10,6 +10,7 @@ import java.time.OffsetDateTime
 import java.util.*
 
 @Table("customer")
+@Serializable
 data class Customer(
     @Id
     val id: Long?,

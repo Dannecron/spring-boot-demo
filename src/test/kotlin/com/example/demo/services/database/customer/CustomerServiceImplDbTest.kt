@@ -41,22 +41,23 @@ class CustomerServiceImplDbTest: BaseDbTest() {
         try {
             city = cityRepository.save(city)
 
-            customerServiceImpl.create(nameOne, city.guid).let {
-                customerIds += it.id ?: fail("customerWithCity id is null")
-                assertEquals(city.id, it.cityId)
+            customerServiceImpl.create(nameTwo, null).let {
+                customerIds += it.id ?: fail("customerWithNoCity id is null")
+                assertNull(it.cityId)
                 assertNotNull(it.createdAt)
                 assertNull(it.updatedAt)
             }
 
-            val customerWithNoCity = customerServiceImpl.create(nameTwo, null)
-            customerIds += customerWithNoCity.id ?: fail("customerWithNoCity id is null")
-            assertNull(customerWithNoCity.cityId)
-            assertNotNull(customerWithNoCity.createdAt)
-            assertNull(customerWithNoCity.updatedAt)
+            val customerWithCity = customerServiceImpl.create(nameOne, city.guid)
+            customerIds += customerWithCity.id ?: fail("customerWithCity id is null")
+            assertEquals(city.id, customerWithCity.cityId)
+            assertNotNull(customerWithCity.createdAt)
+            assertNull(customerWithCity.updatedAt)
 
-            val existedCustomer = customerServiceImpl.findByGuid(customerWithNoCity.guid)
+            val existedCustomer = customerServiceImpl.findByGuid(customerWithCity.guid)
             assertNotNull(existedCustomer)
-            assertEquals(customerWithNoCity.id, existedCustomer.id)
+            assertEquals(customerWithCity.id, existedCustomer.customer.id)
+            assertEquals(city.id, existedCustomer.city?.id)
 
             assertThrows<CityNotFoundException> {
                 customerServiceImpl.create(nameThree, UUID.randomUUID())

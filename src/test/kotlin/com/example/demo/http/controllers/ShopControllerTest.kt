@@ -70,7 +70,7 @@ class ShopControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
         ) doReturn null
 
         mockMvc.get("/shop/common-info")
-            .andExpect { status { status { isNotFound() } } }
+            .andExpect { status { isNotFound() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { content { json("""{"status":"not found"}""") } }
     }

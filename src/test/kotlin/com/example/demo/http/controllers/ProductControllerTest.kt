@@ -52,7 +52,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
         )) doReturn product
 
         mockMvc.get("/api/product/$guid")
-            .andExpect { status { status { isOk() } } }
+            .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.id") { value(product.id.toString()) } }
             .andExpect { jsonPath("\$.guid") { value(guid.toString()) } }
@@ -70,7 +70,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
         )) doReturn null
 
         mockMvc.get("/api/product/$guid")
-            .andExpect { status { status { isNotFound() } } }
+            .andExpect { status { isNotFound() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.status") { value(ResponseStatus.NOT_FOUND.status) } }
     }
@@ -94,7 +94,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
         )))
 
         mockMvc.get("/api/product?page=1&size=2&sort=createdAt,desc")
-            .andExpect { status { status { isOk() } } }
+            .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.meta.total") { value(1) } }
             .andExpect { jsonPath("\$.meta.pages") { value(1) } }
@@ -135,7 +135,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
             contentType = MediaType.APPLICATION_JSON
             content = reqBody
         }
-            .andExpect { status { status { isCreated() } } }
+            .andExpect { status { isCreated() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.id") { value(productId) } }
     }
@@ -150,7 +150,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
             contentType = MediaType.APPLICATION_JSON
             content = reqBody
         }
-            .andExpect { status { status { isBadRequest() } } }
+            .andExpect { status { isBadRequest() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.status") { value(ResponseStatus.BAD_REQUEST.status) } }
             .andExpect { jsonPath("\$.cause") { contains("name") } }
@@ -168,7 +168,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
             contentType = MediaType.APPLICATION_JSON
             content = reqBody
         }
-            .andExpect { status { status { isUnprocessableEntity() } } }
+            .andExpect { status { isUnprocessableEntity() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.status") { value(ResponseStatus.UNPROCESSABLE.status) } }
             .andExpect { jsonPath("\$.cause") { value(MethodArgumentNotValidException::class.qualifiedName) } }
@@ -194,7 +194,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
         )
 
         mockMvc.delete("/api/product/${guid}")
-            .andExpect { status { status { isOk() } } }
+            .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
             .andExpect { jsonPath("\$.status") { value(ResponseStatus.OK.status) } }
     }
