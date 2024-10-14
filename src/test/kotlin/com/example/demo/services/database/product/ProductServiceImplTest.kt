@@ -3,7 +3,7 @@ package com.example.demo.services.database.product
 import com.example.demo.BaseUnitTest
 import com.example.demo.models.Product
 import com.example.demo.providers.ProductRepository
-import com.example.demo.services.database.product.exceptions.ProductNotFoundException
+import com.example.demo.services.database.exceptions.ProductNotFoundException
 import com.example.demo.services.kafka.Producer
 import com.example.demo.services.kafka.exceptions.InvalidArgumentException
 import org.junit.jupiter.api.assertThrows

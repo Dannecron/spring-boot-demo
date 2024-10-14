@@ -9,7 +9,7 @@ import com.example.demo.http.responses.page.PageResponse
 import com.example.demo.models.Product
 import com.example.demo.services.database.exceptions.AlreadyDeletedException
 import com.example.demo.services.database.product.ProductService
-import com.example.demo.services.database.product.exceptions.ProductNotFoundException
+import com.example.demo.services.database.exceptions.ProductNotFoundException
 import com.example.demo.services.kafka.exceptions.InvalidArgumentException
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema

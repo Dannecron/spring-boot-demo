@@ -3,7 +3,7 @@ package com.example.demo.services.database.city
 import com.example.demo.BaseDbTest
 import com.example.demo.models.City
 import com.example.demo.providers.CityRepository
-import com.example.demo.services.database.city.exceptions.CityNotFoundException
+import com.example.demo.services.database.exceptions.CityNotFoundException
 import com.example.demo.services.database.exceptions.AlreadyDeletedException
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired

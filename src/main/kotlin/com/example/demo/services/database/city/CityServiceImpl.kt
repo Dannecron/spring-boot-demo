@@ -2,7 +2,7 @@ package com.example.demo.services.database.city
 
 import com.example.demo.models.City
 import com.example.demo.providers.CityRepository
-import com.example.demo.services.database.city.exceptions.CityNotFoundException
+import com.example.demo.services.database.exceptions.CityNotFoundException
 import com.example.demo.services.database.exceptions.AlreadyDeletedException
 import com.example.demo.services.kafka.dto.CityCreateDto
 import java.time.OffsetDateTime
@@ -14,7 +14,7 @@ class CityServiceImpl(
 ): CityService {
     override fun findByGuid(guid: UUID): City? = cityRepository.findByGuid(guid)
 
-    override fun create(name: String): City? {
+    override fun create(name: String): City {
         val city = City(
             id = null,
             guid = UUID.randomUUID(),
@@ -27,7 +27,7 @@ class CityServiceImpl(
         return cityRepository.save(city)
     }
 
-    override fun create(kafkaCityDto: CityCreateDto): City? {
+    override fun create(kafkaCityDto: CityCreateDto): City {
         val updatedAt = kafkaCityDto.updatedAt
         val deletedAt = kafkaCityDto.deletedAt
 
@@ -43,7 +43,7 @@ class CityServiceImpl(
         return cityRepository.save(city)
     }
 
-    override fun delete(guid: UUID): City? {
+    override fun delete(guid: UUID): City {
         val city = findByGuid(guid) ?: throw CityNotFoundException()
 
         if (city.isDeleted()) {

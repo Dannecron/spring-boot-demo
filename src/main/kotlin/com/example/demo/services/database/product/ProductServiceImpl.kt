@@ -3,7 +3,7 @@ package com.example.demo.services.database.product
 import com.example.demo.models.Product
 import com.example.demo.providers.ProductRepository
 import com.example.demo.services.database.exceptions.AlreadyDeletedException
-import com.example.demo.services.database.product.exceptions.ProductNotFoundException
+import com.example.demo.services.database.exceptions.ProductNotFoundException
 import com.example.demo.services.kafka.Producer
 import com.example.demo.utils.LoggerDelegate
 import net.logstash.logback.marker.Markers
@@ -44,7 +44,7 @@ class ProductServiceImpl(
         return productRepository.save(product)
     }
 
-    override fun delete(guid: UUID): Product? {
+    override fun delete(guid: UUID): Product {
         val product = findByGuid(guid) ?: throw ProductNotFoundException()
 
         if (product.isDeleted()) {
