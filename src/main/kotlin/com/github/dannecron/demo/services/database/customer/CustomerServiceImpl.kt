@@ -12,32 +12,24 @@ class CustomerServiceImpl(
     private val customerRepository: CustomerRepository,
     private val cityRepository: CityRepository
 ): CustomerService {
-    override fun findByGuid(guid: UUID): CustomerExtended? {
-        val customer = customerRepository.findByGuid(guid) ?: return null
-
-        if (customer.cityId == null) {
-            return CustomerExtended(customer, null)
+    override fun findByGuid(guid: UUID): CustomerExtended? = customerRepository.findByGuid(guid)
+        ?.let {
+            customer -> CustomerExtended(
+                customer = customer,
+                city = customer.cityId?.let { cityId -> cityRepository.findById(cityId).orElse(null) }
+            )
         }
 
-        val city = cityRepository.findById(customer.cityId)
-
-        return CustomerExtended(customer, city.orElse(null))
-    }
-
-    override fun create(name: String, cityGuid: UUID?): Customer {
-        val cityId: Long? = cityGuid?.let {
+    override fun create(name: String, cityGuid: UUID?): Customer = Customer(
+        id = null,
+        guid = UUID.randomUUID(),
+        name = name,
+        cityId = cityGuid?.let {
             cityRepository.findByGuid(it)?.id ?: throw CityNotFoundException()
-        }
-
-        val customer = Customer(
-            id = null,
-            guid = UUID.randomUUID(),
-            name = name,
-            cityId = cityId,
-            createdAt = OffsetDateTime.now(),
-            updatedAt = null,
-        )
-
-        return customerRepository.save(customer)
+        },
+        createdAt = OffsetDateTime.now(),
+        updatedAt = null,
+    ).let {
+        customerRepository.save(it)
     }
 }
