@@ -10,7 +10,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.23"
 }
 
-group = "com.example"
+group = "com.github.dannecron.demo"
 version = "single-version"
 
 java {
