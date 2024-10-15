@@ -1,5 +1,8 @@
 package com.github.dannecron.demo.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.github.dannecron.demo.config.properties.KafkaProperties
 import com.github.dannecron.demo.config.properties.ValidationProperties
 import com.github.dannecron.demo.providers.*
@@ -12,9 +15,6 @@ import com.github.dannecron.demo.services.database.product.ProductServiceImpl
 import com.github.dannecron.demo.services.kafka.Producer
 import com.github.dannecron.demo.services.validation.SchemaValidator
 import com.github.dannecron.demo.services.validation.SchemaValidatorImp
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import io.micrometer.observation.ObservationRegistry
 import io.micrometer.observation.aop.ObservedAspect
 import io.opentelemetry.exporter.otlp.http.trace.OtlpHttpSpanExporter
@@ -30,16 +30,13 @@ class AppConfig(
     @Autowired private val kafkaProperties: KafkaProperties,
 ) {
     @Bean
-    fun objectMapper(): ObjectMapper {
-        val objectMapper = ObjectMapper()
-        objectMapper.registerModules(JavaTimeModule())
-        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-        return objectMapper
+    fun objectMapper(): ObjectMapper = ObjectMapper().apply {
+        registerModules(JavaTimeModule())
+        configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
     }
 
     @Bean
-    fun shopProvider(): ShopProvider = com.github.dannecron.demo.providers.MockedShopProvider()
+    fun shopProvider(): ShopProvider = MockedShopProvider()
 
     @Bean
     fun productService(
@@ -66,15 +63,11 @@ class AppConfig(
     ): SchemaValidator = SchemaValidatorImp(validationProperties.schema)
 
     @Bean
-    fun otlpHttpSpanExporter(@Value("\${tracing.url}") url: String): OtlpHttpSpanExporter {
-        return OtlpHttpSpanExporter.builder()
-            .setEndpoint(url)
-            .build()
-    }
+    fun otlpHttpSpanExporter(@Value("\${tracing.url}") url: String) = OtlpHttpSpanExporter.builder()
+        .setEndpoint(url)
+        .build()
 
     @Bean
-    fun observedAspect(@Autowired observationRegistry: ObservationRegistry): ObservedAspect {
-        return ObservedAspect(observationRegistry)
-    }
+    fun observedAspect(@Autowired observationRegistry: ObservationRegistry) = ObservedAspect(observationRegistry)
 }
 

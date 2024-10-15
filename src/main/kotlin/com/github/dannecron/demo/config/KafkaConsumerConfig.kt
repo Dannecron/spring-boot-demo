@@ -27,23 +27,16 @@ class KafkaConsumerConfig(
     )
 
     @Bean
-    fun consumerFactory(): ConsumerFactory<String, String> {
-        val configs = mapOf(
-            ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaProperties.bootstrapServers,
-            ConsumerConfig.GROUP_ID_CONFIG to kafkaProperties.consumer.groupId,
-            ConsumerConfig.AUTO_OFFSET_RESET_CONFIG to kafkaProperties.consumer.autoOffsetReset,
-            ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
-            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java
-        )
-
-        return DefaultKafkaConsumerFactory(configs)
-    }
+    fun consumerFactory(): ConsumerFactory<String, String> = DefaultKafkaConsumerFactory(mapOf(
+        ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaProperties.bootstrapServers,
+        ConsumerConfig.GROUP_ID_CONFIG to kafkaProperties.consumer.groupId,
+        ConsumerConfig.AUTO_OFFSET_RESET_CONFIG to kafkaProperties.consumer.autoOffsetReset,
+        ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
+        ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java
+    ))
 
     @Bean
-    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, String> {
-        val factory = ConcurrentKafkaListenerContainerFactory<String, String>()
-        factory.consumerFactory = consumerFactory()
-
-        return factory
+    fun kafkaListenerContainerFactory() = ConcurrentKafkaListenerContainerFactory<String, String>().apply {
+        consumerFactory = consumerFactory()
     }
 }

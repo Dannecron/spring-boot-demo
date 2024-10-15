@@ -18,15 +18,11 @@ class KafkaProducerConfig(
     @Autowired val kafkaProperties: KafkaProperties
 ) {
     @Bean
-    fun producerFactory(): ProducerFactory<String, Any> {
-        val configProps: MutableMap<String, Any> = HashMap()
-
-        configProps[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] = kafkaProperties.bootstrapServers
-        configProps[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
-        configProps[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
-
-        return DefaultKafkaProducerFactory(configProps)
-    }
+    fun producerFactory(): ProducerFactory<String, Any> = DefaultKafkaProducerFactory(mapOf(
+        ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaProperties.bootstrapServers,
+        ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
+        ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
+    ))
 
     @Bean
     fun kafkaTemplate(): KafkaTemplate<String, Any> = KafkaTemplate(
