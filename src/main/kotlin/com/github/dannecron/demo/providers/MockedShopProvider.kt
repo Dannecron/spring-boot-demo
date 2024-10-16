@@ -16,17 +16,17 @@ class MockedShopProvider: com.github.dannecron.demo.providers.ShopProvider {
                 name = "Foo-1",
                 city = makeCity(id = 1, name = "Foo"),
                 orders = listOf(
-                    Order(products = listOf(productOne, productTwo), isDelivered = true),
-                    Order(products = listOf(productThree), isDelivered = false),
+                    OrderLocal(products = listOf(productOne, productTwo), isDelivered = true),
+                    OrderLocal(products = listOf(productThree), isDelivered = false),
                 )
             ),
             CustomerLocal(
                 name = "Foo-2",
                 city = makeCity(id = 2, name = "Bar"),
                 orders = listOf(
-                    Order(products = listOf(productOne), isDelivered = false),
-                    Order(products = listOf(productTwo), isDelivered = true),
-                    Order(products = listOf(productFour), isDelivered = true),
+                    OrderLocal(products = listOf(productOne), isDelivered = false),
+                    OrderLocal(products = listOf(productTwo), isDelivered = true),
+                    OrderLocal(products = listOf(productFour), isDelivered = true),
                 )
             ),
         ))

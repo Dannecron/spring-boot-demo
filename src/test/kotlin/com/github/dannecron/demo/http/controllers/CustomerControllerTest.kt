@@ -28,8 +28,8 @@ class CustomerControllerTest(
 
     @Test
     fun getCustomer_successWithCity() {
-        val customerId = 22.toLong()
-        val cityId = 11.toLong()
+        val customerId = 22L
+        val cityId = 11L
         val customerGuid = UUID.randomUUID()
         val customerExtended = CustomerExtended(
             customer = Customer(
@@ -64,7 +64,7 @@ class CustomerControllerTest(
 
     @Test
     fun getCustomer_successNoCity() {
-        val customerId = 22.toLong()
+        val customerId = 22L
         val customerGuid = UUID.randomUUID()
         val customerExtended = CustomerExtended(
             customer = Customer(

@@ -1,6 +1,6 @@
 package com.github.dannecron.demo.models
 
-data class CustomerLocal(val name: String, val city: City, val orders: List<Order>) {
+data class CustomerLocal(val name: String, val city: City, val orders: List<OrderLocal>) {
     /**
      * Return the most expensive product among all delivered products
      */

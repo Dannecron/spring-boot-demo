@@ -29,7 +29,7 @@ class ProductServiceImplDbTest: BaseDbTest() {
     @Test
     fun createFindDelete_success() {
         val name = "new-product-name"
-        val price = 33333.toLong()
+        val price = 33333L
         val description = "some-description"
         var product: Product? = null
 

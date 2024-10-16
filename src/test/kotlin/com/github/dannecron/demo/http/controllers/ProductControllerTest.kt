@@ -109,10 +109,10 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
 
     @Test
     fun createProduct_success() {
-        val productId = 13.toLong()
+        val productId = 13L
         val name = "new-product"
         val description = null
-        val price = 20000.toLong()
+        val price = 20000L
 
         val reqBody = """{"name":"$name","description":null,"price":$price}"""
 
@@ -142,7 +142,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
 
     @Test
     fun createProduct_badRequest_noNameParam() {
-        val price = 20000.toLong()
+        val price = 20000L
 
         val reqBody = """{"description":null,"price":$price}"""
 
@@ -160,7 +160,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
 
     @Test
     fun createProduct_badRequest_emptyName() {
-        val price = 20000.toLong()
+        val price = 20000L
 
         val reqBody = """{"name":"","description":null,"price":$price}"""
 

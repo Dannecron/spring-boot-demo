@@ -32,18 +32,18 @@ class ShopControllerTest(@Autowired val mockMvc: MockMvc): BaseUnitTest() {
                 name = "cus-one",
                 city = makeCity(id = 1, name = "city-one"),
                 orders = listOf(
-                    Order(products = listOf(productOne), isDelivered = false),
-                    Order(products = listOf(productTwo), isDelivered = false),
-                    Order(products = listOf(productThree), isDelivered = true),
+                    OrderLocal(products = listOf(productOne), isDelivered = false),
+                    OrderLocal(products = listOf(productTwo), isDelivered = false),
+                    OrderLocal(products = listOf(productThree), isDelivered = true),
                 )
             ),
             CustomerLocal(
                 name = "cus-two",
                 city = makeCity(id = 2, name = "city-two"),
                 orders = listOf(
-                    Order(products = listOf(productOne), isDelivered = false),
-                    Order(products = listOf(productTwo), isDelivered = true),
-                    Order(products = listOf(productFour), isDelivered = true),
+                    OrderLocal(products = listOf(productOne), isDelivered = false),
+                    OrderLocal(products = listOf(productTwo), isDelivered = true),
+                    OrderLocal(products = listOf(productFour), isDelivered = true),
                 )
             ),
         ))
