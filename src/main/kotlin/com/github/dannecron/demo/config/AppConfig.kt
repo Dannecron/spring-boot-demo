@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.github.dannecron.demo.config.properties.KafkaProperties
 import com.github.dannecron.demo.config.properties.ValidationProperties
-import com.github.dannecron.demo.providers.*
+import com.github.dannecron.demo.providers.CityRepository
+import com.github.dannecron.demo.providers.CustomerRepository
+import com.github.dannecron.demo.providers.ProductRepository
 import com.github.dannecron.demo.services.database.city.CityService
 import com.github.dannecron.demo.services.database.city.CityServiceImpl
 import com.github.dannecron.demo.services.database.customer.CustomerService
@@ -34,9 +36,6 @@ class AppConfig(
         registerModules(JavaTimeModule())
         configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
     }
-
-    @Bean
-    fun shopProvider(): ShopProvider = MockedShopProvider()
 
     @Bean
     fun productService(
