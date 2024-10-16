@@ -13,16 +13,14 @@ class SchemaValidatorImp(
     private val loadedSchema: MutableMap<String, String> = mutableMapOf()
 
     override fun validate(schemaName: String, value: JsonElement) {
-
-        val schema = JsonSchema.fromDefinition(
+        JsonSchema.fromDefinition(
             getSchema(schemaName),
-        )
+        ).also {
+            val errors = mutableListOf<ValidationError>()
 
-        val errors = mutableListOf<ValidationError>()
-
-        val valid = schema.validate(value, errors::add)
-        if (!valid) {
-            throw ElementNotValidException(errors)
+            if (!it.validate(value, errors::add)) {
+                throw ElementNotValidException(errors)
+            }
         }
     }
 

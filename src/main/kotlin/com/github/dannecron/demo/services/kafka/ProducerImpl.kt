@@ -8,7 +8,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.support.KafkaHeaders
-import org.springframework.messaging.Message
 import org.springframework.messaging.support.MessageBuilder
 import org.springframework.stereotype.Service
 
@@ -18,17 +17,16 @@ class ProducerImpl(
     private val schemaValidator: SchemaValidator,
 ): Producer {
     override fun produceProductInfo(topicName: String, product: Product) {
+        Json.encodeToJsonElement(ProductDto(product)).let {
+            schemaValidator.validate(SCHEMA_KAFKA_PRODUCT_SYNC, it)
 
-        val serializedProduct = Json.encodeToJsonElement(ProductDto(product))
-
-        schemaValidator.validate(SCHEMA_KAFKA_PRODUCT_SYNC, serializedProduct)
-
-        val message: Message<String> = MessageBuilder
-            .withPayload(serializedProduct.toString())
-            .setHeader(KafkaHeaders.TOPIC, topicName)
-            .setHeader("X-Custom-Header", "some-custom-header")
-            .build()
-
-        kafkaTemplate.send(message)
+            MessageBuilder.withPayload(it.toString())
+                .setHeader(KafkaHeaders.TOPIC, topicName)
+                .setHeader("X-Custom-Header", "some-custom-header")
+                .build()
+        }
+            .let {
+                msg -> kafkaTemplate.send(msg)
+            }
     }
 }

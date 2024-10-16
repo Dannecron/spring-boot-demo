@@ -11,12 +11,9 @@ import java.time.format.DateTimeFormatter
 class OffsetDateTimeSerialization: KSerializer<OffsetDateTime> {
     override val descriptor = PrimitiveSerialDescriptor("Time", PrimitiveKind.STRING)
 
-    override fun deserialize(decoder: Decoder): OffsetDateTime {
-        return OffsetDateTime.parse(decoder.decodeString())
-    }
+    override fun deserialize(decoder: Decoder): OffsetDateTime = OffsetDateTime.parse(decoder.decodeString())
 
     override fun serialize(encoder: Encoder, value: OffsetDateTime) {
         encoder.encodeString(value.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME))
-
     }
 }
