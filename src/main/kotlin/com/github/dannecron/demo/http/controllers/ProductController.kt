@@ -8,8 +8,8 @@ import com.github.dannecron.demo.http.responses.makeOkResponse
 import com.github.dannecron.demo.http.responses.page.PageResponse
 import com.github.dannecron.demo.models.Product
 import com.github.dannecron.demo.services.database.exceptions.AlreadyDeletedException
-import com.github.dannecron.demo.services.database.product.ProductService
 import com.github.dannecron.demo.services.database.exceptions.ProductNotFoundException
+import com.github.dannecron.demo.services.database.product.ProductService
 import com.github.dannecron.demo.services.kafka.exceptions.InvalidArgumentException
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -72,7 +72,7 @@ class ProductController(
     ): ResponseEntity<Any> {
         try {
             productService.syncToKafka(guid, topic)
-        } catch (exception: InvalidArgumentException) {
+        } catch (_: InvalidArgumentException) {
             throw UnprocessableException("cannot sync product to kafka")
         }
 
@@ -99,9 +99,9 @@ class ProductController(
     ): ResponseEntity<Any> {
         try {
             productService.delete(guid)
-        } catch (notFoundException: ProductNotFoundException) {
+        } catch (_: ProductNotFoundException) {
             throw NotFoundException()
-        } catch (alreadyDeletedException: AlreadyDeletedException) {
+        } catch (_: AlreadyDeletedException) {
             throw UnprocessableException("product already deleted")
         }
 
