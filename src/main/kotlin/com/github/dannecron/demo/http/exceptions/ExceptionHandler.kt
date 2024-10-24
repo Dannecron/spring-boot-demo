@@ -1,6 +1,7 @@
 package com.github.dannecron.demo.http.exceptions
 
 import com.github.dannecron.demo.http.responses.BadRequestResponse
+import com.github.dannecron.demo.http.responses.BaseResponse
 import com.github.dannecron.demo.http.responses.NotFoundResponse
 import com.github.dannecron.demo.http.responses.UnprocessableResponse
 import org.springframework.http.HttpStatus
@@ -41,5 +42,13 @@ class ExceptionHandler {
     fun handleMethodArgumentNotValid(exception: MethodArgumentNotValidException): ResponseEntity<Any> = ResponseEntity(
         UnprocessableResponse(exception.javaClass.name, exception.allErrors),
         HttpStatus.UNPROCESSABLE_ENTITY,
+    )
+
+    // 500
+    @ExceptionHandler(RuntimeException::class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    fun handleUnexpectedRuntimeException(exception: RuntimeException): ResponseEntity<Any> = ResponseEntity(
+        BaseResponse(com.github.dannecron.demo.http.responses.ResponseStatus.INTERNAL_ERROR),
+        HttpStatus.INTERNAL_SERVER_ERROR,
     )
 }
