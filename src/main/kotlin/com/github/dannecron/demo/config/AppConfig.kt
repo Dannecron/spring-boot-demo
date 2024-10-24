@@ -17,6 +17,8 @@ import com.github.dannecron.demo.services.database.product.ProductServiceImpl
 import com.github.dannecron.demo.services.kafka.Producer
 import com.github.dannecron.demo.services.validation.SchemaValidator
 import com.github.dannecron.demo.services.validation.SchemaValidatorImp
+import io.ktor.client.engine.*
+import io.ktor.client.engine.cio.*
 import io.micrometer.observation.ObservationRegistry
 import io.micrometer.observation.aop.ObservedAspect
 import io.opentelemetry.exporter.otlp.http.trace.OtlpHttpSpanExporter
@@ -25,6 +27,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import com.github.dannecron.demo.services.neko.Client as NekoClient
+import com.github.dannecron.demo.services.neko.ClientImpl as NekoClientImpl
 
 @Configuration
 @EnableConfigurationProperties(KafkaProperties::class, ValidationProperties::class)
@@ -68,5 +72,17 @@ class AppConfig(
 
     @Bean
     fun observedAspect(@Autowired observationRegistry: ObservationRegistry) = ObservedAspect(observationRegistry)
+
+    @Bean
+    fun httpClientEngine(): HttpClientEngine = CIO.create()
+
+    @Bean
+    fun nekoClient(
+        @Autowired httpClientEngine: HttpClientEngine,
+        @Value("\${neko.baseUrl}") baseUrl: String,
+    ): NekoClient = NekoClientImpl(
+        engine = httpClientEngine,
+        baseUrl = baseUrl,
+    )
 }
 

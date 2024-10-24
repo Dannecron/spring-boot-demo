@@ -29,7 +29,7 @@ kafka:
   consumer:
     group-id: demo-consumer
     topics: demo-city-sync
-    auto-offset-reset: none
+    auto-offset-reset: latest
     auto-startup: true
 
 validation:
@@ -67,3 +67,6 @@ management:
 
 tracing:
   url: ${OTLP_TRACING_HTTP_URL:http://localhost:4318/v1/traces}
+
+neko:
+  baseUrl: https://nekos.best
