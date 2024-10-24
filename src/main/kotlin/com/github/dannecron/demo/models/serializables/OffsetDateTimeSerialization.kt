@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.services.serializables
+package com.github.dannecron.demo.models.serializables
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -8,7 +8,7 @@ import kotlinx.serialization.encoding.Encoder
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
-class OffsetDateTimeSerialization: KSerializer<OffsetDateTime> {
+object OffsetDateTimeSerialization: KSerializer<OffsetDateTime> {
     override val descriptor = PrimitiveSerialDescriptor("Time", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): OffsetDateTime = OffsetDateTime.parse(decoder.decodeString())

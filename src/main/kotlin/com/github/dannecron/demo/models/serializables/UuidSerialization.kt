@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.services.serializables
+package com.github.dannecron.demo.models.serializables
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -7,7 +7,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.util.*
 
-class UuidSerialization: KSerializer<UUID> {
+object UuidSerialization: KSerializer<UUID> {
     override val descriptor = PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): UUID = UUID.fromString(decoder.decodeString())

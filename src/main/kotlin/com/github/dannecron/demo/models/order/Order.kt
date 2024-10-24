@@ -1,7 +1,7 @@
 package com.github.dannecron.demo.models.order
 
-import com.github.dannecron.demo.services.serializables.OffsetDateTimeSerialization
-import com.github.dannecron.demo.services.serializables.UuidSerialization
+import com.github.dannecron.demo.models.serializables.OffsetDateTimeSerialization
+import com.github.dannecron.demo.models.serializables.UuidSerialization
 import kotlinx.serialization.Serializable
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column

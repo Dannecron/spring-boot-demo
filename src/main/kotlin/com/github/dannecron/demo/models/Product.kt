@@ -1,8 +1,8 @@
 package com.github.dannecron.demo.models
 
 
-import com.github.dannecron.demo.services.serializables.OffsetDateTimeSerialization
-import com.github.dannecron.demo.services.serializables.UuidSerialization
+import com.github.dannecron.demo.models.serializables.OffsetDateTimeSerialization
+import com.github.dannecron.demo.models.serializables.UuidSerialization
 import com.github.dannecron.demo.utils.roundTo
 import kotlinx.serialization.Serializable
 import org.springframework.data.annotation.Id
