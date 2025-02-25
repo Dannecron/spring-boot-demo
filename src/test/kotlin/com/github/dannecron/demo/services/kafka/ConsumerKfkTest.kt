@@ -7,6 +7,7 @@ import io.micrometer.core.instrument.MeterRegistry
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.mockito.kotlin.after
+import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
@@ -22,7 +23,7 @@ import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -34,10 +35,14 @@ import kotlin.test.assertEquals
     partitions = 1,
 )
 @DirtiesContext
-class ConsumerKfkTest(
-    @Autowired private val kafkaTemplate: KafkaTemplate<String, Any>,
-    @Autowired private val metricRegistry: MeterRegistry,
-) {
+class ConsumerKfkTest {
+
+    @Autowired
+    private lateinit var kafkaTemplate: KafkaTemplate<String, Any>
+
+    @Autowired
+    private lateinit var metricRegistry: MeterRegistry
+
     @MockBean
     private lateinit var cityService: CityService
 
@@ -54,7 +59,7 @@ class ConsumerKfkTest(
             deletedAt = null,
         )
 
-        whenever(cityService.create(cityCreateDto)) doReturn City(
+        whenever(cityService.create(any<CityCreateDto>())) doReturn City(
             id = 123,
             guid = cityGuid,
             name = cityName,
