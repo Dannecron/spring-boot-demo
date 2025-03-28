@@ -1,0 +1,10 @@
+---
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:14-alpine:///test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    hikari:
+      maximum-pool-size: 2
+  flyway:
+    enabled: true
+    locations: classpath:migration/structure, classpath:migration/data
