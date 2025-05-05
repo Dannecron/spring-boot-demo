@@ -1,6 +1,6 @@
 package com.github.dannecron.demo.services.database.city
 
-import com.github.dannecron.demo.models.City
+import com.github.dannecron.demo.db.entity.City
 import com.github.dannecron.demo.services.database.exceptions.CityNotFoundException
 import com.github.dannecron.demo.services.database.exceptions.AlreadyDeletedException
 import com.github.dannecron.demo.services.kafka.dto.CityCreateDto

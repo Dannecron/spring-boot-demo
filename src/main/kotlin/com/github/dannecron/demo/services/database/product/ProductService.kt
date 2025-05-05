@@ -1,13 +1,13 @@
 package com.github.dannecron.demo.services.database.product
 
-import com.github.dannecron.demo.models.Product
+import com.github.dannecron.demo.db.entity.Product
 import com.github.dannecron.demo.services.database.exceptions.AlreadyDeletedException
 import com.github.dannecron.demo.services.database.exceptions.ProductNotFoundException
 import com.github.dannecron.demo.services.kafka.exceptions.InvalidArgumentException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import java.util.*
+import java.util.UUID
 
 @Service
 interface ProductService {

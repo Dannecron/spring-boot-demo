@@ -1,21 +1,26 @@
 package com.github.dannecron.demo.services.database.product
 
-import com.github.dannecron.demo.models.Product
-import com.github.dannecron.demo.providers.ProductRepository
+import com.github.dannecron.demo.core.services.generation.CommonGenerator
+import com.github.dannecron.demo.db.entity.Product
+import com.github.dannecron.demo.db.repository.ProductRepository
 import com.github.dannecron.demo.services.database.exceptions.AlreadyDeletedException
 import com.github.dannecron.demo.services.database.exceptions.ProductNotFoundException
 import com.github.dannecron.demo.services.kafka.Producer
+import com.github.dannecron.demo.services.kafka.dto.ProductDto
+import com.github.dannecron.demo.services.kafka.exceptions.InvalidArgumentException
 import com.github.dannecron.demo.utils.LoggerDelegate
 import net.logstash.logback.marker.Markers
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import java.time.OffsetDateTime
-import java.util.*
+import org.springframework.stereotype.Service
+import java.time.format.DateTimeFormatter
+import java.util.UUID
 
+@Service
 class ProductServiceImpl(
-    private val defaultSyncTopic: String,
     private val productRepository: ProductRepository,
     private val producer: Producer,
+    private val commonGenerator: CommonGenerator,
 ): ProductService {
     private val logger by LoggerDelegate()
 
@@ -32,11 +37,11 @@ class ProductServiceImpl(
     override fun create(name: String, price: Long, description: String?): Product {
         val product = Product(
             id = null,
-            guid = UUID.randomUUID(),
+            guid = commonGenerator.generateUUID(),
             name = name,
             description = description,
             price = price,
-            createdAt = OffsetDateTime.now(),
+            createdAt = commonGenerator.generateCurrentTime(),
             updatedAt = null,
             deletedAt = null,
         )
@@ -52,7 +57,7 @@ class ProductServiceImpl(
         }
 
         val deletedProduct = product.copy(
-            deletedAt = OffsetDateTime.now(),
+            deletedAt = commonGenerator.generateCurrentTime(),
         )
 
         return productRepository.save(deletedProduct)
@@ -61,7 +66,17 @@ class ProductServiceImpl(
     override fun syncToKafka(guid: UUID, topic: String?) {
         val product = findByGuid(guid) ?: throw ProductNotFoundException()
 
-        producer.produceProductInfo(topic ?: defaultSyncTopic, product)
+        producer.produceProductSync(product.toKafkaDto())
     }
 
+    private fun Product.toKafkaDto() = ProductDto(
+        id = id ?: throw InvalidArgumentException("product.id"),
+        guid = guid.toString(),
+        name = name,
+        description = description,
+        price = price,
+        createdAt = createdAt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+        updatedAt = updatedAt?.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+        deletedAt = deletedAt?.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+    )
 }

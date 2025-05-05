@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.services.validation.exceptions
+package com.github.dannecron.demo.core.services.validation.exceptions
 
 import io.github.optimumcode.json.schema.ValidationError
 

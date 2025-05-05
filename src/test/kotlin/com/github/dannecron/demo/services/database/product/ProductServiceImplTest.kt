@@ -1,99 +1,149 @@
 package com.github.dannecron.demo.services.database.product
 
-import com.github.dannecron.demo.BaseUnitTest
-import com.github.dannecron.demo.models.Product
-import com.github.dannecron.demo.providers.ProductRepository
+import com.github.dannecron.demo.core.services.generation.CommonGenerator
+import com.github.dannecron.demo.db.entity.Product
+import com.github.dannecron.demo.db.repository.ProductRepository
+import com.github.dannecron.demo.services.database.exceptions.AlreadyDeletedException
 import com.github.dannecron.demo.services.database.exceptions.ProductNotFoundException
 import com.github.dannecron.demo.services.kafka.Producer
-import com.github.dannecron.demo.services.kafka.exceptions.InvalidArgumentException
+import com.github.dannecron.demo.services.kafka.dto.ProductDto
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.junit.runner.RunWith
-import org.mockito.kotlin.*
-import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.test.context.junit4.SpringRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoInteractions
+import org.mockito.kotlin.whenever
 import java.time.OffsetDateTime
-import java.util.*
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import java.time.format.DateTimeFormatter
+import java.util.UUID
+import kotlin.test.assertEquals
 
-@RunWith(SpringRunner::class)
-@SpringBootTest
-class ProductServiceImplTest: BaseUnitTest() {
-    private val defaultTopic = "some-default-topic"
-    private lateinit var productService: ProductServiceImpl
+class ProductServiceImplTest {
+    private val mockGuid = UUID.randomUUID()
+    private val mockCurrentTime = OffsetDateTime.now()
 
-    @MockBean
-    @Qualifier("producer")
-    private lateinit var producer: Producer
-    @MockBean
-    private lateinit var productRepository: ProductRepository
-
-    @BeforeTest
-    fun setUp() {
-        productService = ProductServiceImpl(
-            defaultSyncTopic = defaultTopic,
-            productRepository = productRepository,
-            producer = producer,
-        )
+    private val productRepository: ProductRepository = mock()
+    private val producer: Producer = mock()
+    private val commonGenerator: CommonGenerator = mock {
+        on { generateUUID() } doReturn mockGuid
+        on { generateCurrentTime() } doReturn mockCurrentTime
     }
 
+    private val productService = ProductServiceImpl(
+        productRepository = productRepository,
+        producer = producer,
+        commonGenerator = commonGenerator,
+    )
+
+    private val guid = UUID.randomUUID()
+    private val product = Product(
+        id = 123,
+        guid = guid,
+        name = "name",
+        description = "description",
+        price = 10050,
+        createdAt = OffsetDateTime.now().minusDays(1),
+        updatedAt = OffsetDateTime.now().minusHours(2),
+        deletedAt = null,
+    )
+    private val kafkaProductDto = ProductDto(
+        id = 123,
+        guid = guid.toString(),
+        name = "name",
+        description = "description",
+        price = 10050,
+        createdAt = product.createdAt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+        updatedAt = product.updatedAt!!.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+        deletedAt = null,
+    )
+
     @Test
-    fun syncToKafka_success() {
-        val guid = UUID.randomUUID()
-        val product = Product(
-            id = 123,
-            guid = guid,
+    fun create() {
+        val expectedProductForCreation = product.copy(
+            id = null,
+            guid = mockGuid,
+            createdAt = mockCurrentTime,
+            updatedAt = null,
+        )
+        val expectedCreatedProduct = expectedProductForCreation.copy(id = 1)
+
+        whenever(productRepository.save<Product>(any())).thenReturn(expectedCreatedProduct)
+
+        val result = productService.create(
             name = "name",
-            description = "description",
             price = 10050,
-            createdAt = OffsetDateTime.now().minusDays(1),
-            updatedAt = OffsetDateTime.now().minusHours(2),
-            deletedAt = OffsetDateTime.now(),
+            description = "description",
         )
+        assertEquals(expectedCreatedProduct, result)
 
-        whenever(productRepository.findByGuid(eq(guid))) doReturn product
-        whenever(producer.produceProductInfo(defaultTopic, product)) doAnswer {}
-
-        productService.syncToKafka(guid, null)
+        verify(productRepository, times(1)).save(expectedProductForCreation)
     }
 
     @Test
-    fun syncToKafka_notFound() {
-        val specificTopic = "specificNotice"
-        val guid = UUID.randomUUID()
+    fun `delete - success`() {
+        val deletedProduct = product.copy(
+            deletedAt = mockCurrentTime,
+        )
+        whenever(productRepository.findByGuid(any())).thenReturn(product)
+        whenever(productRepository.save<Product>(any())).thenReturn(deletedProduct)
 
-        whenever(productRepository.findByGuid(eq(guid))) doReturn null
+        val result = productService.delete(guid)
+        assertEquals(deletedProduct, result)
+
+        verify(productRepository, times(1)).findByGuid(guid)
+        verify(productRepository, times(1)).save(deletedProduct)
+    }
+
+    @Test
+    fun `delete - fail - already deleted`() {
+        val deletedProduct = product.copy(
+            deletedAt = mockCurrentTime,
+        )
+        whenever(productRepository.findByGuid(any())).thenReturn(deletedProduct)
+
+        assertThrows<AlreadyDeletedException> {
+            productService.delete(guid)
+        }
+
+        verify(productRepository, times(1)).findByGuid(guid)
+        verify(productRepository, never()).save(any())
+    }
+
+    @Test
+    fun `delete - fail - not found`() {
+        whenever(productRepository.findByGuid(any())).thenReturn(null)
 
         assertThrows<ProductNotFoundException> {
-            productService.syncToKafka(guid, specificTopic)
+            productService.delete(guid)
         }
 
-        verifyNoInteractions(producer)
+        verify(productRepository, times(1)).findByGuid(guid)
+        verify(productRepository, never()).save(any())
     }
 
     @Test
-    fun syncToKafka_invalidArgumentException() {
-        val specificTopic = "specificNotice"
-        val guid = UUID.randomUUID()
+    fun `syncToKafka - success`() {
+        whenever(productRepository.findByGuid(any())) doReturn product
 
-        val product = Product(
-            id = 123,
-            guid = guid,
-            name = "name",
-            description = "description",
-            price = 10050,
-            createdAt = OffsetDateTime.now().minusDays(1),
-            updatedAt = OffsetDateTime.now().minusHours(2),
-            deletedAt = OffsetDateTime.now(),
-        )
+        productService.syncToKafka(guid, null)
 
-        whenever(productRepository.findByGuid(eq(guid))) doReturn product
-        whenever(producer.produceProductInfo(specificTopic, product)) doThrow InvalidArgumentException("some error")
+        verify(productRepository, times(1)).findByGuid(guid)
+        verify(producer, times(1)).produceProductSync(kafkaProductDto)
+    }
 
-        assertThrows< InvalidArgumentException> {
-            productService.syncToKafka(guid, specificTopic)
+    @Test
+    fun `syncToKafka - not found`() {
+        whenever(productRepository.findByGuid(any())) doReturn null
+
+        assertThrows<ProductNotFoundException> {
+            productService.syncToKafka(guid, null)
         }
+
+        verify(productRepository, times(1)).findByGuid(guid)
+        verifyNoInteractions(producer)
     }
 }

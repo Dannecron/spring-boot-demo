@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.config.properties
+package com.github.dannecron.demo.core.config.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

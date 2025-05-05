@@ -1,6 +1,7 @@
-package com.github.dannecron.demo.models.order
+package com.github.dannecron.demo.models
 
-import com.github.dannecron.demo.models.Product
+import com.github.dannecron.demo.db.entity.Product
+import com.github.dannecron.demo.db.entity.order.Order
 
 data class OrderWithProducts(
     val order: Order,

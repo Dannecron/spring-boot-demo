@@ -69,13 +69,13 @@ subprojects {
 
 dependencies {
 	implementation(project(":db"))
+	implementation(project(":core"))
 
 	runtimeOnly(libs.micrometer.registry.prometheus)
 
 	implementation(libs.bundles.tracing)
 	implementation(libs.jackson.datatype.jsr)
 	implementation(libs.jackson.module.kotlin)
-	implementation(libs.json.schema.validator)
 	implementation(libs.ktor.client.cio)
 	implementation(libs.ktor.client.core)
 	implementation(libs.logback.encoder)
@@ -85,13 +85,14 @@ dependencies {
 	implementation(libs.spring.boot.starter.mustache)
 	implementation(libs.spring.boot.starter.validation)
 	implementation(libs.spring.boot.starter.web)
+	implementation(libs.spring.cloud.starter.streamKafka)
 	implementation(libs.spring.doc.openapi.starter)
-	implementation(libs.spring.kafka)
 
-	testImplementation(libs.spring.kafka.test)
+	testImplementation(libs.ktor.client.mock)
+	testImplementation(libs.spring.boot.starter.actuatorAutoconfigure)
+	testImplementation(libs.spring.cloud.starter.streamTestBinder)
 	testImplementation(libs.testcontainers)
 	testImplementation(libs.testcontainers.junit.jupiter)
-	testImplementation(libs.ktor.client.mock)
 
 	developmentOnly(libs.spring.boot.devtools)
 }
