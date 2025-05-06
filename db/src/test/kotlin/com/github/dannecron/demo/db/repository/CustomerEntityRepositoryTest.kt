@@ -1,7 +1,7 @@
 package com.github.dannecron.demo.db.repository
 
 import com.github.dannecron.demo.db.BaseDbTest
-import com.github.dannecron.demo.db.entity.Customer
+import com.github.dannecron.demo.db.entity.CustomerEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.jdbc.Sql
@@ -12,13 +12,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 @ContextConfiguration(classes = [CustomerRepository::class])
-class CustomerRepositoryTest : BaseDbTest() {
+class CustomerEntityRepositoryTest : BaseDbTest() {
 
     @Autowired
     private lateinit var customerRepository: CustomerRepository
 
     private val customerGuid = UUID.fromString("823c50de-4c81-49bd-a69a-2d52be42b728")
-    private val customer = Customer(
+    private val customerEntity = CustomerEntity(
         id = 1000,
         guid = customerGuid,
         name = "Customer",
@@ -31,7 +31,7 @@ class CustomerRepositoryTest : BaseDbTest() {
     @Sql(scripts = ["/sql/insert_city.sql", "/sql/insert_customer.sql"])
     fun findByGuid() {
         val result = customerRepository.findByGuid(customerGuid)
-        assertEquals(customer, result)
+        assertEquals(customerEntity, result)
 
         val emptyResult = customerRepository.findByGuid(UUID.randomUUID())
         assertNull(emptyResult)

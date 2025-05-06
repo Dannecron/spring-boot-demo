@@ -1,7 +1,7 @@
 package com.github.dannecron.demo.db.repository
 
 import com.github.dannecron.demo.db.BaseDbTest
-import com.github.dannecron.demo.db.entity.order.OrderProduct
+import com.github.dannecron.demo.db.entity.order.OrderProductEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.jdbc.Sql
@@ -11,13 +11,13 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ContextConfiguration(classes = [OrderProductRepository::class])
-class OrderProductRepositoryTest : BaseDbTest() {
+class OrderEntityProductEntityRepositoryTest : BaseDbTest() {
 
     @Autowired
     private lateinit var orderProductRepository: OrderProductRepository
     
     private val orderId = 1000L
-    private val orderProduct = OrderProduct(
+    private val orderProductEntity = OrderProductEntity(
         guid = UUID.fromString("930f54e2-c60d-448e-83b1-0d259ff2c2d3"),
         orderId = orderId,
         productId = 1000,
@@ -38,6 +38,6 @@ class OrderProductRepositoryTest : BaseDbTest() {
     fun findByOrderId() {
         val result = orderProductRepository.findByOrderId(orderId)
         assertEquals(1, result.size)
-        assertEquals(orderProduct, result[0])
+        assertEquals(orderProductEntity, result[0])
     }
 }

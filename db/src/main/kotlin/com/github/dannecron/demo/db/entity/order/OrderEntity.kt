@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.db.entity
+package com.github.dannecron.demo.db.entity.order
 
 import com.github.dannecron.demo.db.serialialization.OffsetDateTimeSerialization
 import com.github.dannecron.demo.db.serialialization.UuidSerialization
@@ -9,19 +9,23 @@ import org.springframework.data.relational.core.mapping.Table
 import java.time.OffsetDateTime
 import java.util.UUID
 
-@Table("customer")
+@Table(value = "order")
 @Serializable
-data class Customer(
+data class OrderEntity(
     @Id
     val id: Long?,
     @Serializable(with = UuidSerialization::class)
     val guid: UUID,
-    val name: String,
-    val cityId: Long?,
+    val customerId: Long,
+    @Serializable(with = OffsetDateTimeSerialization::class)
+    @Column(value = "delivered_at")
+    val deliveredAt: OffsetDateTime?,
     @Serializable(with = OffsetDateTimeSerialization::class)
     @Column(value = "created_at")
     val createdAt: OffsetDateTime,
     @Serializable(with = OffsetDateTimeSerialization::class)
     @Column(value = "updated_at")
-    val updatedAt: OffsetDateTime?,
-)
+    val updatedAt: OffsetDateTime?
+) {
+    fun isDelivered(): Boolean = deliveredAt != null
+}
