@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.utils
+package com.github.dannecron.demo.core.utils
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
