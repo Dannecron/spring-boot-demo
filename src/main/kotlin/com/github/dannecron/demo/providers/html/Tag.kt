@@ -1,8 +1,8 @@
 package com.github.dannecron.demo.providers.html
 
 open class Tag(val name: String) {
-    val children: MutableList<Tag> = ArrayList()
-    val attributes: MutableList<Attribute> = ArrayList()
+    val children: MutableList<Tag> = mutableListOf()
+    val attributes: MutableList<Attribute> = mutableListOf()
 
     override fun toString(): String {
         return "<$name" +
@@ -25,4 +25,4 @@ fun <T: Tag> Tag.doInit(tag: T, init: T.() -> Unit): T {
     return tag
 }
 
-fun Tag.text(s : Any?) = doInit(Text(s.toString()), {})
+fun Tag.text(s : Any?) = doInit(Text(s.toString())) {}

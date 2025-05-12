@@ -1,71 +1,62 @@
 package com.github.dannecron.demo.services.kafka
 
-import com.github.dannecron.demo.BaseUnitTest
-import com.github.dannecron.demo.models.Product
+import com.github.dannecron.demo.core.services.validation.SchemaValidator
 import com.github.dannecron.demo.services.kafka.dto.ProductDto
-import com.github.dannecron.demo.services.validation.SchemaValidator
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
-import org.junit.runner.RunWith
-import org.mockito.kotlin.*
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.kafka.core.KafkaTemplate
-import org.springframework.kafka.support.KafkaHeaders
-import org.springframework.kafka.support.SendResult
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
+import org.springframework.cloud.stream.function.StreamBridge
 import org.springframework.messaging.Message
-import org.springframework.test.context.junit4.SpringRunner
 import java.time.OffsetDateTime
-import java.util.*
-import java.util.concurrent.CompletableFuture
+import java.time.format.DateTimeFormatter
+import java.util.UUID
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
-@RunWith(SpringRunner::class)
-@SpringBootTest
-class ProducerImplTest: BaseUnitTest() {
-    @Autowired
-    private lateinit var producerImpl: ProducerImpl
-
-    @MockBean
-    private lateinit var kafkaTemplate: KafkaTemplate<String, Any>
-
-    @MockBean
-    private lateinit var schemaValidator: SchemaValidator
+class ProducerImplTest {
+    private val streamBridge: StreamBridge = mock()
+    private val schemaValidator: SchemaValidator = mock()
+    private val producerImpl = ProducerImpl(
+        streamBridge = streamBridge,
+        schemaValidator = schemaValidator,
+    )
 
     @Test
-    fun produceProductInfo_success() {
-        val topic = "some-topic"
-        val product = Product(
+    fun produceProductSync_success() {
+        val guid = UUID.randomUUID()
+        val createdAt = OffsetDateTime.now().minusDays(2)
+        val updatedAt = OffsetDateTime.now().minusHours(1)
+        val productDto = ProductDto(
             id = 123,
-            guid = UUID.randomUUID(),
+            guid = guid.toString(),
             name = "name",
             description = null,
             price = 10050,
-            createdAt = OffsetDateTime.now().minusDays(2),
-            updatedAt = OffsetDateTime.now().minusHours(1),
-            deletedAt = OffsetDateTime.now(),
+            createdAt = createdAt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+            updatedAt = updatedAt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+            deletedAt = null,
         )
 
         val captor = argumentCaptor<Message<String>>()
 
-        whenever(kafkaTemplate.send(captor.capture())) doReturn CompletableFuture<SendResult<String, Any>>()
+        whenever(streamBridge.send(any(), captor.capture())).thenReturn(true)
 
-        whenever(schemaValidator.validate(
-            eq("product-sync"),
-            eq(Json.encodeToJsonElement(product))
-        )) doAnswer { }
-
-        producerImpl.produceProductInfo(topic, product)
+        producerImpl.produceProductSync(productDto)
 
         assertEquals(1, captor.allValues.count())
         val actualArgument = captor.firstValue
 
         val actualProductDto = Json.decodeFromString<ProductDto>(actualArgument.payload)
-        assertEquals(product.id, actualProductDto.id)
-        assertEquals(product.guid.toString(), actualProductDto.guid)
-        assertEquals(topic, actualArgument.headers[KafkaHeaders.TOPIC])
+        assertEquals(productDto, actualProductDto)
         assertEquals("some-custom-header", actualArgument.headers["X-Custom-Header"])
+
+        verify(streamBridge, times(1)).send(eq("productSyncProducer"), any())
+        verify(schemaValidator, times(1)).validate("kafka-product-sync", Json.encodeToJsonElement(productDto))
     }
 }

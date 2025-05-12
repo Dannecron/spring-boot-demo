@@ -44,18 +44,19 @@ allprojects {
 	dependencies {
 		implementation(rootProject.libs.kotlin.reflect)
 		implementation(rootProject.libs.kotlinx.serialization.json)
+		implementation(rootProject.libs.logback.encoder)
 		implementation(rootProject.libs.spring.aspects)
 
 		testImplementation(rootProject.libs.kotlin.test.junit)
 		testImplementation(rootProject.libs.mockito.kotlin)
 		testImplementation(rootProject.libs.spring.boot.starter.test)
-
-		kover(project(":db"))
 	}
 
 	tasks.test {
 		useJUnitPlatform()
 		finalizedBy("koverXmlReport")
+
+		jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED", "--add-opens=java.base/java.util=ALL-UNNAMED")
 	}
 }
 
@@ -78,7 +79,6 @@ dependencies {
 	implementation(libs.jackson.module.kotlin)
 	implementation(libs.ktor.client.cio)
 	implementation(libs.ktor.client.core)
-	implementation(libs.logback.encoder)
 	implementation(libs.postgres)
 	implementation(libs.spring.boot.starter.actuator)
 	implementation(libs.spring.boot.starter.jdbc)
@@ -95,4 +95,7 @@ dependencies {
 	testImplementation(libs.testcontainers.junit.jupiter)
 
 	developmentOnly(libs.spring.boot.devtools)
+
+	kover(project(":core"))
+	kover(project(":db"))
 }

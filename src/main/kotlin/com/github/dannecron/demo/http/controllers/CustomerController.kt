@@ -1,7 +1,7 @@
 package com.github.dannecron.demo.http.controllers
 
+import com.github.dannecron.demo.core.services.customer.CustomerService
 import com.github.dannecron.demo.http.exceptions.NotFoundException
-import com.github.dannecron.demo.services.database.customer.CustomerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType

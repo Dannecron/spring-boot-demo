@@ -1,32 +1,36 @@
 package com.github.dannecron.demo.services.kafka
 
-import com.github.dannecron.demo.models.Product
+import com.github.dannecron.demo.core.services.validation.SchemaValidator
 import com.github.dannecron.demo.services.kafka.dto.ProductDto
-import com.github.dannecron.demo.services.validation.SchemaValidator
-import com.github.dannecron.demo.services.validation.SchemaValidator.Companion.SCHEMA_KAFKA_PRODUCT_SYNC
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
-import org.springframework.kafka.core.KafkaTemplate
-import org.springframework.kafka.support.KafkaHeaders
+import org.springframework.cloud.stream.function.StreamBridge
 import org.springframework.messaging.support.MessageBuilder
 import org.springframework.stereotype.Service
 
 @Service
 class ProducerImpl(
-    private val kafkaTemplate: KafkaTemplate<String, Any>,
+    private val streamBridge: StreamBridge,
     private val schemaValidator: SchemaValidator,
 ): Producer {
-    override fun produceProductInfo(topicName: String, product: Product) {
-        Json.encodeToJsonElement(ProductDto(product)).let {
-            schemaValidator.validate(SCHEMA_KAFKA_PRODUCT_SYNC, it)
+    private companion object {
+        private const val BINDING_NAME_PRODUCT_SYNC = "productSyncProducer"
+        private const val SCHEMA_KAFKA_PRODUCT_SYNC = "kafka-product-sync"
+    }
 
-            MessageBuilder.withPayload(it.toString())
-                .setHeader(KafkaHeaders.TOPIC, topicName)
-                .setHeader("X-Custom-Header", "some-custom-header")
-                .build()
-        }
+    override fun produceProductSync(product: ProductDto) {
+        Json.encodeToJsonElement((product))
+            .also { schemaValidator.validate(SCHEMA_KAFKA_PRODUCT_SYNC, it) }
             .let {
-                msg -> kafkaTemplate.send(msg)
+                MessageBuilder.withPayload(it.toString())
+                    .setHeader("X-Custom-Header", "some-custom-header")
+                    .build()
+            }
+            .let {
+                streamBridge.send(
+                    BINDING_NAME_PRODUCT_SYNC,
+                    it,
+                )
             }
     }
 }

@@ -4,7 +4,7 @@ fun getTitleColor() = "#b9c9fe"
 fun getCellColor(index: Int, row: Int) = if ((index + row) %2 == 0) "#dce4ff" else "#eff2ff"
 
 fun renderProductTable(): String {
-    return com.github.dannecron.demo.providers.html.html {
+    return html {
         table {
             tr(color = getTitleColor()) {
 

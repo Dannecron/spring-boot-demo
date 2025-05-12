@@ -1,11 +1,11 @@
 package com.github.dannecron.demo.http.controllers
 
 import com.github.dannecron.demo.BaseUnitTest
+import com.github.dannecron.demo.core.dto.City
+import com.github.dannecron.demo.core.dto.Customer
+import com.github.dannecron.demo.core.dto.view.CustomerExtended
+import com.github.dannecron.demo.core.services.customer.CustomerService
 import com.github.dannecron.demo.http.responses.ResponseStatus
-import com.github.dannecron.demo.models.City
-import com.github.dannecron.demo.models.Customer
-import com.github.dannecron.demo.models.CustomerExtended
-import com.github.dannecron.demo.services.database.customer.CustomerService
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.whenever
@@ -16,7 +16,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import java.time.OffsetDateTime
-import java.util.*
+import java.util.UUID
 import kotlin.test.Test
 
 @WebMvcTest(CustomerController::class)

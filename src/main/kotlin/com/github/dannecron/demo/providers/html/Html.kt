@@ -1,14 +1,14 @@
 package com.github.dannecron.demo.providers.html
 
-class Html: com.github.dannecron.demo.providers.html.Tag("html")
+class Html: Tag("html")
 
-fun html(init: com.github.dannecron.demo.providers.html.Html.() -> Unit): com.github.dannecron.demo.providers.html.Html {
-    val tag = com.github.dannecron.demo.providers.html.Html()
+fun html(init: Html.() -> Unit): Html {
+    val tag = Html()
     tag.init()
     return tag
 }
 
-fun com.github.dannecron.demo.providers.html.Html.table(init : com.github.dannecron.demo.providers.html.Table.() -> Unit) = doInit(
-    com.github.dannecron.demo.providers.html.Table(), init)
-fun com.github.dannecron.demo.providers.html.Html.center(init : com.github.dannecron.demo.providers.html.Center.() -> Unit) = doInit(
-    com.github.dannecron.demo.providers.html.Center(), init)
+fun Html.table(init : Table.() -> Unit) = doInit(
+    Table(), init)
+fun Html.center(init : Center.() -> Unit) = doInit(
+    Center(), init)

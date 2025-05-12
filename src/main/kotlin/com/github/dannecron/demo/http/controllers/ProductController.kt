@@ -1,15 +1,16 @@
 package com.github.dannecron.demo.http.controllers
 
+import com.github.dannecron.demo.core.dto.Product
+import com.github.dannecron.demo.core.exceptions.AlreadyDeletedException
+import com.github.dannecron.demo.core.exceptions.ProductNotFoundException
+import com.github.dannecron.demo.core.services.product.ProductService
 import com.github.dannecron.demo.http.exceptions.NotFoundException
 import com.github.dannecron.demo.http.exceptions.UnprocessableException
 import com.github.dannecron.demo.http.requests.CreateProductRequest
 import com.github.dannecron.demo.http.responses.NotFoundResponse
 import com.github.dannecron.demo.http.responses.makeOkResponse
 import com.github.dannecron.demo.http.responses.page.PageResponse
-import com.github.dannecron.demo.models.Product
-import com.github.dannecron.demo.services.database.exceptions.AlreadyDeletedException
-import com.github.dannecron.demo.services.database.exceptions.ProductNotFoundException
-import com.github.dannecron.demo.services.database.product.ProductService
+import com.github.dannecron.demo.services.ProductSyncService
 import com.github.dannecron.demo.services.kafka.exceptions.InvalidArgumentException
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -27,7 +28,8 @@ import java.util.*
 @RestController
 @RequestMapping(value = ["/api/product"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class ProductController(
-    val productService: ProductService,
+    private val productService: ProductService,
+    private val productSyncService: ProductSyncService,
 ) {
     @GetMapping("/{guid}")
     @Throws(NotFoundException::class)
@@ -71,7 +73,7 @@ class ProductController(
         @RequestParam(required = false) topic: String?
     ): ResponseEntity<Any> {
         try {
-            productService.syncToKafka(guid, topic)
+            productSyncService.syncToKafka(guid, topic)
         } catch (_: InvalidArgumentException) {
             throw UnprocessableException("cannot sync product to kafka")
         }

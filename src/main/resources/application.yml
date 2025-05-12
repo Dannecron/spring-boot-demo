@@ -16,6 +16,50 @@ spring:
     default-schema: ${DB_SCHEMA:public}
   profiles:
     active: ${SPRING_ACTIVE_PROFILE:default}
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    security:
+      protocol: PLAINTEXT
+  cloud:
+    discovery:
+      client:
+        composite-indicator:
+          enabled: false
+    function:
+      definition: >
+        citySyncConsumer
+    stream:
+      defaultBinder: kafka
+      kafka:
+        default:
+          producer:
+            sync: true
+        binder:
+          enable-observation: true
+          requiredAcks: all
+          producerProperties:
+            retries: 3
+            key:
+              serializer: org.apache.kafka.common.serialization.StringSerializer
+          consumerProperties:
+            key:
+              deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        bindings:
+          citySyncConsumer-in-0:
+            consumer:
+              enable-dlq: false
+      bindings:
+        # input
+        citySyncConsumer-in-0:
+          group: demo-group
+          destination: demo-city-sync
+          binder: kafka
+          consumer:
+            retry-template-name: DEFAULT
+        # output
+        productSyncProducer:
+          destination: demo-product-sync
+          binder: kafka
 
 logging:
   level:
@@ -26,11 +70,6 @@ kafka:
   producer:
     product:
       default-sync-topic: demo-product-sync
-  consumer:
-    group-id: demo-consumer
-    topics: demo-city-sync
-    auto-offset-reset: latest
-    auto-startup: true
 
 validation:
   schema:
