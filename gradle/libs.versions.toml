@@ -3,7 +3,7 @@ jackson = "2.15.4"
 kotlin = "2.1.10"
 ktor = "3.0.0"
 spring-boot = "3.2.10"
-spring-cloud = "3.2.10"
+spring-cloud = "4.1.5"
 testcontainers = "1.19.7"
 
 [libraries]
@@ -22,7 +22,7 @@ micrometer-bridge-otel = { module = "io.micrometer:micrometer-tracing-bridge-ote
 micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.4.0" }
 otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
-postgres = { module = "org.postgresql:postgresql", version = "42.6.2" }
+postgres = { module = "org.postgresql:postgresql", version = "42.7.5" }
 spring-aspects = { module = "org.springframework:spring-aspects" }
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "spring-boot" }
@@ -33,7 +33,8 @@ spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-star
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
 spring-cloud-starter-streamKafka = { module = "org.springframework.cloud:spring-cloud-starter-stream-kafka", version.ref = "spring-cloud"}
-spring-cloud-starter-streamTestBinder = { module = "org.springframework.cloud:spring-cloud-stream-test-binder", version = "4.0.4"}
+spring-cloud-stream = { module = "org.springframework.cloud:spring-cloud-stream", version.ref = "spring-cloud"}
+spring-cloud-streamTestBinder = { module = "org.springframework.cloud:spring-cloud-stream-test-binder", version.ref = "spring-cloud"}
 spring-doc-openapi-starter = "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0"
 testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers"}
 testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers"}
@@ -49,4 +50,4 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
-spring-dependencyManagement = { id = "io.spring.dependency-management", version = "1.1.6"}
+spring-dependencyManagement = { id = "io.spring.dependency-management", version = "1.1.7"}

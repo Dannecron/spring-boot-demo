@@ -4,8 +4,8 @@ spring:
     name: demo
   datasource:
     url: jdbc:postgresql://${DB_URL:localhost:5432}/${DB_NAME:demo}?currentSchema=${DB_SCHEMA:public}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
       schema: ${DB_SCHEMA:public}
@@ -65,12 +65,6 @@ logging:
   level:
     root: ${SPRING_LOG_LEVEL:INFO}
 
-kafka:
-  bootstrap-servers: ${KAFKA_SERVERS:localhost:9095}
-  producer:
-    product:
-      default-sync-topic: demo-product-sync
-
 validation:
   schema:
     kafka-product-sync: kafka/product/sync.json
@@ -105,7 +99,7 @@ management:
       probability: 1.0
 
 tracing:
-  url: ${OTLP_TRACING_HTTP_URL:http://localhost:4318/v1/traces}
+  url: ${OTLP_TRACING_HTTP_URL}
 
 neko:
   baseUrl: https://nekos.best

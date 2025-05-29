@@ -17,6 +17,7 @@ allprojects {
 		plugin(rootProject.libs.plugins.kotlin.jvm.get().pluginId)
 		plugin(rootProject.libs.plugins.kotlin.serialization.get().pluginId)
 		plugin(rootProject.libs.plugins.kotlin.kover.get().pluginId)
+		plugin(rootProject.libs.plugins.spring.boot.get().pluginId)
 
 		plugin("java")
 	}
@@ -30,6 +31,7 @@ allprojects {
 	java {
 		sourceCompatibility = JavaVersion.VERSION_17
 	}
+
 	kotlin {
 		compilerOptions {
 			freeCompilerArgs.addAll("-Xjsr305=strict")
@@ -66,6 +68,10 @@ subprojects {
 		plugin(rootProject.libs.plugins.spring.boot.get().pluginId)
 		plugin(rootProject.libs.plugins.spring.dependencyManagement.get().pluginId)
 	}
+
+	tasks.bootJar {
+		enabled = false
+	}
 }
 
 dependencies {
@@ -86,11 +92,12 @@ dependencies {
 	implementation(libs.spring.boot.starter.validation)
 	implementation(libs.spring.boot.starter.web)
 	implementation(libs.spring.cloud.starter.streamKafka)
+	implementation(libs.spring.cloud.stream)
 	implementation(libs.spring.doc.openapi.starter)
 
 	testImplementation(libs.ktor.client.mock)
 	testImplementation(libs.spring.boot.starter.actuatorAutoconfigure)
-	testImplementation(libs.spring.cloud.starter.streamTestBinder)
+	testImplementation(libs.spring.cloud.streamTestBinder)
 	testImplementation(libs.testcontainers)
 	testImplementation(libs.testcontainers.junit.jupiter)
 
@@ -98,4 +105,18 @@ dependencies {
 
 	kover(project(":core"))
 	kover(project(":db"))
+}
+
+tasks.bootJar {
+	enabled = true
+	archiveFileName.set("app.jar")
+	mainClass.set("com.github.dannecron.demo.DemoApplicationKt")
+}
+
+tasks.jar {
+	enabled = false
+}
+
+springBoot {
+	buildInfo()
 }
