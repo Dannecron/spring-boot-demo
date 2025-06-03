@@ -4,3 +4,4 @@ plugins {
 rootProject.name = "demo"
 include("db")
 include("core")
+include("edge-consuming")

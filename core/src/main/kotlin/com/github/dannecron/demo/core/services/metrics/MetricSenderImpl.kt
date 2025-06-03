@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.services.metrics
+package com.github.dannecron.demo.core.services.metrics
 
 import io.micrometer.core.instrument.Counter
 import io.micrometer.core.instrument.MeterRegistry

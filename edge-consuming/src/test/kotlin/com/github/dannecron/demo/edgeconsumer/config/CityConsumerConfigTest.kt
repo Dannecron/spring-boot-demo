@@ -1,14 +1,14 @@
-package com.github.dannecron.demo.config.kafka
+package com.github.dannecron.demo.edgeconsumer.config
 
-import com.github.dannecron.demo.services.kafka.CityCreateConsumer
-import com.github.dannecron.demo.services.kafka.dto.CityCreateDto
+import com.github.dannecron.demo.edgeconsuming.config.CityConsumerConfig
+import com.github.dannecron.demo.edgeconsuming.consumer.CityCreateConsumer
+import com.github.dannecron.demo.edgeconsuming.dto.CityCreateDto
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.after
 import org.mockito.kotlin.verify
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.actuate.autoconfigure.endpoint.EndpointAutoConfiguration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
@@ -43,10 +43,9 @@ import java.util.UUID
         DataSourceTransactionManagerAutoConfiguration::class,
         HibernateJpaAutoConfiguration::class,
         SecurityAutoConfiguration::class,
-        EndpointAutoConfiguration::class,
     ]
 )
-class CityEntityCreateConsumerImplConfigTest {
+class CityConsumerConfigTest {
 
     @Autowired
     private lateinit var inputDestination: InputDestination

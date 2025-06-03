@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.services.kafka.dto
+package com.github.dannecron.demo.edgeconsuming.dto
 
 import kotlinx.serialization.Serializable
 
@@ -10,3 +10,4 @@ data class CityCreateDto (
     val updatedAt: String?,
     val deletedAt: String?,
 )
+

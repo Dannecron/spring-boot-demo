@@ -1,9 +1,9 @@
-package com.github.dannecron.demo.services.kafka
+package com.github.dannecron.demo.edgeconsuming.consumer
 
 import com.github.dannecron.demo.core.dto.CityCreate
 import com.github.dannecron.demo.core.services.city.CityService
-import com.github.dannecron.demo.services.kafka.dto.CityCreateDto
-import com.github.dannecron.demo.services.metrics.MetricsSender
+import com.github.dannecron.demo.core.services.metrics.MetricsSender
+import com.github.dannecron.demo.edgeconsuming.dto.CityCreateDto
 import org.springframework.stereotype.Component
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter

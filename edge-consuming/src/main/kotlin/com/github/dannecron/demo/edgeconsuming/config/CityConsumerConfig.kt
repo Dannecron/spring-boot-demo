@@ -1,7 +1,7 @@
-package com.github.dannecron.demo.config.kafka
+package com.github.dannecron.demo.edgeconsuming.config
 
-import com.github.dannecron.demo.services.kafka.CityCreateConsumer
-import com.github.dannecron.demo.services.kafka.dto.CityCreateDto
+import com.github.dannecron.demo.edgeconsuming.consumer.CityCreateConsumer
+import com.github.dannecron.demo.edgeconsuming.dto.CityCreateDto
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.util.function.Consumer

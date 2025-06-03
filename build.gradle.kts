@@ -44,6 +44,9 @@ allprojects {
 	}
 
 	dependencies {
+		runtimeOnly(rootProject.libs.micrometer.registry.prometheus)
+
+		implementation(rootProject.libs.bundles.tracing)
 		implementation(rootProject.libs.kotlin.reflect)
 		implementation(rootProject.libs.kotlinx.serialization.json)
 		implementation(rootProject.libs.logback.encoder)
@@ -77,16 +80,13 @@ subprojects {
 dependencies {
 	implementation(project(":db"))
 	implementation(project(":core"))
+	implementation(project(":edge-consuming"))
 
-	runtimeOnly(libs.micrometer.registry.prometheus)
-
-	implementation(libs.bundles.tracing)
 	implementation(libs.jackson.datatype.jsr)
 	implementation(libs.jackson.module.kotlin)
 	implementation(libs.ktor.client.cio)
 	implementation(libs.ktor.client.core)
 	implementation(libs.postgres)
-	implementation(libs.spring.boot.starter.actuator)
 	implementation(libs.spring.boot.starter.jdbc)
 	implementation(libs.spring.boot.starter.mustache)
 	implementation(libs.spring.boot.starter.validation)
@@ -96,13 +96,13 @@ dependencies {
 	implementation(libs.spring.doc.openapi.starter)
 
 	testImplementation(libs.ktor.client.mock)
-	testImplementation(libs.spring.boot.starter.actuatorAutoconfigure)
 	testImplementation(libs.spring.cloud.streamTestBinder)
 	testImplementation(libs.testcontainers)
 	testImplementation(libs.testcontainers.junit.jupiter)
 
 	developmentOnly(libs.spring.boot.devtools)
 
+	kover(project(":edge-consuming"))
 	kover(project(":core"))
 	kover(project(":db"))
 }
