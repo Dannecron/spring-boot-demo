@@ -2,6 +2,7 @@ package com.github.dannecron.demo.core.services.product
 
 import com.github.dannecron.demo.core.dto.Product
 import com.github.dannecron.demo.core.exceptions.AlreadyDeletedException
+import com.github.dannecron.demo.core.exceptions.InvalidDataException
 import com.github.dannecron.demo.core.exceptions.ProductNotFoundException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -16,4 +17,7 @@ interface ProductService {
 
     @Throws(ProductNotFoundException::class, AlreadyDeletedException::class)
     fun delete(guid: UUID): Product
+
+    @Throws(ProductNotFoundException::class, InvalidDataException::class)
+    fun send(guid: UUID, topic: String?)
 }

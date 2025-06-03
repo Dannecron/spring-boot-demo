@@ -4,7 +4,6 @@ import com.github.dannecron.demo.BaseUnitTest
 import com.github.dannecron.demo.core.dto.Product
 import com.github.dannecron.demo.core.services.product.ProductService
 import com.github.dannecron.demo.http.responses.ResponseStatus
-import com.github.dannecron.demo.services.ProductSyncService
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.nullValue
 import org.junit.jupiter.api.Test
@@ -39,9 +38,6 @@ class ProductControllerTest: BaseUnitTest() {
     @MockBean
     private lateinit var productService: ProductService
 
-    @MockBean
-    private lateinit var productSyncService: ProductSyncService
-
     private val guid = UUID.randomUUID()
     private val now = OffsetDateTime.now()
     private val productId = 12L
@@ -72,7 +68,6 @@ class ProductControllerTest: BaseUnitTest() {
             .andExpect { jsonPath("\$.updatedAt") { value(nullValue()) } }
 
         verify(productService, times(1)).findByGuid(guid)
-        verifyNoInteractions(productSyncService)
     }
 
     @Test
@@ -85,7 +80,6 @@ class ProductControllerTest: BaseUnitTest() {
             .andExpect { jsonPath("\$.status") { value(ResponseStatus.NOT_FOUND.status) } }
 
         verify(productService, times(1)).findByGuid(guid)
-        verifyNoInteractions(productSyncService)
     }
 
     @Test
@@ -109,7 +103,6 @@ class ProductControllerTest: BaseUnitTest() {
             .andExpect { jsonPath("\$.data[0].isDeleted") { value(false) } }
 
         verify(productService, times(1)).findAll(pageRequest)
-        verifyNoInteractions(productSyncService)
     }
 
     @Test
@@ -127,7 +120,6 @@ class ProductControllerTest: BaseUnitTest() {
             .andExpect { jsonPath("\$.id") { value(productId) } }
 
         verify(productService, times(1)).create(productName, productPrice, null)
-        verifyNoInteractions(productSyncService)
     }
 
     @Test
@@ -144,7 +136,6 @@ class ProductControllerTest: BaseUnitTest() {
             .andExpect { jsonPath("\$.cause") { contains("name") } }
 
         verifyNoInteractions(productService)
-        verifyNoInteractions(productSyncService)
     }
 
     @Test
@@ -161,7 +152,6 @@ class ProductControllerTest: BaseUnitTest() {
             .andExpect { jsonPath("\$.cause") { value(MethodArgumentNotValidException::class.qualifiedName) } }
 
         verifyNoInteractions(productService)
-        verifyNoInteractions(productSyncService)
     }
 
     @Test
@@ -176,6 +166,5 @@ class ProductControllerTest: BaseUnitTest() {
             .andExpect { jsonPath("\$.status") { value(ResponseStatus.OK.status) } }
 
         verify(productService, times(1)).delete(guid)
-        verifyNoInteractions(productSyncService)
     }
 }
