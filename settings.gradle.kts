@@ -5,3 +5,5 @@ rootProject.name = "demo"
 include("db")
 include("core")
 include("edge-consuming")
+include("edge-producing")
+include("edge-contracts")

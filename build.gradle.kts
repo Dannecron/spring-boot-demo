@@ -78,7 +78,9 @@ subprojects {
 }
 
 dependencies {
+	implementation(project(":edge-contracts"))
 	implementation(project(":db"))
+	implementation(project(":edge-producing"))
 	implementation(project(":core"))
 	implementation(project(":edge-consuming"))
 
@@ -104,7 +106,9 @@ dependencies {
 
 	kover(project(":edge-consuming"))
 	kover(project(":core"))
+	kover(project(":edge-producing"))
 	kover(project(":db"))
+	kover(project(":edge-contracts"))
 }
 
 tasks.bootJar {

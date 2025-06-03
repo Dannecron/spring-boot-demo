@@ -1,10 +1,11 @@
-package com.github.dannecron.demo.services.kafka
+package com.github.dannecron.demo.edgeproducing.producer
 
-import com.github.dannecron.demo.core.services.validation.SchemaValidator
-import com.github.dannecron.demo.services.kafka.dto.ProductDto
+import com.github.dannecron.demo.edgecontracts.validation.SchemaValidator
+import com.github.dannecron.demo.edgeproducing.dto.ProductDto
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.eq
@@ -17,12 +18,11 @@ import org.springframework.messaging.Message
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.UUID
-import kotlin.test.Test
 
-class ProducerImplTest {
+class ProductProducerImplTest {
     private val streamBridge: StreamBridge = mock()
     private val schemaValidator: SchemaValidator = mock()
-    private val producerImpl = ProducerImpl(
+    private val producerImpl = ProductProducerImpl(
         streamBridge = streamBridge,
         schemaValidator = schemaValidator,
     )

@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.services.kafka.dto
+package com.github.dannecron.demo.edgeproducing.dto
 
 import kotlinx.serialization.Serializable
 
