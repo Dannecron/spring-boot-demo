@@ -1,7 +1,7 @@
-package com.github.dannecron.demo.core.services.validation
+package com.github.dannecron.demo.edgecontracts.validation
 
-import com.github.dannecron.demo.core.services.validation.exceptions.ElementNotValidException
-import com.github.dannecron.demo.core.services.validation.exceptions.SchemaNotFoundException
+import com.github.dannecron.demo.edgecontracts.validation.exceptions.ElementNotValidException
+import com.github.dannecron.demo.edgecontracts.validation.exceptions.SchemaNotFoundException
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -91,6 +91,7 @@ class SchemaValidatorImpTest {
         )
     }
 
+    @Suppress("SameParameterValue")
     private fun getJsonSchema(resourcePath: String) = javaClass.classLoader
         .getResourceAsStream(resourcePath)!!
         .readAllBytes()

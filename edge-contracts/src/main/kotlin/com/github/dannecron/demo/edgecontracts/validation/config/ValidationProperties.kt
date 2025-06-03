@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.core.config.properties
+package com.github.dannecron.demo.edgecontracts.validation.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

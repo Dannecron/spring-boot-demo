@@ -1,7 +1,7 @@
-package com.github.dannecron.demo.core.services.validation
+package com.github.dannecron.demo.edgecontracts.validation
 
-import com.github.dannecron.demo.core.services.validation.exceptions.ElementNotValidException
-import com.github.dannecron.demo.core.services.validation.exceptions.SchemaNotFoundException
+import com.github.dannecron.demo.edgecontracts.validation.exceptions.ElementNotValidException
+import com.github.dannecron.demo.edgecontracts.validation.exceptions.SchemaNotFoundException
 import io.github.optimumcode.json.schema.JsonSchema
 import io.github.optimumcode.json.schema.ValidationError
 import kotlinx.serialization.json.JsonElement
