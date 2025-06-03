@@ -89,6 +89,8 @@ dependencies {
 	implementation(libs.springBoot.starter.mustache)
 	implementation(libs.springBoot.starter.web)
 
+	testImplementation(libs.archUnit.junit)
+
 	developmentOnly(libs.springBoot.devtools)
 
 	kover(project(":edge-contracts"))

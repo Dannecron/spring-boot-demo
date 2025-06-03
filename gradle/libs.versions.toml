@@ -7,6 +7,7 @@ spring-cloud = "4.1.5"
 testcontainers = "1.19.7"
 
 [libraries]
+archUnit-junit = { module = "com.tngtech.archunit:archunit-junit5", version = "1.4.1" }
 flyway-core = { module = "org.flywaydb:flyway-core", version = "9.22.3" }
 jackson-datatype-jsr = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
