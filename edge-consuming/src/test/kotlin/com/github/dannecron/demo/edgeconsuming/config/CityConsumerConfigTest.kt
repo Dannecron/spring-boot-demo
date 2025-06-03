@@ -1,6 +1,5 @@
-package com.github.dannecron.demo.edgeconsumer.config
+package com.github.dannecron.demo.edgeconsuming.config
 
-import com.github.dannecron.demo.edgeconsuming.config.CityConsumerConfig
 import com.github.dannecron.demo.edgeconsuming.consumer.CityCreateConsumer
 import com.github.dannecron.demo.edgeconsuming.dto.CityCreateDto
 import kotlinx.serialization.encodeToString

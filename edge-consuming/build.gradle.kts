@@ -1,7 +1,5 @@
-group = "com.github.dannecron.demo"
-version = "single-version"
-
 dependencies {
+    implementation(project(":edge-contracts"))
     implementation(project(":core"))
 
     implementation(rootProject.libs.jackson.datatype.jsr)
