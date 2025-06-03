@@ -50,11 +50,11 @@ allprojects {
 		implementation(rootProject.libs.kotlin.reflect)
 		implementation(rootProject.libs.kotlinx.serialization.json)
 		implementation(rootProject.libs.logback.encoder)
-		implementation(rootProject.libs.spring.aspects)
+		implementation(rootProject.libs.springFramework.aspects)
 
 		testImplementation(rootProject.libs.kotlin.test.junit)
 		testImplementation(rootProject.libs.mockito.kotlin)
-		testImplementation(rootProject.libs.spring.boot.starter.test)
+		testImplementation(rootProject.libs.springBoot.starter.test)
 	}
 
 	tasks.test {
@@ -81,34 +81,23 @@ dependencies {
 	implementation(project(":edge-contracts"))
 	implementation(project(":db"))
 	implementation(project(":edge-producing"))
+	implementation(project(":edge-integration"))
 	implementation(project(":core"))
 	implementation(project(":edge-consuming"))
+	implementation(project(":edge-rest"))
 
-	implementation(libs.jackson.datatype.jsr)
-	implementation(libs.jackson.module.kotlin)
-	implementation(libs.ktor.client.cio)
-	implementation(libs.ktor.client.core)
-	implementation(libs.postgres)
-	implementation(libs.spring.boot.starter.jdbc)
-	implementation(libs.spring.boot.starter.mustache)
-	implementation(libs.spring.boot.starter.validation)
-	implementation(libs.spring.boot.starter.web)
-	implementation(libs.spring.cloud.starter.streamKafka)
-	implementation(libs.spring.cloud.stream)
-	implementation(libs.spring.doc.openapi.starter)
+	implementation(libs.springBoot.starter.mustache)
+	implementation(libs.springBoot.starter.web)
 
-	testImplementation(libs.ktor.client.mock)
-	testImplementation(libs.spring.cloud.streamTestBinder)
-	testImplementation(libs.testcontainers)
-	testImplementation(libs.testcontainers.junit.jupiter)
+	developmentOnly(libs.springBoot.devtools)
 
-	developmentOnly(libs.spring.boot.devtools)
-
-	kover(project(":edge-consuming"))
-	kover(project(":core"))
-	kover(project(":edge-producing"))
-	kover(project(":db"))
 	kover(project(":edge-contracts"))
+	kover(project(":db"))
+	kover(project(":edge-producing"))
+	kover(project(":edge-integration"))
+	kover(project(":core"))
+	kover(project(":edge-consuming"))
+	kover(project(":edge-rest"))
 }
 
 tasks.bootJar {

@@ -1,9 +1,10 @@
-package com.github.dannecron.demo.http.controllers
+package com.github.dannecron.demo.edgerest.controllers
 
-import com.github.dannecron.demo.BaseUnitTest
 import com.github.dannecron.demo.core.dto.Product
 import com.github.dannecron.demo.core.services.product.ProductService
-import com.github.dannecron.demo.http.responses.ResponseStatus
+import com.github.dannecron.demo.edgecontracts.api.model.ResponseStatusModel
+import com.github.dannecron.demo.edgerest.ExceptionHandler
+import com.github.dannecron.demo.edgerest.WebTestConfig
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.nullValue
 import org.junit.jupiter.api.Test
@@ -14,12 +15,14 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.http.MediaType
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
@@ -30,7 +33,15 @@ import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 @WebMvcTest(ProductController::class)
-class ProductControllerTest: BaseUnitTest() {
+@AutoConfigureMockMvc
+@ContextConfiguration(
+    classes = [
+        WebTestConfig::class,
+        ProductController::class,
+        ExceptionHandler::class,
+    ]
+)
+class ProductControllerTest {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
@@ -77,7 +88,7 @@ class ProductControllerTest: BaseUnitTest() {
         mockMvc.get("/api/product/$guid")
             .andExpect { status { isNotFound() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
-            .andExpect { jsonPath("\$.status") { value(ResponseStatus.NOT_FOUND.status) } }
+            .andExpect { jsonPath("\$.status") { value(ResponseStatusModel.NOT_FOUND.status) } }
 
         verify(productService, times(1)).findByGuid(guid)
     }
@@ -132,7 +143,7 @@ class ProductControllerTest: BaseUnitTest() {
         }
             .andExpect { status { isBadRequest() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
-            .andExpect { jsonPath("\$.status") { value(ResponseStatus.BAD_REQUEST.status) } }
+            .andExpect { jsonPath("\$.status") { value(ResponseStatusModel.BAD_REQUEST.status) } }
             .andExpect { jsonPath("\$.cause") { contains("name") } }
 
         verifyNoInteractions(productService)
@@ -148,7 +159,7 @@ class ProductControllerTest: BaseUnitTest() {
         }
             .andExpect { status { isUnprocessableEntity() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
-            .andExpect { jsonPath("\$.status") { value(ResponseStatus.UNPROCESSABLE.status) } }
+            .andExpect { jsonPath("\$.status") { value(ResponseStatusModel.UNPROCESSABLE.status) } }
             .andExpect { jsonPath("\$.cause") { value(MethodArgumentNotValidException::class.qualifiedName) } }
 
         verifyNoInteractions(productService)
@@ -163,7 +174,7 @@ class ProductControllerTest: BaseUnitTest() {
         mockMvc.delete("/api/product/${guid}")
             .andExpect { status { isOk() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
-            .andExpect { jsonPath("\$.status") { value(ResponseStatus.OK.status) } }
+            .andExpect { jsonPath("\$.status") { value(ResponseStatusModel.OK.status) } }
 
         verify(productService, times(1)).delete(guid)
     }

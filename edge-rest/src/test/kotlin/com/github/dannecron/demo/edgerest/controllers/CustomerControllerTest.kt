@@ -1,18 +1,21 @@
-package com.github.dannecron.demo.http.controllers
+package com.github.dannecron.demo.edgerest.controllers
 
-import com.github.dannecron.demo.BaseUnitTest
 import com.github.dannecron.demo.core.dto.City
 import com.github.dannecron.demo.core.dto.Customer
 import com.github.dannecron.demo.core.dto.view.CustomerExtended
 import com.github.dannecron.demo.core.services.customer.CustomerService
-import com.github.dannecron.demo.http.responses.ResponseStatus
+import com.github.dannecron.demo.edgecontracts.api.model.ResponseStatusModel
+import com.github.dannecron.demo.edgerest.ExceptionHandler
+import com.github.dannecron.demo.edgerest.WebTestConfig
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import java.time.OffsetDateTime
@@ -20,9 +23,19 @@ import java.util.UUID
 import kotlin.test.Test
 
 @WebMvcTest(CustomerController::class)
-class CustomerControllerTest(
-    @Autowired val mockMvc: MockMvc,
-): BaseUnitTest() {
+@AutoConfigureMockMvc
+@ContextConfiguration(
+    classes = [
+        WebTestConfig::class,
+        CustomerController::class,
+        ExceptionHandler::class,
+    ]
+)
+class CustomerControllerTest {
+
+    @Autowired
+    private lateinit var mockMvc: MockMvc
+
     @MockBean
     private lateinit var customerService: CustomerService
 
@@ -101,6 +114,6 @@ class CustomerControllerTest(
         mockMvc.get("/api/customer/$customerGuid")
             .andExpect { status { isNotFound() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
-            .andExpect { jsonPath("\$.status") { value(ResponseStatus.NOT_FOUND.status) } }
+            .andExpect { jsonPath("\$.status") { value(ResponseStatusModel.NOT_FOUND.status) } }
     }
 }
