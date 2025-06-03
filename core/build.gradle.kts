@@ -1,12 +1,10 @@
-group = "com.github.dannecron.demo"
-version = "single-version"
-
 dependencies {
     implementation(project(":db"))
     implementation(project(":edge-producing"))
+    implementation(project(":edge-integration"))
 
-    implementation(rootProject.libs.spring.boot.starter.actuator)
-    implementation(rootProject.libs.spring.boot.starter.jdbc)
+    implementation(rootProject.libs.springBoot.starter.actuator)
+    implementation(rootProject.libs.springData.commons)
 
-    testImplementation(rootProject.libs.spring.boot.starter.actuatorAutoconfigure)
+    testImplementation(rootProject.libs.springBoot.starter.actuatorAutoconfigure)
 }

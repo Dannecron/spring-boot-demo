@@ -3,8 +3,8 @@ dependencies {
 
     implementation(rootProject.libs.jackson.datatype.jsr)
     implementation(rootProject.libs.jackson.module.kotlin)
-    implementation(rootProject.libs.spring.boot.starter.validation)
-    implementation(rootProject.libs.spring.cloud.starter.streamKafka)
+    implementation(rootProject.libs.springBoot.starter.validation)
+    implementation(rootProject.libs.springCloud.starter.streamKafka)
 
-    testImplementation(rootProject.libs.spring.cloud.streamTestBinder)
+    testImplementation(rootProject.libs.springCloud.streamTestBinder)
 }
