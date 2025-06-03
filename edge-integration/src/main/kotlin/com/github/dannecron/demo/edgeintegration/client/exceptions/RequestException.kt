@@ -1,3 +1,3 @@
-package com.github.dannecron.demo.services.neko.exceptions
+package com.github.dannecron.demo.edgeintegration.client.exceptions
 
 class RequestException(message: String): RuntimeException(message)

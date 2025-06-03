@@ -1,14 +1,21 @@
-package com.github.dannecron.demo.services.neko
+package com.github.dannecron.demo.edgeintegration.client
 
-import com.github.dannecron.demo.BaseUnitTest
-import com.github.dannecron.demo.services.neko.exceptions.RequestException
-import io.ktor.client.engine.mock.*
-import io.ktor.http.*
-import io.ktor.utils.io.*
+import com.github.dannecron.demo.edgeintegration.client.exceptions.RequestException
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.headersOf
+import io.ktor.utils.io.ByteReadChannel
 import org.junit.jupiter.api.assertThrows
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertContains
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
-class ClientImplTest: BaseUnitTest() {
+class ClientImplTest {
     @Test
     fun getCategories_success() {
         val mockEngine = MockEngine { req ->

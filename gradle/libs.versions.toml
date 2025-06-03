@@ -23,19 +23,21 @@ micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-p
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.4.0" }
 otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
 postgres = { module = "org.postgresql:postgresql", version = "42.7.5" }
-spring-aspects = { module = "org.springframework:spring-aspects" }
-spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
-spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "spring-boot" }
-spring-boot-starter-actuatorAutoconfigure = { module = "org.springframework.boot:spring-boot-actuator-autoconfigure" }
-spring-boot-starter-jdbc = { module = "org.springframework.boot:spring-boot-starter-data-jdbc", version.ref = "spring-boot"}
-spring-boot-starter-mustache = { module = "org.springframework.boot:spring-boot-starter-mustache", version.ref = "spring-boot" }
-spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
-spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
-spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
-spring-cloud-starter-streamKafka = { module = "org.springframework.cloud:spring-cloud-starter-stream-kafka", version.ref = "spring-cloud"}
-spring-cloud-stream = { module = "org.springframework.cloud:spring-cloud-stream", version.ref = "spring-cloud"}
-spring-cloud-streamTestBinder = { module = "org.springframework.cloud:spring-cloud-stream-test-binder", version.ref = "spring-cloud"}
-spring-doc-openapi-starter = "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0"
+springFramework-context = { module = "org.springframework:spring-context"}
+springFramework-aspects = { module = "org.springframework:spring-aspects" }
+springBoot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
+springBoot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "spring-boot" }
+springBoot-starter-actuatorAutoconfigure = { module = "org.springframework.boot:spring-boot-actuator-autoconfigure" }
+springBoot-starter-jdbc = { module = "org.springframework.boot:spring-boot-starter-data-jdbc", version.ref = "spring-boot"}
+springBoot-starter-mustache = { module = "org.springframework.boot:spring-boot-starter-mustache", version.ref = "spring-boot" }
+springBoot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
+springBoot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
+springBoot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
+springCloud-starter-streamKafka = { module = "org.springframework.cloud:spring-cloud-starter-stream-kafka", version.ref = "spring-cloud"}
+springCloud-stream = { module = "org.springframework.cloud:spring-cloud-stream", version.ref = "spring-cloud"}
+springCloud-streamTestBinder = { module = "org.springframework.cloud:spring-cloud-stream-test-binder", version.ref = "spring-cloud"}
+springData-commons = { module = "org.springframework.data:spring-data-commons", version.ref = "spring-boot" }
+springDoc-openapi-starter = "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0"
 testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers"}
 testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers"}
 testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers"}
