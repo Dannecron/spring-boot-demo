@@ -1,14 +1,13 @@
-package com.github.dannecron.demo.http.responses.neko
+package com.github.dannecron.demo.edgecontracts.api.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Image(
+data class NekoImageApiModel(
     val url: String,
     val animeName: String?,
     val artistHref: String?,
     val artistName: String?,
     val sourceUrl: String?,
-) {
-    fun isGif() = animeName != null
-}
+    val isGif: Boolean,
+)

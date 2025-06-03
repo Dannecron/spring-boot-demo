@@ -1,8 +1,10 @@
-package com.github.dannecron.demo.http.requests
+package com.github.dannecron.demo.edgecontracts.api.request
 
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class CreateProductRequest(
     @field:NotBlank(message = "name value required")
     val name: String,

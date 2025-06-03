@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.http.responses.page
+package com.github.dannecron.demo.edgecontracts.api.response.page
 
 import kotlinx.serialization.Serializable
 import org.springframework.data.domain.Page
