@@ -1,6 +1,6 @@
-package com.github.dannecron.demo.edgeintegration.client
+package com.github.dannecron.demo.edgeintegration.client.neko
 
-import com.github.dannecron.demo.edgeintegration.client.exceptions.RequestException
+import com.github.dannecron.demo.edgeintegration.client.neko.exceptions.RequestException
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.http.HttpHeaders
@@ -34,7 +34,7 @@ class ClientImplTest {
         }
 
         val client = ClientImpl(engine = mockEngine, baseUrl = "https://localhost")
-        client.getCategories().let {
+        client.getCategories().also {
             assertContains(it.toList(), "neko")
             assertContains(it.toList(), "wink")
         }
@@ -88,7 +88,7 @@ class ClientImplTest {
         }
 
         val client = ClientImpl(engine = mockEngine, baseUrl = "https://localhost")
-        client.getImages(category = category, amount = amount).results.map {
+        client.getImages(category = category, amount = amount).results.forEach {
             assertNull(it.sourceUrl)
             assertNull(it.artistName)
             assertNull(it.artistHref)
@@ -126,7 +126,7 @@ class ClientImplTest {
         }
 
         val client = ClientImpl(engine = mockEngine, baseUrl = "https://localhost")
-        client.getImages(category = category, amount = amount).results.map {
+        client.getImages(category = category, amount = amount).results.forEach {
             assertNotNull(it.sourceUrl)
             assertNotNull(it.artistName)
             assertNotNull(it.artistHref)

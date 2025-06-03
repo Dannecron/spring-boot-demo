@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.edgeintegration.client.dto
+package com.github.dannecron.demo.edgeintegration.client.neko.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

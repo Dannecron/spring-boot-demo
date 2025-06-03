@@ -1,8 +1,8 @@
-package com.github.dannecron.demo.edgeintegration.client
+package com.github.dannecron.demo.edgeintegration.client.neko
 
-import com.github.dannecron.demo.edgeintegration.client.dto.CategoryFormat
-import com.github.dannecron.demo.edgeintegration.client.dto.ImagesResponse
-import com.github.dannecron.demo.edgeintegration.client.exceptions.RequestException
+import com.github.dannecron.demo.edgeintegration.client.neko.dto.CategoryFormat
+import com.github.dannecron.demo.edgeintegration.client.neko.dto.ImagesResponse
+import com.github.dannecron.demo.edgeintegration.client.neko.exceptions.RequestException
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.request.get
@@ -12,7 +12,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.springframework.stereotype.Service
 
-@Service
 class ClientImpl(
     engine: HttpClientEngine,
     private val baseUrl: String,
