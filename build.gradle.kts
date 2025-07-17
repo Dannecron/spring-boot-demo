@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
 	idea
 	alias(libs.plugins.kotlin.kover)
@@ -29,11 +31,13 @@ allprojects {
 	}
 
 	java {
-		sourceCompatibility = JavaVersion.VERSION_17
+		sourceCompatibility = JavaVersion.VERSION_20
+		targetCompatibility = JavaVersion.VERSION_20
 	}
 
 	kotlin {
 		compilerOptions {
+			jvmTarget.set(JvmTarget.JVM_20)
 			freeCompilerArgs.addAll("-Xjsr305=strict")
 			apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_1)
 		}
