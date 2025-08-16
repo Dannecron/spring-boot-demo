@@ -1,4 +1,4 @@
-package com.github.dannecron.demo.db.serialialization
+package com.github.dannecron.demo.edgecontracts.serialialization
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

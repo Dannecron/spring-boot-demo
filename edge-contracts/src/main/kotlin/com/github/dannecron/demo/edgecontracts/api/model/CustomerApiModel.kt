@@ -1,7 +1,7 @@
 package com.github.dannecron.demo.edgecontracts.api.model
 
-import com.github.dannecron.demo.db.serialialization.OffsetDateTimeSerialization
-import com.github.dannecron.demo.db.serialialization.UuidSerialization
+import com.github.dannecron.demo.edgecontracts.serialialization.OffsetDateTimeSerialization
+import com.github.dannecron.demo.edgecontracts.serialialization.UuidSerialization
 import kotlinx.serialization.Serializable
 import java.time.OffsetDateTime
 import java.util.UUID
