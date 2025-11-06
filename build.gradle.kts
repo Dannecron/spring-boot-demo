@@ -2,13 +2,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
 	idea
-	alias(libs.plugins.kotlin.kover)
-	alias(libs.plugins.kotlin.jpa)
-	alias(libs.plugins.kotlin.jvm)
-	alias(libs.plugins.kotlin.serialization)
-	alias(libs.plugins.kotlin.spring)
-	alias(libs.plugins.spring.boot)
-	alias(libs.plugins.spring.dependencyManagement)
+	alias(libs.plugins.io.spring.dependency.management)
+	alias(libs.plugins.org.jetbrains.kotlin.jvm)
+	alias(libs.plugins.org.jetbrains.kotlin.plugin.jpa)
+	alias(libs.plugins.org.jetbrains.kotlin.plugin.serialization)
+	alias(libs.plugins.org.jetbrains.kotlin.plugin.spring)
+	alias(libs.plugins.org.jetbrains.kotlinx.kover)
+	alias(libs.plugins.org.springframework.boot)
 }
 
 group = "com.github.dannecron.demo"
@@ -16,15 +16,15 @@ version = "single-version"
 
 allprojects {
 	apply {
-		plugin(rootProject.libs.plugins.kotlin.jvm.get().pluginId)
-		plugin(rootProject.libs.plugins.kotlin.serialization.get().pluginId)
-		plugin(rootProject.libs.plugins.kotlin.kover.get().pluginId)
-		plugin(rootProject.libs.plugins.spring.boot.get().pluginId)
+		plugin(rootProject.libs.plugins.org.jetbrains.kotlin.jvm.get().pluginId)
+		plugin(rootProject.libs.plugins.org.jetbrains.kotlin.plugin.serialization.get().pluginId)
+		plugin(rootProject.libs.plugins.org.jetbrains.kotlinx.kover.get().pluginId)
+		plugin(rootProject.libs.plugins.org.springframework.boot.get().pluginId)
 
 		plugin("java")
 	}
 
-	plugins.withId("org.jetbrains.kotlinx.kover") {
+	plugins.withId(rootProject.libs.plugins.org.jetbrains.kotlinx.kover.get().pluginId) {
 		tasks.named("koverXmlReport") {
 			dependsOn(tasks.test)
 		}
@@ -48,17 +48,17 @@ allprojects {
 	}
 
 	dependencies {
-		runtimeOnly(rootProject.libs.micrometer.registry.prometheus)
+		runtimeOnly(rootProject.libs.io.micrometer.micrometer.registry.prometheus)
 
 		implementation(rootProject.libs.bundles.tracing)
-		implementation(rootProject.libs.kotlin.reflect)
-		implementation(rootProject.libs.kotlinx.serialization.json)
-		implementation(rootProject.libs.logback.encoder)
-		implementation(rootProject.libs.springFramework.aspects)
+		implementation(rootProject.libs.net.logstash.logback.logstash.logback.encoder)
+		implementation(rootProject.libs.org.jetbrains.kotlin.kotlin.reflect)
+		implementation(rootProject.libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
+		implementation(rootProject.libs.org.springframework.spring.aspects)
 
-		testImplementation(rootProject.libs.kotlin.test.junit)
-		testImplementation(rootProject.libs.mockito.kotlin)
-		testImplementation(rootProject.libs.springBoot.starter.test)
+		testImplementation(rootProject.libs.org.jetbrains.kotlin.kotlin.test.junit5)
+		testImplementation(rootProject.libs.org.mockito.kotlin.mockito.kotlin)
+		testImplementation(rootProject.libs.org.springframework.boot.spring.boot.starter.test)
 	}
 
 	tasks.test {
@@ -71,9 +71,9 @@ allprojects {
 
 subprojects {
 	apply {
-		plugin(rootProject.libs.plugins.kotlin.spring.get().pluginId)
-		plugin(rootProject.libs.plugins.spring.boot.get().pluginId)
-		plugin(rootProject.libs.plugins.spring.dependencyManagement.get().pluginId)
+		plugin(rootProject.libs.plugins.io.spring.dependency.management.get().pluginId)
+		plugin(rootProject.libs.plugins.org.jetbrains.kotlin.plugin.spring.get().pluginId)
+		plugin(rootProject.libs.plugins.org.springframework.boot.get().pluginId)
 	}
 
 	tasks.bootJar {
@@ -90,12 +90,12 @@ dependencies {
 	implementation(project(":edge-consuming"))
 	implementation(project(":edge-rest"))
 
-	implementation(libs.springBoot.starter.mustache)
-	implementation(libs.springBoot.starter.web)
+	implementation(libs.org.springframework.boot.spring.boot.starter.mustache)
+	implementation(libs.org.springframework.boot.spring.boot.starter.web)
 
-	testImplementation(libs.archUnit.junit)
+	testImplementation(libs.com.tngtech.archunit.archunit.junit5)
 
-	developmentOnly(libs.springBoot.devtools)
+	developmentOnly(libs.org.springframework.boot.spring.boot.devtools)
 
 	kover(project(":edge-contracts"))
 	kover(project(":db"))

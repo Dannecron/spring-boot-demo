@@ -3,8 +3,8 @@ dependencies {
     implementation(project(":edge-producing"))
     implementation(project(":edge-integration"))
 
-    implementation(rootProject.libs.springBoot.starter.actuator)
-    implementation(rootProject.libs.springData.commons)
+    implementation(rootProject.libs.org.springframework.boot.spring.boot.starter.actuator)
+    implementation(rootProject.libs.org.springframework.data.spring.data.commons)
 
-    testImplementation(rootProject.libs.springBoot.starter.actuatorAutoconfigure)
+    testImplementation(rootProject.libs.org.springframework.boot.spring.boot.starter.actuator.autoconfigure)
 }

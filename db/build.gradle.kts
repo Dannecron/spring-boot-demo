@@ -1,13 +1,13 @@
 plugins {
-    alias(libs.plugins.kotlin.jpa)
+    alias(libs.plugins.org.jetbrains.kotlin.plugin.jpa)
 }
 
 dependencies {
-    implementation(rootProject.libs.flyway.core)
-    implementation(rootProject.libs.postgres)
-    implementation(rootProject.libs.springBoot.starter.jdbc)
+    implementation(rootProject.libs.org.flywaydb.flyway.core)
+    implementation(rootProject.libs.org.postgresql.postgresql)
+    implementation(rootProject.libs.org.springframework.boot.spring.boot.starter.data.jdbc)
 
-    testImplementation(libs.testcontainers)
-    testImplementation(libs.testcontainers.junit.jupiter)
-    testImplementation(libs.testcontainers.postgresql)
+    testImplementation(libs.org.testcontainers.junit.jupiter)
+    testImplementation(libs.org.testcontainers.postgresql)
+    testImplementation(libs.org.testcontainers.testcontainers)
 }

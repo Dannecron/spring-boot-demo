@@ -1,7 +1,7 @@
 dependencies {
-    implementation(rootProject.libs.springFramework.context)
-    implementation(rootProject.libs.ktor.client.cio)
-    implementation(rootProject.libs.ktor.client.core)
+    implementation(rootProject.libs.io.ktor.ktor.client.cio)
+    implementation(rootProject.libs.io.ktor.ktor.client.core)
+    implementation(rootProject.libs.org.springframework.spring.context)
 
-    testImplementation(rootProject.libs.ktor.client.mock)
+    testImplementation(rootProject.libs.io.ktor.ktor.client.mock)
 }

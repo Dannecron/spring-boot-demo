@@ -1,8 +1,7 @@
 dependencies {
-    implementation(rootProject.libs.json.schema.validator)
-    implementation(rootProject.libs.springBoot.starter.web)
-    implementation(rootProject.libs.springData.commons)
-    implementation(rootProject.libs.springDoc.openapi.starter)
-    implementation(rootProject.libs.springCloud.stream)
-
+    implementation(rootProject.libs.io.github.optimumcode.json.schema.validator)
+    implementation(rootProject.libs.org.springdoc.springdoc.openapi.starter.webmvc.ui)
+    implementation(rootProject.libs.org.springframework.boot.spring.boot.starter.web)
+    implementation(rootProject.libs.org.springframework.cloud.spring.cloud.stream)
+    implementation(rootProject.libs.org.springframework.data.spring.data.commons)
 }

@@ -7,50 +7,50 @@ spring-cloud = "4.1.5"
 testcontainers = "1.19.7"
 
 [libraries]
-archUnit-junit = { module = "com.tngtech.archunit:archunit-junit5", version = "1.4.1" }
-flyway-core = { module = "org.flywaydb:flyway-core", version = "9.22.3" }
-jackson-datatype-jsr = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
-jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
-json-schema-validator = { module = "io.github.optimumcode:json-schema-validator", version = "0.2.3"}
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor"}
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor"}
-ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor"}
-logback-encoder = { module = "net.logstash.logback:logstash-logback-encoder", version = "8.0" }
-micrometer-bridge-otel = { module = "io.micrometer:micrometer-tracing-bridge-otel"}
-micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
-mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.4.0" }
-otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
-postgres = { module = "org.postgresql:postgresql", version = "42.7.5" }
-springFramework-context = { module = "org.springframework:spring-context"}
-springFramework-aspects = { module = "org.springframework:spring-aspects" }
-springBoot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
-springBoot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "spring-boot" }
-springBoot-starter-actuatorAutoconfigure = { module = "org.springframework.boot:spring-boot-actuator-autoconfigure" }
-springBoot-starter-jdbc = { module = "org.springframework.boot:spring-boot-starter-data-jdbc", version.ref = "spring-boot"}
-springBoot-starter-mustache = { module = "org.springframework.boot:spring-boot-starter-mustache", version.ref = "spring-boot" }
-springBoot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot" }
-springBoot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
-springBoot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
-springCloud-starter-streamKafka = { module = "org.springframework.cloud:spring-cloud-starter-stream-kafka", version.ref = "spring-cloud"}
-springCloud-stream = { module = "org.springframework.cloud:spring-cloud-stream", version.ref = "spring-cloud"}
-springCloud-streamTestBinder = { module = "org.springframework.cloud:spring-cloud-stream-test-binder", version.ref = "spring-cloud"}
-springData-commons = { module = "org.springframework.data:spring-data-commons", version.ref = "spring-boot" }
-springDoc-openapi-starter = "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0"
-testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers"}
-testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers"}
-testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers"}
+com-fasterxml-jackson-datatype-jackson_datatype_jsr310 = { group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version.ref = "jackson" }
+com-fasterxml-jackson-module-jackson_module_kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson" }
+com-tngtech-archunit-archunit_junit5 = { group = "com.tngtech.archunit", name = "archunit-junit5", version = "1.4.1" }
+io-github-optimumcode-json_schema_validator = { group = "io.github.optimumcode", name = "json-schema-validator",  version = "0.5.2" }
+io-ktor-ktor_client_cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+io-ktor-ktor_client_core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+io-ktor-ktor_client_mock = { group = "io.ktor", name = "ktor-client-mock", version.ref = "ktor" }
+io-micrometer-micrometer_registry_prometheus = { group = "io.micrometer", name = "micrometer-registry-prometheus" }
+io-micrometer-micrometer_tracing_bridge_otel = { group = "io.micrometer", name = "micrometer-tracing-bridge-otel" }
+io-opentelemetry-opentelemetry_exporter_otlp = { group = "io.opentelemetry", name = "opentelemetry-exporter-otlp" }
+net-logstash-logback-logstash_logback_encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version = "8.0" }
+org-flywaydb-flyway_core = { group = "org.flywaydb", name = "flyway-core", version = "9.22.3" }
+org-jetbrains-kotlin-kotlin_reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+org-jetbrains-kotlin-kotlin_test_junit5 = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit5", version.ref = "kotlin" }
+org-jetbrains-kotlinx-kotlinx_serialization_json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.3" }
+org-mockito-kotlin-mockito_kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version = "5.4.0" }
+org-postgresql-postgresql = { group = "org.postgresql", name = "postgresql", version = "42.7.5" }
+org-springdoc-springdoc_openapi_starter_webmvc_ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version = "2.6.0" }
+org-springframework-boot-spring_boot_devtools = { group = "org.springframework.boot", name = "spring-boot-devtools" }
+org-springframework-boot-spring_boot_starter_actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator", version.ref = "spring-boot" }
+org-springframework-boot-spring_boot_starter_actuator_autoconfigure = { group = "org.springframework.boot", name = "spring-boot-actuator-autoconfigure" }
+org-springframework-boot-spring_boot_starter_data_jdbc = { group = "org.springframework.boot", name = "spring-boot-starter-data-jdbc", version.ref = "spring-boot" }
+org-springframework-boot-spring_boot_starter_mustache = { group = "org.springframework.boot", name = "spring-boot-starter-mustache", version.ref = "spring-boot"}
+org-springframework-boot-spring_boot_starter_test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "spring-boot"}
+org-springframework-boot-spring_boot_starter_validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation", version.ref = "spring-boot"}
+org-springframework-boot-spring_boot_starter_web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "spring-boot"}
+org-springframework-cloud-spring_cloud_starter_stream_kafka = { group = "org.springframework.cloud", name = "spring-cloud-starter-stream-kafka", version.ref = "spring-cloud"}
+org-springframework-cloud-spring_cloud_stream = { group = "org.springframework.cloud", name = "spring-cloud-stream", version.ref = "spring-cloud" }
+org-springframework-cloud-spring_cloud_stream_test_binder = { group = "org.springframework.cloud", name = "spring-cloud-stream-test-binder", version.ref = "spring-cloud" }
+org-springframework-data-spring_data_commons = { group = "org.springframework.data", name = "spring-data-commons", version.ref = "spring-boot" }
+org-springframework-spring_aspects = { group = "org.springframework", name = "spring-aspects" }
+org-springframework-spring_context = { group = "org.springframework", name = "spring-context"}
+org-testcontainers-junit_jupiter = { group = "org.testcontainers", name = "junit-jupiter", version.ref = "testcontainers" }
+org-testcontainers-postgresql = { group = "org.testcontainers", name = "postgresql", version.ref = "testcontainers" }
+org-testcontainers-testcontainers = { group = "org.testcontainers", name = "testcontainers", version.ref = "testcontainers" }
 
 [bundles]
-tracing = ["micrometer-bridge-otel", "otel-exporter"]
+tracing = ["io-micrometer-micrometer_tracing_bridge_otel", "io-opentelemetry-opentelemetry_exporter_otlp"]
 
 [plugins]
-kotlin-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.8.3" }
-kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
-spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
-spring-dependencyManagement = { id = "io.spring.dependency-management", version = "1.1.7"}
+io-spring-dependency-management = { id = "io.spring.dependency-management", version = "1.1.7" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+org-jetbrains-kotlin-plugin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+org-jetbrains-kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+org-jetbrains-kotlin-plugin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+org-jetbrains-kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.8.3" }
+org-springframework-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }

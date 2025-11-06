@@ -2,10 +2,10 @@ dependencies {
     implementation(project(":edge-contracts"))
     implementation(project(":core"))
 
-    implementation(rootProject.libs.jackson.datatype.jsr)
-    implementation(rootProject.libs.jackson.module.kotlin)
-    implementation(rootProject.libs.springCloud.starter.streamKafka)
-    implementation(rootProject.libs.springCloud.stream)
+    implementation(rootProject.libs.com.fasterxml.jackson.datatype.jackson.datatype.jsr310)
+    implementation(rootProject.libs.com.fasterxml.jackson.module.jackson.module.kotlin)
+    implementation(rootProject.libs.org.springframework.cloud.spring.cloud.starter.stream.kafka)
+    implementation(rootProject.libs.org.springframework.cloud.spring.cloud.stream)
 
-    testImplementation(rootProject.libs.springCloud.streamTestBinder)
+    testImplementation(rootProject.libs.org.springframework.cloud.spring.cloud.stream.test.binder)
 }
