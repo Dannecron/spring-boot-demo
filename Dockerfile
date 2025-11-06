@@ -1,3 +1,9 @@
-FROM openjdk:17-jdk-slim
-COPY --chmod=777 build/libs/demo-single-version.jar /application/demo.jar
-CMD ["java", "-jar", "/application/demo.jar"]
+FROM eclipse-temurin:20-jdk
+
+WORKDIR /app
+
+COPY ./entrypoint.sh .
+RUN chmod +x ./entrypoint.sh
+COPY ./build/libs/*.jar .
+
+ENTRYPOINT ["/app/entrypoint.sh"]

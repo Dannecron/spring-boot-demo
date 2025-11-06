@@ -5,16 +5,16 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
-    environment:
-      SPRING_LOG_LEVEL: $SPRING_LOG_LEVEL
-      SPRING_ACTIVE_PROFILE: $SPRING_ACTIVE_PROFILE
-      DB_URL: $DB_URL
-      DB_NAME: $DB_NAME
-      DB_SCHEMA: $DB_SCHEMA
-      DB_USERNAME: $DB_USERNAME
-      DB_PASSWORD: $DB_PASSWORD
-      KAFKA_SERVERS: $KAFKA_SERVERS
-      OTLP_TRACING_HTTP_URL: $OTLP_TRACING_HTTP_URL
+    env_file:
+      - .env
     expose:
       - 8080
       - 8081
+    command:
+      - app.jar
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "--silent", "http://localhost:8081/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s

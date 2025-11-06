@@ -9,6 +9,8 @@ spring:
     driver-class-name: org.postgresql.Driver
     hikari:
       schema: ${DB_SCHEMA:public}
+      maximum-pool-size: ${HIKARI_DB_MAXIMUM_POOL_SIZE}
+      minimum-idle: ${HIKARI_DB_MINIMUM_IDLE_SIZE}
   flyway: #flyway automatically uses the datasource from the application to connect to the DB
     enabled: true # enables flyway database migration
     locations: classpath:db/migration/structure, classpath:db/migration/data # the location where flyway should look for migration scripts
@@ -97,6 +99,12 @@ management:
   tracing:
     sampling:
       probability: 1.0
+
+server:
+  tomcat:
+    threads:
+      max: ${TOMCAT_THREADS_MAX}
+      min-spare: ${TOMCAT_THREADS_MIN}
 
 tracing:
   url: ${OTLP_TRACING_HTTP_URL}
